@@ -1,27 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/navigation/router.dart';
 import 'flavors.dart';
 
-class CrptoApp extends StatelessWidget {
+class CrptoApp extends ConsumerWidget {
   const CrptoApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Crpto',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: _buildFlavorBanner(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(appRouterProvider);
+
+    return MaterialApp.router(
+      routerConfig: appRouter,
+      builder: (_, child) => _buildFlavorBanner(
         show: kDebugMode,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: const Text('Home Page'),
-          ),
-        ),
+        child: child,
       ),
     );
   }
@@ -42,6 +37,6 @@ class CrptoApp extends StatelessWidget {
             color: Colors.green,
             child: child,
           )
-        : Container(child: child);
+        : child ?? const SizedBox.shrink();
   }
 }
