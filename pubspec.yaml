@@ -28,6 +28,10 @@ dependencies:
   retrofit: ^4.4.2
   dio: ^5.8.0+1
 
+  # graphics
+  flutter_svg: ^2.0.17
+  vector_graphics: ^1.1.18
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -35,14 +39,24 @@ dev_dependencies:
     sdk: flutter
 
   freezed: ^2.5.8
-  json_serializable: ^6.9.3
+  json_serializable: ^6.9.4
   riverpod_generator: ^2.6.4
-  retrofit_generator: ^9.1.7
-  build_runner: ^2.4.14
+  retrofit_generator: ^9.1.9
+  build_runner: ^2.4.15
   riverpod_lint: ^2.6.4
   custom_lint: ^0.7.3
+
+  # graphics
+  vector_graphics_compiler: ^1.1.16
 
   flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/svgs/
+    - assets/svgs_vec/
+    - assets/svgs/crypto_icons/
+    - assets/svgs_vec/crypto_icons/
