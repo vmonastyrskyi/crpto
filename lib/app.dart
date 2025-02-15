@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/navigation/router.dart';
+import 'core/utils/app_colors.dart';
 import 'flavors.dart';
 
 class CrptoApp extends ConsumerWidget {
@@ -18,6 +19,7 @@ class CrptoApp extends ConsumerWidget {
         show: kDebugMode,
         child: child,
       ),
+      theme: darkTheme,
     );
   }
 
@@ -40,3 +42,11 @@ class CrptoApp extends ConsumerWidget {
         : child ?? const SizedBox.shrink();
   }
 }
+
+ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
+  primaryColor: AppColors.primaryColor,
+  scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
+  dividerTheme: const DividerThemeData(
+    color: Colors.transparent,
+  ),
+);

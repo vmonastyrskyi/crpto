@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app.dart';
+import 'core/utils/crypto_utils.dart';
 import 'flavors.dart';
 
 void main() async {
@@ -10,10 +11,11 @@ void main() async {
   F.flavor = Flavor.dev;
 
   await F.init();
+  await CryptoUtils.init();
 
   runApp(
-    ProviderScope(
-      child: const CrptoApp(),
+    const ProviderScope(
+      child: CrptoApp(),
     ),
   );
 }
