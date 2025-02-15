@@ -6,7 +6,7 @@ abstract final class CryptoUtils {
 
   static final List<String> _iconNames = [];
 
-  static final Map<String, String> _names = Map.unmodifiable(
+  static final Map<String, String> _displayNames = Map.unmodifiable(
     {
       'btc': 'Bitcoin',
       'eth': 'Ethereum',
@@ -424,8 +424,8 @@ abstract final class CryptoUtils {
     );
   }
 
-  static String getFullName(String key) {
-    return _names[key.toLowerCase()] ?? 'N/A';
+  static String getDisplayName(String key) {
+    return _displayNames[key.toLowerCase()] ?? 'N/A';
   }
 
   static String getSvgVecPath(String iconName) {

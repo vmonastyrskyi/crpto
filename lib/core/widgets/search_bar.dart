@@ -22,13 +22,13 @@ class CRPTOSearchBar extends StatelessWidget {
       elevation: const WidgetStatePropertyAll(1.0),
       textStyle: const WidgetStatePropertyAll(
         TextStyle(
-          color: AppColors.textColor,
+          color: AppColors.primaryTextColor,
           fontSize: 14.0,
         ),
       ),
       hintStyle: const WidgetStatePropertyAll(
         TextStyle(
-          color: AppColors.hintColor,
+          color: AppColors.hintTextColor,
           fontSize: 14.0,
         ),
       ),
