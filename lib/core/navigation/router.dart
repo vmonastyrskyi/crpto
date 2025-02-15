@@ -3,7 +3,7 @@ import 'package:crpto/features/market_coins/presentation/ui/market_coins_screen.
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'router.g.dart';
+part 'generated/router.g.dart';
 
 @riverpod
 class AppRouter extends _$AppRouter {
