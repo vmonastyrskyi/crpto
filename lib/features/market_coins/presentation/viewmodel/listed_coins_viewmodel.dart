@@ -48,16 +48,15 @@ class ListedCoinsViewModel extends _$ListedCoinsViewModel {
 
       state = state.copyWith(searchStatus: ListedCoinsSearchStatus.loading);
 
-      final searchedListedCoins = _lastListedCoins.where(
-        (listedCoin) {
-          final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
-          final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
-          final searchRegExp = RegExp(searchValue, caseSensitive: false);
+      final searchedListedCoins =
+          _lastListedCoins.where((listedCoin) {
+            final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
+            final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
+            final searchRegExp = RegExp(searchValue, caseSensitive: false);
 
-          return searchRegExp.hasMatch(coinBaseAsset) ||
-              searchRegExp.hasMatch(coinDisplayName);
-        },
-      ).toList();
+            return searchRegExp.hasMatch(coinBaseAsset) ||
+                searchRegExp.hasMatch(coinDisplayName);
+          }).toList();
 
       state = state.copyWith(
         searchStatus: ListedCoinsSearchStatus.searched,

@@ -12,13 +12,15 @@ String _$appRouterHash() => r'8475c43a46a211408a22df3eab7dfdde9721dbb7';
 @ProviderFor(AppRouter)
 final appRouterProvider =
     AutoDisposeNotifierProvider<AppRouter, GoRouter>.internal(
-  AppRouter.new,
-  name: r'appRouterProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$appRouterHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AppRouter.new,
+      name: r'appRouterProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$appRouterHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AppRouter = AutoDisposeNotifier<GoRouter>;
 // ignore_for_file: type=lint

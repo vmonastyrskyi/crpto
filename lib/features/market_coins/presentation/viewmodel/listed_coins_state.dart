@@ -3,19 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/listed_coins_state.freezed.dart';
 
-enum ListedCoinsStatus {
-  initial,
-  loading,
-  loaded,
-  error,
-}
+enum ListedCoinsStatus { initial, loading, loaded, error }
 
-enum ListedCoinsSearchStatus {
-  initial,
-  loading,
-  searched,
-  error,
-}
+enum ListedCoinsSearchStatus { initial, loading, searched, error }
 
 @freezed
 class ListedCoinsState with _$ListedCoinsState {
@@ -26,8 +16,8 @@ class ListedCoinsState with _$ListedCoinsState {
   }) = _ListedCoinsState;
 
   factory ListedCoinsState.initial() => const ListedCoinsState(
-        status: ListedCoinsStatus.initial,
-        searchStatus: ListedCoinsSearchStatus.initial,
-        listedCoins: [],
-      );
+    status: ListedCoinsStatus.initial,
+    searchStatus: ListedCoinsSearchStatus.initial,
+    listedCoins: [],
+  );
 }

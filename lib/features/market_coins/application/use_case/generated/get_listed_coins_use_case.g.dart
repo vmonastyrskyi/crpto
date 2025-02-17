@@ -12,12 +12,15 @@ String _$getListedCoinsUseCaseHash() =>
 /// See also [GetListedCoinsUseCase].
 @ProviderFor(GetListedCoinsUseCase)
 final getListedCoinsUseCaseProvider = AutoDisposeNotifierProvider<
-    GetListedCoinsUseCase, GetListedCoinsUseCase>.internal(
+  GetListedCoinsUseCase,
+  GetListedCoinsUseCase
+>.internal(
   GetListedCoinsUseCase.new,
   name: r'getListedCoinsUseCaseProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$getListedCoinsUseCaseHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$getListedCoinsUseCaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

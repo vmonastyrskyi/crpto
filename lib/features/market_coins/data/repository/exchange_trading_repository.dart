@@ -14,8 +14,9 @@ class ExchangeTradingRepository extends _$ExchangeTradingRepository
 
   @override
   IExchangeTradingRepository build() {
-    _exchangeTradingDataSource =
-        ref.watch(binanceExchangeTradingDataSourceProvider);
+    _exchangeTradingDataSource = ref.watch(
+      binanceExchangeTradingDataSourceProvider,
+    );
 
     return this;
   }
@@ -24,11 +25,8 @@ class ExchangeTradingRepository extends _$ExchangeTradingRepository
   Future<List<ListedCoin>> getListedCoins() async {
     final response = await _exchangeTradingDataSource.getExchangeInfo();
 
-    final listedCoins = response.listedCoins
-        .map(
-          (listedCoin) => listedCoin.toModel(),
-        )
-        .toList();
+    final listedCoins =
+        response.listedCoins.map((listedCoin) => listedCoin.toModel()).toList();
 
     return listedCoins;
   }

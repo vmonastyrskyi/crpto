@@ -7,15 +7,16 @@ part of '../get_exchange_info_response.dart';
 // **************************************************************************
 
 _$GetExchangeInfoResponseImpl _$$GetExchangeInfoResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$GetExchangeInfoResponseImpl(
-      listedCoins: (json['symbols'] as List<dynamic>)
+  Map<String, dynamic> json,
+) => _$GetExchangeInfoResponseImpl(
+  listedCoins:
+      (json['symbols'] as List<dynamic>)
           .map((e) => ListedCoinDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+);
 
 Map<String, dynamic> _$$GetExchangeInfoResponseImplToJson(
-        _$GetExchangeInfoResponseImpl instance) =>
-    <String, dynamic>{
-      'symbols': instance.listedCoins.map((e) => e.toJson()).toList(),
-    };
+  _$GetExchangeInfoResponseImpl instance,
+) => <String, dynamic>{
+  'symbols': instance.listedCoins.map((e) => e.toJson()).toList(),
+};

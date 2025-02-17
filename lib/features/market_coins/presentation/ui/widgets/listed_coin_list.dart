@@ -1,6 +1,5 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/market_coins/domain/model/listed_coin.dart';
 import 'package:crpto/features/market_coins/presentation/ui/widgets/listed_coin_list_item.dart';
@@ -28,10 +27,11 @@ class ListedCoinList extends ConsumerWidget {
   }
 
   Widget _buildLoadingIndicator() {
-    return Center(
-      child: const CircularProgressIndicator(
-        color: AppColors.loaderColor,
-      ).withPaddingAll(16.0),
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: CircularProgressIndicator(color: AppColors.loaderColor),
+      ),
     );
   }
 

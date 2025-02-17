@@ -13,9 +13,5 @@ void main() async {
   await F.init();
   await CryptoUtils.init();
 
-  runApp(
-    const ProviderScope(
-      child: CrptoApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: CrptoApp()));
 }

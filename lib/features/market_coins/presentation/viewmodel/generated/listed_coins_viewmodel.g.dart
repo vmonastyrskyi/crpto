@@ -13,14 +13,15 @@ String _$listedCoinsViewModelHash() =>
 @ProviderFor(ListedCoinsViewModel)
 final listedCoinsViewModelProvider =
     NotifierProvider<ListedCoinsViewModel, ListedCoinsState>.internal(
-  ListedCoinsViewModel.new,
-  name: r'listedCoinsViewModelProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$listedCoinsViewModelHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ListedCoinsViewModel.new,
+      name: r'listedCoinsViewModelProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$listedCoinsViewModelHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ListedCoinsViewModel = Notifier<ListedCoinsState>;
 // ignore_for_file: type=lint

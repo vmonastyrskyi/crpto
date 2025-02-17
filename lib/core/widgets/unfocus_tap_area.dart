@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UnfocusTapArea extends StatelessWidget {
-  const UnfocusTapArea({
-    super.key,
-    required this.child,
-  });
+  const UnfocusTapArea({super.key, required this.child});
 
   final Widget child;
 

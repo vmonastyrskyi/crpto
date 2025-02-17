@@ -7,19 +7,13 @@ class MarketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('crpto'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('crpto'), centerTitle: true),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             spacing: 16.0,
             children: <Widget>[
-              const Text(
-                'Market Screen',
-                style: TextStyle(fontSize: 20.0),
-              ),
+              const Text('Market Screen', style: TextStyle(fontSize: 20.0)),
               ElevatedButton(
                 onPressed: () {
                   context.pushNamed('coins');

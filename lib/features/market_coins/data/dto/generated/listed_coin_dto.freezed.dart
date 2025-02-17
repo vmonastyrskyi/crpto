@@ -12,7 +12,8 @@ part of '../listed_coin_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 ListedCoinDTO _$ListedCoinDTOFromJson(Map<String, dynamic> json) {
   return _ListedCoinDTO.fromJson(json);
@@ -42,14 +43,16 @@ mixin _$ListedCoinDTO {
 /// @nodoc
 abstract class $ListedCoinDTOCopyWith<$Res> {
   factory $ListedCoinDTOCopyWith(
-          ListedCoinDTO value, $Res Function(ListedCoinDTO) then) =
-      _$ListedCoinDTOCopyWithImpl<$Res, ListedCoinDTO>;
+    ListedCoinDTO value,
+    $Res Function(ListedCoinDTO) then,
+  ) = _$ListedCoinDTOCopyWithImpl<$Res, ListedCoinDTO>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'symbol') String id,
-      @JsonKey(name: 'status') String status,
-      @JsonKey(name: 'baseAsset') String baseAsset,
-      @JsonKey(name: 'quoteAsset') String quoteAsset});
+  $Res call({
+    @JsonKey(name: 'symbol') String id,
+    @JsonKey(name: 'status') String status,
+    @JsonKey(name: 'baseAsset') String baseAsset,
+    @JsonKey(name: 'quoteAsset') String quoteAsset,
+  });
 }
 
 /// @nodoc
@@ -72,24 +75,31 @@ class _$ListedCoinDTOCopyWithImpl<$Res, $Val extends ListedCoinDTO>
     Object? baseAsset = null,
     Object? quoteAsset = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseAsset: null == baseAsset
-          ? _value.baseAsset
-          : baseAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      quoteAsset: null == quoteAsset
-          ? _value.quoteAsset
-          : quoteAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as String,
+            status:
+                null == status
+                    ? _value.status
+                    : status // ignore: cast_nullable_to_non_nullable
+                        as String,
+            baseAsset:
+                null == baseAsset
+                    ? _value.baseAsset
+                    : baseAsset // ignore: cast_nullable_to_non_nullable
+                        as String,
+            quoteAsset:
+                null == quoteAsset
+                    ? _value.quoteAsset
+                    : quoteAsset // ignore: cast_nullable_to_non_nullable
+                        as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -97,15 +107,17 @@ class _$ListedCoinDTOCopyWithImpl<$Res, $Val extends ListedCoinDTO>
 abstract class _$$ListedCoinDTOImplCopyWith<$Res>
     implements $ListedCoinDTOCopyWith<$Res> {
   factory _$$ListedCoinDTOImplCopyWith(
-          _$ListedCoinDTOImpl value, $Res Function(_$ListedCoinDTOImpl) then) =
-      __$$ListedCoinDTOImplCopyWithImpl<$Res>;
+    _$ListedCoinDTOImpl value,
+    $Res Function(_$ListedCoinDTOImpl) then,
+  ) = __$$ListedCoinDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'symbol') String id,
-      @JsonKey(name: 'status') String status,
-      @JsonKey(name: 'baseAsset') String baseAsset,
-      @JsonKey(name: 'quoteAsset') String quoteAsset});
+  $Res call({
+    @JsonKey(name: 'symbol') String id,
+    @JsonKey(name: 'status') String status,
+    @JsonKey(name: 'baseAsset') String baseAsset,
+    @JsonKey(name: 'quoteAsset') String quoteAsset,
+  });
 }
 
 /// @nodoc
@@ -113,8 +125,9 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
     extends _$ListedCoinDTOCopyWithImpl<$Res, _$ListedCoinDTOImpl>
     implements _$$ListedCoinDTOImplCopyWith<$Res> {
   __$$ListedCoinDTOImplCopyWithImpl(
-      _$ListedCoinDTOImpl _value, $Res Function(_$ListedCoinDTOImpl) _then)
-      : super(_value, _then);
+    _$ListedCoinDTOImpl _value,
+    $Res Function(_$ListedCoinDTOImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListedCoinDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -126,35 +139,42 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
     Object? baseAsset = null,
     Object? quoteAsset = null,
   }) {
-    return _then(_$ListedCoinDTOImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseAsset: null == baseAsset
-          ? _value.baseAsset
-          : baseAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      quoteAsset: null == quoteAsset
-          ? _value.quoteAsset
-          : quoteAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$ListedCoinDTOImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as String,
+        status:
+            null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                    as String,
+        baseAsset:
+            null == baseAsset
+                ? _value.baseAsset
+                : baseAsset // ignore: cast_nullable_to_non_nullable
+                    as String,
+        quoteAsset:
+            null == quoteAsset
+                ? _value.quoteAsset
+                : quoteAsset // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ListedCoinDTOImpl implements _ListedCoinDTO {
-  _$ListedCoinDTOImpl(
-      {@JsonKey(name: 'symbol') required this.id,
-      @JsonKey(name: 'status') required this.status,
-      @JsonKey(name: 'baseAsset') required this.baseAsset,
-      @JsonKey(name: 'quoteAsset') required this.quoteAsset});
+  _$ListedCoinDTOImpl({
+    @JsonKey(name: 'symbol') required this.id,
+    @JsonKey(name: 'status') required this.status,
+    @JsonKey(name: 'baseAsset') required this.baseAsset,
+    @JsonKey(name: 'quoteAsset') required this.quoteAsset,
+  });
 
   factory _$ListedCoinDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$ListedCoinDTOImplFromJson(json);
@@ -205,19 +225,17 @@ class _$ListedCoinDTOImpl implements _ListedCoinDTO {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ListedCoinDTOImplToJson(
-      this,
-    );
+    return _$$ListedCoinDTOImplToJson(this);
   }
 }
 
 abstract class _ListedCoinDTO implements ListedCoinDTO {
-  factory _ListedCoinDTO(
-          {@JsonKey(name: 'symbol') required final String id,
-          @JsonKey(name: 'status') required final String status,
-          @JsonKey(name: 'baseAsset') required final String baseAsset,
-          @JsonKey(name: 'quoteAsset') required final String quoteAsset}) =
-      _$ListedCoinDTOImpl;
+  factory _ListedCoinDTO({
+    @JsonKey(name: 'symbol') required final String id,
+    @JsonKey(name: 'status') required final String status,
+    @JsonKey(name: 'baseAsset') required final String baseAsset,
+    @JsonKey(name: 'quoteAsset') required final String quoteAsset,
+  }) = _$ListedCoinDTOImpl;
 
   factory _ListedCoinDTO.fromJson(Map<String, dynamic> json) =
       _$ListedCoinDTOImpl.fromJson;

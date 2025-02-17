@@ -39,24 +39,13 @@ class DioClientFamily extends Family<Dio> {
   const DioClientFamily();
 
   /// See also [dioClient].
-  DioClientProvider call({
-    List<Interceptor>? interceptors,
-    String? baseUrl,
-  }) {
-    return DioClientProvider(
-      interceptors: interceptors,
-      baseUrl: baseUrl,
-    );
+  DioClientProvider call({List<Interceptor>? interceptors, String? baseUrl}) {
+    return DioClientProvider(interceptors: interceptors, baseUrl: baseUrl);
   }
 
   @override
-  DioClientProvider getProviderOverride(
-    covariant DioClientProvider provider,
-  ) {
-    return call(
-      interceptors: provider.interceptors,
-      baseUrl: provider.baseUrl,
-    );
+  DioClientProvider getProviderOverride(covariant DioClientProvider provider) {
+    return call(interceptors: provider.interceptors, baseUrl: provider.baseUrl);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -77,26 +66,24 @@ class DioClientFamily extends Family<Dio> {
 /// See also [dioClient].
 class DioClientProvider extends AutoDisposeProvider<Dio> {
   /// See also [dioClient].
-  DioClientProvider({
-    List<Interceptor>? interceptors,
-    String? baseUrl,
-  }) : this._internal(
-          (ref) => dioClient(
-            ref as DioClientRef,
-            interceptors: interceptors,
-            baseUrl: baseUrl,
-          ),
-          from: dioClientProvider,
-          name: r'dioClientProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$dioClientHash,
-          dependencies: DioClientFamily._dependencies,
-          allTransitiveDependencies: DioClientFamily._allTransitiveDependencies,
+  DioClientProvider({List<Interceptor>? interceptors, String? baseUrl})
+    : this._internal(
+        (ref) => dioClient(
+          ref as DioClientRef,
           interceptors: interceptors,
           baseUrl: baseUrl,
-        );
+        ),
+        from: dioClientProvider,
+        name: r'dioClientProvider',
+        debugGetCreateSourceHash:
+            const bool.fromEnvironment('dart.vm.product')
+                ? null
+                : _$dioClientHash,
+        dependencies: DioClientFamily._dependencies,
+        allTransitiveDependencies: DioClientFamily._allTransitiveDependencies,
+        interceptors: interceptors,
+        baseUrl: baseUrl,
+      );
 
   DioClientProvider._internal(
     super._createNotifier, {
@@ -113,9 +100,7 @@ class DioClientProvider extends AutoDisposeProvider<Dio> {
   final String? baseUrl;
 
   @override
-  Override overrideWith(
-    Dio Function(DioClientRef provider) create,
-  ) {
+  Override overrideWith(Dio Function(DioClientRef provider) create) {
     return ProviderOverride(
       origin: this,
       override: DioClientProvider._internal(
@@ -173,5 +158,6 @@ class _DioClientProviderElement extends AutoDisposeProviderElement<Dio>
   @override
   String? get baseUrl => (origin as DioClientProvider).baseUrl;
 }
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

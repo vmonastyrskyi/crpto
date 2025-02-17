@@ -12,7 +12,8 @@ part of '../listed_coins_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ListedCoinsState {
@@ -31,13 +32,15 @@ mixin _$ListedCoinsState {
 /// @nodoc
 abstract class $ListedCoinsStateCopyWith<$Res> {
   factory $ListedCoinsStateCopyWith(
-          ListedCoinsState value, $Res Function(ListedCoinsState) then) =
-      _$ListedCoinsStateCopyWithImpl<$Res, ListedCoinsState>;
+    ListedCoinsState value,
+    $Res Function(ListedCoinsState) then,
+  ) = _$ListedCoinsStateCopyWithImpl<$Res, ListedCoinsState>;
   @useResult
-  $Res call(
-      {ListedCoinsStatus status,
-      ListedCoinsSearchStatus searchStatus,
-      List<ListedCoin> listedCoins});
+  $Res call({
+    ListedCoinsStatus status,
+    ListedCoinsSearchStatus searchStatus,
+    List<ListedCoin> listedCoins,
+  });
 }
 
 /// @nodoc
@@ -59,44 +62,53 @@ class _$ListedCoinsStateCopyWithImpl<$Res, $Val extends ListedCoinsState>
     Object? searchStatus = null,
     Object? listedCoins = null,
   }) {
-    return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ListedCoinsStatus,
-      searchStatus: null == searchStatus
-          ? _value.searchStatus
-          : searchStatus // ignore: cast_nullable_to_non_nullable
-              as ListedCoinsSearchStatus,
-      listedCoins: null == listedCoins
-          ? _value.listedCoins
-          : listedCoins // ignore: cast_nullable_to_non_nullable
-              as List<ListedCoin>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            status:
+                null == status
+                    ? _value.status
+                    : status // ignore: cast_nullable_to_non_nullable
+                        as ListedCoinsStatus,
+            searchStatus:
+                null == searchStatus
+                    ? _value.searchStatus
+                    : searchStatus // ignore: cast_nullable_to_non_nullable
+                        as ListedCoinsSearchStatus,
+            listedCoins:
+                null == listedCoins
+                    ? _value.listedCoins
+                    : listedCoins // ignore: cast_nullable_to_non_nullable
+                        as List<ListedCoin>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ListedCoinsStateImplCopyWith<$Res>
     implements $ListedCoinsStateCopyWith<$Res> {
-  factory _$$ListedCoinsStateImplCopyWith(_$ListedCoinsStateImpl value,
-          $Res Function(_$ListedCoinsStateImpl) then) =
-      __$$ListedCoinsStateImplCopyWithImpl<$Res>;
+  factory _$$ListedCoinsStateImplCopyWith(
+    _$ListedCoinsStateImpl value,
+    $Res Function(_$ListedCoinsStateImpl) then,
+  ) = __$$ListedCoinsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {ListedCoinsStatus status,
-      ListedCoinsSearchStatus searchStatus,
-      List<ListedCoin> listedCoins});
+  $Res call({
+    ListedCoinsStatus status,
+    ListedCoinsSearchStatus searchStatus,
+    List<ListedCoin> listedCoins,
+  });
 }
 
 /// @nodoc
 class __$$ListedCoinsStateImplCopyWithImpl<$Res>
     extends _$ListedCoinsStateCopyWithImpl<$Res, _$ListedCoinsStateImpl>
     implements _$$ListedCoinsStateImplCopyWith<$Res> {
-  __$$ListedCoinsStateImplCopyWithImpl(_$ListedCoinsStateImpl _value,
-      $Res Function(_$ListedCoinsStateImpl) _then)
-      : super(_value, _then);
+  __$$ListedCoinsStateImplCopyWithImpl(
+    _$ListedCoinsStateImpl _value,
+    $Res Function(_$ListedCoinsStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListedCoinsState
   /// with the given fields replaced by the non-null parameter values.
@@ -107,31 +119,36 @@ class __$$ListedCoinsStateImplCopyWithImpl<$Res>
     Object? searchStatus = null,
     Object? listedCoins = null,
   }) {
-    return _then(_$ListedCoinsStateImpl(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as ListedCoinsStatus,
-      searchStatus: null == searchStatus
-          ? _value.searchStatus
-          : searchStatus // ignore: cast_nullable_to_non_nullable
-              as ListedCoinsSearchStatus,
-      listedCoins: null == listedCoins
-          ? _value._listedCoins
-          : listedCoins // ignore: cast_nullable_to_non_nullable
-              as List<ListedCoin>,
-    ));
+    return _then(
+      _$ListedCoinsStateImpl(
+        status:
+            null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                    as ListedCoinsStatus,
+        searchStatus:
+            null == searchStatus
+                ? _value.searchStatus
+                : searchStatus // ignore: cast_nullable_to_non_nullable
+                    as ListedCoinsSearchStatus,
+        listedCoins:
+            null == listedCoins
+                ? _value._listedCoins
+                : listedCoins // ignore: cast_nullable_to_non_nullable
+                    as List<ListedCoin>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ListedCoinsStateImpl implements _ListedCoinsState {
-  const _$ListedCoinsStateImpl(
-      {required this.status,
-      required this.searchStatus,
-      required final List<ListedCoin> listedCoins})
-      : _listedCoins = listedCoins;
+  const _$ListedCoinsStateImpl({
+    required this.status,
+    required this.searchStatus,
+    required final List<ListedCoin> listedCoins,
+  }) : _listedCoins = listedCoins;
 
   @override
   final ListedCoinsStatus status;
@@ -158,13 +175,19 @@ class _$ListedCoinsStateImpl implements _ListedCoinsState {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.searchStatus, searchStatus) ||
                 other.searchStatus == searchStatus) &&
-            const DeepCollectionEquality()
-                .equals(other._listedCoins, _listedCoins));
+            const DeepCollectionEquality().equals(
+              other._listedCoins,
+              _listedCoins,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, searchStatus,
-      const DeepCollectionEquality().hash(_listedCoins));
+  int get hashCode => Object.hash(
+    runtimeType,
+    status,
+    searchStatus,
+    const DeepCollectionEquality().hash(_listedCoins),
+  );
 
   /// Create a copy of ListedCoinsState
   /// with the given fields replaced by the non-null parameter values.
@@ -173,14 +196,17 @@ class _$ListedCoinsStateImpl implements _ListedCoinsState {
   @pragma('vm:prefer-inline')
   _$$ListedCoinsStateImplCopyWith<_$ListedCoinsStateImpl> get copyWith =>
       __$$ListedCoinsStateImplCopyWithImpl<_$ListedCoinsStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ListedCoinsState implements ListedCoinsState {
-  const factory _ListedCoinsState(
-      {required final ListedCoinsStatus status,
-      required final ListedCoinsSearchStatus searchStatus,
-      required final List<ListedCoin> listedCoins}) = _$ListedCoinsStateImpl;
+  const factory _ListedCoinsState({
+    required final ListedCoinsStatus status,
+    required final ListedCoinsSearchStatus searchStatus,
+    required final List<ListedCoin> listedCoins,
+  }) = _$ListedCoinsStateImpl;
 
   @override
   ListedCoinsStatus get status;

@@ -24,15 +24,14 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
             .where((listedCoin) => listedCoin.status == 'TRADING')
             .toList();
 
-    listedCoins = listedCoins.map(
-      (listedCoin) {
-        final baseAsset = listedCoin.baseAsset;
+    listedCoins =
+        listedCoins.map((listedCoin) {
+          final baseAsset = listedCoin.baseAsset;
 
-        final hasIcon = CryptoUtils.isIconExists(baseAsset);
+          final hasIcon = CryptoUtils.isIconExists(baseAsset);
 
-        return listedCoin.copyWith(hasIcon: hasIcon);
-      },
-    ).toList();
+          return listedCoin.copyWith(hasIcon: hasIcon);
+        }).toList();
 
     return listedCoins;
   }

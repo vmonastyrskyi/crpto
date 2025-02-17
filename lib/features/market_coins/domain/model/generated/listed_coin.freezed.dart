@@ -12,7 +12,8 @@ part of '../listed_coin.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ListedCoin {
@@ -32,15 +33,17 @@ mixin _$ListedCoin {
 /// @nodoc
 abstract class $ListedCoinCopyWith<$Res> {
   factory $ListedCoinCopyWith(
-          ListedCoin value, $Res Function(ListedCoin) then) =
-      _$ListedCoinCopyWithImpl<$Res, ListedCoin>;
+    ListedCoin value,
+    $Res Function(ListedCoin) then,
+  ) = _$ListedCoinCopyWithImpl<$Res, ListedCoin>;
   @useResult
-  $Res call(
-      {String id,
-      String status,
-      String baseAsset,
-      String quoteAsset,
-      bool hasIcon});
+  $Res call({
+    String id,
+    String status,
+    String baseAsset,
+    String quoteAsset,
+    bool hasIcon,
+  });
 }
 
 /// @nodoc
@@ -64,28 +67,36 @@ class _$ListedCoinCopyWithImpl<$Res, $Val extends ListedCoin>
     Object? quoteAsset = null,
     Object? hasIcon = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseAsset: null == baseAsset
-          ? _value.baseAsset
-          : baseAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      quoteAsset: null == quoteAsset
-          ? _value.quoteAsset
-          : quoteAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      hasIcon: null == hasIcon
-          ? _value.hasIcon
-          : hasIcon // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as String,
+            status:
+                null == status
+                    ? _value.status
+                    : status // ignore: cast_nullable_to_non_nullable
+                        as String,
+            baseAsset:
+                null == baseAsset
+                    ? _value.baseAsset
+                    : baseAsset // ignore: cast_nullable_to_non_nullable
+                        as String,
+            quoteAsset:
+                null == quoteAsset
+                    ? _value.quoteAsset
+                    : quoteAsset // ignore: cast_nullable_to_non_nullable
+                        as String,
+            hasIcon:
+                null == hasIcon
+                    ? _value.hasIcon
+                    : hasIcon // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -93,16 +104,18 @@ class _$ListedCoinCopyWithImpl<$Res, $Val extends ListedCoin>
 abstract class _$$ListedCoinImplCopyWith<$Res>
     implements $ListedCoinCopyWith<$Res> {
   factory _$$ListedCoinImplCopyWith(
-          _$ListedCoinImpl value, $Res Function(_$ListedCoinImpl) then) =
-      __$$ListedCoinImplCopyWithImpl<$Res>;
+    _$ListedCoinImpl value,
+    $Res Function(_$ListedCoinImpl) then,
+  ) = __$$ListedCoinImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String status,
-      String baseAsset,
-      String quoteAsset,
-      bool hasIcon});
+  $Res call({
+    String id,
+    String status,
+    String baseAsset,
+    String quoteAsset,
+    bool hasIcon,
+  });
 }
 
 /// @nodoc
@@ -110,8 +123,9 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
     extends _$ListedCoinCopyWithImpl<$Res, _$ListedCoinImpl>
     implements _$$ListedCoinImplCopyWith<$Res> {
   __$$ListedCoinImplCopyWithImpl(
-      _$ListedCoinImpl _value, $Res Function(_$ListedCoinImpl) _then)
-      : super(_value, _then);
+    _$ListedCoinImpl _value,
+    $Res Function(_$ListedCoinImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListedCoin
   /// with the given fields replaced by the non-null parameter values.
@@ -124,40 +138,48 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
     Object? quoteAsset = null,
     Object? hasIcon = null,
   }) {
-    return _then(_$ListedCoinImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      baseAsset: null == baseAsset
-          ? _value.baseAsset
-          : baseAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      quoteAsset: null == quoteAsset
-          ? _value.quoteAsset
-          : quoteAsset // ignore: cast_nullable_to_non_nullable
-              as String,
-      hasIcon: null == hasIcon
-          ? _value.hasIcon
-          : hasIcon // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$ListedCoinImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as String,
+        status:
+            null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                    as String,
+        baseAsset:
+            null == baseAsset
+                ? _value.baseAsset
+                : baseAsset // ignore: cast_nullable_to_non_nullable
+                    as String,
+        quoteAsset:
+            null == quoteAsset
+                ? _value.quoteAsset
+                : quoteAsset // ignore: cast_nullable_to_non_nullable
+                    as String,
+        hasIcon:
+            null == hasIcon
+                ? _value.hasIcon
+                : hasIcon // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ListedCoinImpl implements _ListedCoin {
-  _$ListedCoinImpl(
-      {required this.id,
-      required this.status,
-      required this.baseAsset,
-      required this.quoteAsset,
-      this.hasIcon = false});
+  _$ListedCoinImpl({
+    required this.id,
+    required this.status,
+    required this.baseAsset,
+    required this.quoteAsset,
+    this.hasIcon = false,
+  });
 
   @override
   final String id;
@@ -204,12 +226,13 @@ class _$ListedCoinImpl implements _ListedCoin {
 }
 
 abstract class _ListedCoin implements ListedCoin {
-  factory _ListedCoin(
-      {required final String id,
-      required final String status,
-      required final String baseAsset,
-      required final String quoteAsset,
-      final bool hasIcon}) = _$ListedCoinImpl;
+  factory _ListedCoin({
+    required final String id,
+    required final String status,
+    required final String baseAsset,
+    required final String quoteAsset,
+    final bool hasIcon,
+  }) = _$ListedCoinImpl;
 
   @override
   String get id;

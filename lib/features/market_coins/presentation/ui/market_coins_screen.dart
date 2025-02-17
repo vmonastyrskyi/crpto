@@ -61,9 +61,7 @@ class _MarketCoinsScreenState extends ConsumerState<MarketCoinsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Flexible(child: _buildAppBarTitle()),
-        ],
+        children: <Widget>[Flexible(child: _buildAppBarTitle())],
       ),
     );
   }

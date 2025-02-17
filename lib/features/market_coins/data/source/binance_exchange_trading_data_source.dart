@@ -20,10 +20,8 @@ IExchangeTradingDataSource binanceExchangeTradingDataSource(Ref ref) {
 @RestApi()
 abstract class BinanceExchangeTradingDataSource
     implements IExchangeTradingDataSource {
-  factory BinanceExchangeTradingDataSource(
-    Dio dio, {
-    String baseUrl,
-  }) = _BinanceExchangeTradingDataSource;
+  factory BinanceExchangeTradingDataSource(Dio dio, {String baseUrl}) =
+      _BinanceExchangeTradingDataSource;
 
   @override
   @GET("/exchangeInfo")

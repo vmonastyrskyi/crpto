@@ -7,10 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
 class ListedCoinListItem extends ConsumerStatefulWidget {
-  const ListedCoinListItem({
-    super.key,
-    required this.listedCoin,
-  });
+  const ListedCoinListItem({super.key, required this.listedCoin});
 
   final ListedCoin listedCoin;
 
@@ -77,7 +74,9 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
       activeTrackColor: AppColors.switchActiveTrackColor,
       inactiveThumbColor: AppColors.switchInactiveThumbColor,
       inactiveTrackColor: AppColors.switchInactiveTrackColor,
-      trackOutlineColor: const WidgetStatePropertyAll(AppColors.switchTrackOutlineColor),
+      trackOutlineColor: const WidgetStatePropertyAll(
+        AppColors.switchTrackOutlineColor,
+      ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );
   }

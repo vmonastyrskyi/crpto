@@ -15,30 +15,24 @@ class CrptoApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: appRouter,
-      builder: (_, child) => _buildFlavorBanner(
-        show: kDebugMode,
-        child: child,
-      ),
+      builder: (_, child) => _buildFlavorBanner(show: kDebugMode, child: child),
       theme: darkTheme,
     );
   }
 
-  Widget _buildFlavorBanner({
-    bool show = true,
-    Widget? child,
-  }) {
+  Widget _buildFlavorBanner({bool show = true, Widget? child}) {
     return show
         ? Banner(
-            message: F.name.toUpperCase(),
-            location: BannerLocation.topStart,
-            textStyle: const TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 11.0,
-              height: 1.0,
-            ),
-            color: Colors.green,
-            child: child,
-          )
+          message: F.name.toUpperCase(),
+          location: BannerLocation.topStart,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 11.0,
+            height: 1.0,
+          ),
+          color: Colors.green,
+          child: child,
+        )
         : child ?? const SizedBox.shrink();
   }
 }
@@ -46,7 +40,5 @@ class CrptoApp extends ConsumerWidget {
 ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
   primaryColor: AppColors.primaryColor,
   scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
-  dividerTheme: const DividerThemeData(
-    color: Colors.transparent,
-  ),
+  dividerTheme: const DividerThemeData(color: Colors.transparent),
 );
