@@ -41,4 +41,10 @@ ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
   primaryColor: AppColors.primaryColor,
   scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
   dividerTheme: const DividerThemeData(color: Colors.transparent),
+  pageTransitionsTheme: PageTransitionsTheme(
+    builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+      value: (_) => const FadeForwardsPageTransitionsBuilder(),
+      TargetPlatform.values,
+    ),
+  ),
 );

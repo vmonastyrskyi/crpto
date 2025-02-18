@@ -2,9 +2,9 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/market_coins/domain/model/listed_coin.dart';
+import 'package:crpto/features/market_coins/presentation/controller/listed_coins/listed_coins_controller.dart';
+import 'package:crpto/features/market_coins/presentation/controller/listed_coins/listed_coins_state.dart';
 import 'package:crpto/features/market_coins/presentation/ui/widgets/listed_coin_list_item.dart';
-import 'package:crpto/features/market_coins/presentation/viewmodel/listed_coins_state.dart';
-import 'package:crpto/features/market_coins/presentation/viewmodel/listed_coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,14 +13,14 @@ class ListedCoinList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(listedCoinsViewModelProvider);
+    final state = ref.watch(listedCoinsControllerProvider);
 
     return switch (state) {
-      ListedCoinsState(status: final status)
-          when status == ListedCoinsStatus.loading =>
+      ListedCoinsState(status: final status, listedCoins: final listedCoins)
+          when status == ListedCoinsStatus.loading && listedCoins.isEmpty =>
         _buildLoadingIndicator(),
       ListedCoinsState(status: final status, listedCoins: final listedCoins)
-          when status == ListedCoinsStatus.loaded && listedCoins.isNotEmpty =>
+          when status == ListedCoinsStatus.loaded || listedCoins.isNotEmpty =>
         _buildListedCoinList(listedCoins),
       _ => _buildNoListedCoinsFoundWarning(),
     };

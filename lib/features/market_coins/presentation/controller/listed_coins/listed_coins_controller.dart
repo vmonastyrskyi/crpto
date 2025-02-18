@@ -2,19 +2,19 @@ import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/market_coins/application/use_case/get_listed_coins_use_case.dart';
 import 'package:crpto/features/market_coins/domain/model/listed_coin.dart';
-import 'package:crpto/features/market_coins/presentation/viewmodel/listed_coins_state.dart';
+import 'package:crpto/features/market_coins/presentation/controller/listed_coins/listed_coins_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/listed_coins_viewmodel.g.dart';
+part 'generated/listed_coins_controller.g.dart';
 
-extension ListedCoinsViewModelExtension on WidgetRef {
-  ListedCoinsViewModel get listedCoinsViewModel =>
-      read(listedCoinsViewModelProvider.notifier);
+extension ListedCoinsControllerExtension on WidgetRef {
+  ListedCoinsController listedCoinsController() =>
+      read(listedCoinsControllerProvider.notifier);
 }
 
 @Riverpod(keepAlive: true)
-class ListedCoinsViewModel extends _$ListedCoinsViewModel {
+class ListedCoinsController extends _$ListedCoinsController {
   late final GetListedCoinsUseCase _getListedCoinsUseCase;
 
   @override

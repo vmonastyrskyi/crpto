@@ -4,8 +4,8 @@ import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/search_bar.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
+import 'package:crpto/features/market_coins/presentation/controller/listed_coins/listed_coins_controller.dart';
 import 'package:crpto/features/market_coins/presentation/ui/widgets/listed_coin_list.dart';
-import 'package:crpto/features/market_coins/presentation/viewmodel/listed_coins_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,14 +20,15 @@ class MarketCoinsScreen extends ConsumerStatefulWidget {
 class _MarketCoinsScreenState extends ConsumerState<MarketCoinsScreen> {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
-  ListedCoinsViewModel get listedCoinsViewModel => ref.listedCoinsViewModel;
+  ListedCoinsController get _listedCoinsController =>
+      ref.listedCoinsController();
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      listedCoinsViewModel.loadListedCoins();
+      _listedCoinsController.loadListedCoins();
     });
   }
 
@@ -94,7 +95,7 @@ class _MarketCoinsScreenState extends ConsumerState<MarketCoinsScreen> {
       hintText: 'Search',
       onChanged: (searchValue) {
         _searchListedCoinsDebounce(
-          () => listedCoinsViewModel.searchListedCoins(searchValue.trim()),
+          () => _listedCoinsController.searchListedCoins(searchValue.trim()),
           const Duration(milliseconds: 250),
         );
       },
