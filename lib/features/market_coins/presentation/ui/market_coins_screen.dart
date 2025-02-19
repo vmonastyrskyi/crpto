@@ -91,7 +91,7 @@ class _MarketCoinsScreenState extends ConsumerState<MarketCoinsScreen> {
   }
 
   Widget _buildSearchBar() {
-    return CRPTOSearchBar(
+    return CrptoSearchBar(
       hintText: 'Search',
       onChanged: (searchValue) {
         _searchListedCoinsDebounce(
