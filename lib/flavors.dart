@@ -4,10 +4,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 const String _logTag = 'FLAVORS';
 
-enum Flavor {
-  prod,
-  dev,
-}
+enum Flavor { prod, dev }
 
 class F {
   static Flavor? flavor;
