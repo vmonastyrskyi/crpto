@@ -1,5 +1,6 @@
-import 'package:crpto/features/market/presentation/ui/market_screen.dart';
-import 'package:crpto/features/market_coins/presentation/ui/market_coins_screen.dart';
+import 'package:crpto/core/navigation/route_names.dart';
+import 'package:crpto/features/coins_exchange/presentation/ui/coins_exchange_screen.dart';
+import 'package:crpto/features/coins_management/presentation/ui/coins_management_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -14,13 +15,13 @@ class AppRouter extends _$AppRouter {
       routes: <RouteBase>[
         GoRoute(
           path: '/',
-          name: 'market',
-          builder: (_, __) => const MarketScreen(),
+          name: RouteNames.coinsExchange,
+          builder: (_, __) => const CoinsExchangeScreen(),
           routes: <RouteBase>[
             GoRoute(
-              path: 'coins',
-              name: 'coins',
-              builder: (_, __) => const MarketCoinsScreen(),
+              path: 'coins-management',
+              name: RouteNames.coinsManagement,
+              builder: (_, __) => const CoinsManagementScreen(),
             ),
           ],
         ),
