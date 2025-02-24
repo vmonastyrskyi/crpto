@@ -34,6 +34,8 @@ dependencies:
 
   # local storage
   shared_preferences: ^2.5.2
+  drift_flutter: ^0.2.4
+  drift: ^2.25.1
 
   cupertino_icons: ^1.0.8
 
@@ -43,6 +45,7 @@ dev_dependencies:
 
   freezed: ^2.5.8
   json_serializable: ^6.9.4
+  drift_dev: ^2.25.2
 
   riverpod_generator: ^2.6.4
   retrofit_generator: ^9.1.9
