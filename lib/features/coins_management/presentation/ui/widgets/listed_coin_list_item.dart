@@ -67,14 +67,14 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
   }
 
   Widget _buildSwitcher() {
-    final switched = ref.watch(
+    final selected = ref.watch(
       listedCoinControllerProvider(
         _listedCoin,
       ).select((state) => state.selected),
     );
 
     return Switch(
-      value: switched,
+      value: selected,
       onChanged: _listedCoinController.select,
       activeColor: AppColors.switchActiveColor,
       activeTrackColor: AppColors.switchActiveTrackColor,

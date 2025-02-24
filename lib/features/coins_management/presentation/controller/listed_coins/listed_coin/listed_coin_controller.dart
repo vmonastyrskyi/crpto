@@ -1,6 +1,9 @@
-import 'package:crpto/core/data/local/local_storage_with_cache.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coin/listed_coin_state.dart';
+import 'package:crpto/shared/application/use_case/add_selected_coin.dart';
+import 'package:crpto/shared/application/use_case/get_selected_coins.dart';
+import 'package:crpto/shared/application/use_case/remove_selected_coin.dart';
+import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -13,12 +16,21 @@ extension ListedCoinControllerExtension on WidgetRef {
 
 @riverpod
 class ListedCoinController extends _$ListedCoinController {
+  late final GetSelectedCoins _getSelectedCoins;
+  late final AddSelectedCoin _addSelectedCoin;
+  late final RemoveSelectedCoin _removeSelectedCoin;
+
   @override
   ListedCoinState build(ListedCoin listedCoin) {
-    final selectedCoins =
-        localStorageWithCache.get<List<String>>('selected_coins') ?? [];
+    _getSelectedCoins = ref.watch(getSelectedCoinsProvider);
+    _addSelectedCoin = ref.watch(addSelectedCoinProvider);
+    _removeSelectedCoin = ref.watch(removeSelectedCoinProvider);
 
-    if (selectedCoins.contains(listedCoin.symbol)) {
+    final selectedCoins = _getSelectedCoins();
+
+    if (selectedCoins.any(
+      (selectedCoin) => selectedCoin.symbol == listedCoin.symbol,
+    )) {
       return ListedCoinState.initial(listedCoin: listedCoin, selected: true);
     }
 
@@ -26,15 +38,15 @@ class ListedCoinController extends _$ListedCoinController {
   }
 
   Future<void> select(bool selected) async {
-    final selectedCoins =
-        (localStorageWithCache.get<List<String>>('selected_coins') ?? [])
-            .toSet();
+    final selectedCoin = SelectedCoin(
+      symbol: listedCoin.symbol,
+      baseAsset: listedCoin.baseAsset,
+      quoteAsset: listedCoin.quoteAsset,
+    );
 
     !selected
-        ? selectedCoins.remove(listedCoin.symbol)
-        : selectedCoins.add(listedCoin.symbol);
-
-    await localStorageWithCache.put('selected_coins', [...selectedCoins]);
+        ? await _removeSelectedCoin(selectedCoin)
+        : await _addSelectedCoin(selectedCoin);
 
     state = state.copyWith(selected: selected);
   }
