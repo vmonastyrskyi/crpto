@@ -23,12 +23,12 @@ ListedCoinDTO _$ListedCoinDTOFromJson(Map<String, dynamic> json) {
 mixin _$ListedCoinDTO {
   @JsonKey(name: 'symbol')
   String get symbol => throw _privateConstructorUsedError;
-  @JsonKey(name: 'status')
-  String get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'baseAsset')
   String get baseAsset => throw _privateConstructorUsedError;
   @JsonKey(name: 'quoteAsset')
   String get quoteAsset => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status')
+  String get status => throw _privateConstructorUsedError;
 
   /// Serializes this ListedCoinDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,9 +49,9 @@ abstract class $ListedCoinDTOCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'symbol') String symbol,
-    @JsonKey(name: 'status') String status,
     @JsonKey(name: 'baseAsset') String baseAsset,
     @JsonKey(name: 'quoteAsset') String quoteAsset,
+    @JsonKey(name: 'status') String status,
   });
 }
 
@@ -71,9 +71,9 @@ class _$ListedCoinDTOCopyWithImpl<$Res, $Val extends ListedCoinDTO>
   @override
   $Res call({
     Object? symbol = null,
-    Object? status = null,
     Object? baseAsset = null,
     Object? quoteAsset = null,
+    Object? status = null,
   }) {
     return _then(
       _value.copyWith(
@@ -81,11 +81,6 @@ class _$ListedCoinDTOCopyWithImpl<$Res, $Val extends ListedCoinDTO>
                 null == symbol
                     ? _value.symbol
                     : symbol // ignore: cast_nullable_to_non_nullable
-                        as String,
-            status:
-                null == status
-                    ? _value.status
-                    : status // ignore: cast_nullable_to_non_nullable
                         as String,
             baseAsset:
                 null == baseAsset
@@ -96,6 +91,11 @@ class _$ListedCoinDTOCopyWithImpl<$Res, $Val extends ListedCoinDTO>
                 null == quoteAsset
                     ? _value.quoteAsset
                     : quoteAsset // ignore: cast_nullable_to_non_nullable
+                        as String,
+            status:
+                null == status
+                    ? _value.status
+                    : status // ignore: cast_nullable_to_non_nullable
                         as String,
           )
           as $Val,
@@ -114,9 +114,9 @@ abstract class _$$ListedCoinDTOImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'symbol') String symbol,
-    @JsonKey(name: 'status') String status,
     @JsonKey(name: 'baseAsset') String baseAsset,
     @JsonKey(name: 'quoteAsset') String quoteAsset,
+    @JsonKey(name: 'status') String status,
   });
 }
 
@@ -135,9 +135,9 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? symbol = null,
-    Object? status = null,
     Object? baseAsset = null,
     Object? quoteAsset = null,
+    Object? status = null,
   }) {
     return _then(
       _$ListedCoinDTOImpl(
@@ -145,11 +145,6 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
             null == symbol
                 ? _value.symbol
                 : symbol // ignore: cast_nullable_to_non_nullable
-                    as String,
-        status:
-            null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
                     as String,
         baseAsset:
             null == baseAsset
@@ -161,6 +156,11 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
                 ? _value.quoteAsset
                 : quoteAsset // ignore: cast_nullable_to_non_nullable
                     as String,
+        status:
+            null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                    as String,
       ),
     );
   }
@@ -171,9 +171,9 @@ class __$$ListedCoinDTOImplCopyWithImpl<$Res>
 class _$ListedCoinDTOImpl implements _ListedCoinDTO {
   _$ListedCoinDTOImpl({
     @JsonKey(name: 'symbol') required this.symbol,
-    @JsonKey(name: 'status') required this.status,
     @JsonKey(name: 'baseAsset') required this.baseAsset,
     @JsonKey(name: 'quoteAsset') required this.quoteAsset,
+    @JsonKey(name: 'status') required this.status,
   });
 
   factory _$ListedCoinDTOImpl.fromJson(Map<String, dynamic> json) =>
@@ -183,18 +183,18 @@ class _$ListedCoinDTOImpl implements _ListedCoinDTO {
   @JsonKey(name: 'symbol')
   final String symbol;
   @override
-  @JsonKey(name: 'status')
-  final String status;
-  @override
   @JsonKey(name: 'baseAsset')
   final String baseAsset;
   @override
   @JsonKey(name: 'quoteAsset')
   final String quoteAsset;
+  @override
+  @JsonKey(name: 'status')
+  final String status;
 
   @override
   String toString() {
-    return 'ListedCoinDTO(symbol: $symbol, status: $status, baseAsset: $baseAsset, quoteAsset: $quoteAsset)';
+    return 'ListedCoinDTO(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, status: $status)';
   }
 
   @override
@@ -203,17 +203,17 @@ class _$ListedCoinDTOImpl implements _ListedCoinDTO {
         (other.runtimeType == runtimeType &&
             other is _$ListedCoinDTOImpl &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.baseAsset, baseAsset) ||
                 other.baseAsset == baseAsset) &&
             (identical(other.quoteAsset, quoteAsset) ||
-                other.quoteAsset == quoteAsset));
+                other.quoteAsset == quoteAsset) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, symbol, status, baseAsset, quoteAsset);
+      Object.hash(runtimeType, symbol, baseAsset, quoteAsset, status);
 
   /// Create a copy of ListedCoinDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -232,9 +232,9 @@ class _$ListedCoinDTOImpl implements _ListedCoinDTO {
 abstract class _ListedCoinDTO implements ListedCoinDTO {
   factory _ListedCoinDTO({
     @JsonKey(name: 'symbol') required final String symbol,
-    @JsonKey(name: 'status') required final String status,
     @JsonKey(name: 'baseAsset') required final String baseAsset,
     @JsonKey(name: 'quoteAsset') required final String quoteAsset,
+    @JsonKey(name: 'status') required final String status,
   }) = _$ListedCoinDTOImpl;
 
   factory _ListedCoinDTO.fromJson(Map<String, dynamic> json) =
@@ -244,14 +244,14 @@ abstract class _ListedCoinDTO implements ListedCoinDTO {
   @JsonKey(name: 'symbol')
   String get symbol;
   @override
-  @JsonKey(name: 'status')
-  String get status;
-  @override
   @JsonKey(name: 'baseAsset')
   String get baseAsset;
   @override
   @JsonKey(name: 'quoteAsset')
   String get quoteAsset;
+  @override
+  @JsonKey(name: 'status')
+  String get status;
 
   /// Create a copy of ListedCoinDTO
   /// with the given fields replaced by the non-null parameter values.

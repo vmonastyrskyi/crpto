@@ -8,9 +8,9 @@ part 'generated/listed_coin_dto.g.dart';
 class ListedCoinDTO with _$ListedCoinDTO {
   factory ListedCoinDTO({
     @JsonKey(name: 'symbol') required String symbol,
-    @JsonKey(name: 'status') required String status,
     @JsonKey(name: 'baseAsset') required String baseAsset,
     @JsonKey(name: 'quoteAsset') required String quoteAsset,
+    @JsonKey(name: 'status') required String status,
   }) = _ListedCoinDTO;
 
   factory ListedCoinDTO.fromJson(Map<String, dynamic> json) =>
@@ -18,12 +18,12 @@ class ListedCoinDTO with _$ListedCoinDTO {
 }
 
 extension ListedCoinDTOMapper on ListedCoinDTO {
-  ListedCoin toModel() {
+  static ListedCoin toModel(ListedCoinDTO listedCoinDTO) {
     return ListedCoin(
-      symbol: symbol,
-      status: status,
-      baseAsset: baseAsset,
-      quoteAsset: quoteAsset,
+      symbol: listedCoinDTO.symbol,
+      baseAsset: listedCoinDTO.baseAsset,
+      quoteAsset: listedCoinDTO.quoteAsset,
+      status: listedCoinDTO.status,
     );
   }
 }

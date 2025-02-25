@@ -1,6 +1,6 @@
 import 'package:crpto/core/data/local/database/tables/selected_coins.dart';
-import 'package:crpto/shared/data/source/drift_selected_coin_data_source.dart';
-import 'package:crpto/shared/data/source/i_selected_coin_data_source.dart';
+import 'package:crpto/shared/data/source/selected_coin/drift_selected_coin_data_source.dart';
+import 'package:crpto/shared/data/source/selected_coin/i_selected_coin_data_source.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:crpto/shared/domain/repository/i_selected_coin_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,7 +20,7 @@ class SelectedCoinRepository extends _$SelectedCoinRepository
   }
 
   @override
-  List<SelectedCoin> getSelectedCoins() {
+  List<SelectedCoin> getAll() {
     final selectedCoinDTOs = _selectedCoinDataSource.getAll();
 
     final selectedCoins =
@@ -30,14 +30,14 @@ class SelectedCoinRepository extends _$SelectedCoinRepository
   }
 
   @override
-  Future<void> addSelectedCoin(SelectedCoin selectedCoin) {
+  Future<void> add(SelectedCoin selectedCoin) {
     final selectedCoinDTO = SelectedCoinDTOMapper.fromModel(selectedCoin);
 
     return _selectedCoinDataSource.insert(selectedCoinDTO);
   }
 
   @override
-  Future<void> removeSelectedCoin(SelectedCoin selectedCoin) {
+  Future<void> remove(SelectedCoin selectedCoin) {
     final selectedCoinDTO = SelectedCoinDTOMapper.fromModel(selectedCoin);
 
     return _selectedCoinDataSource.delete(selectedCoinDTO);

@@ -6,15 +6,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'generated/get_selected_coins.g.dart';
 
 @riverpod
-class GetSelectedCoins extends _$GetSelectedCoins {
+class GetSelectedCoinsUseCase extends _$GetSelectedCoinsUseCase {
   late final ISelectedCoinRepository _selectedCoinRepository;
 
   @override
-  GetSelectedCoins build() {
+  GetSelectedCoinsUseCase build() {
     _selectedCoinRepository = ref.watch(selectedCoinRepositoryProvider);
 
     return this;
   }
 
-  List<SelectedCoin> call() => _selectedCoinRepository.getSelectedCoins();
+  List<SelectedCoin> call() => _selectedCoinRepository.getAll();
 }

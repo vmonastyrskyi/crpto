@@ -3,19 +3,19 @@ import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:crpto/shared/domain/repository/i_selected_coin_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/remove_selected_coin.g.dart';
+part 'generated/add_selected_coin.g.dart';
 
 @riverpod
-class RemoveSelectedCoin extends _$RemoveSelectedCoin {
+class AddSelectedCoinUseCase extends _$AddSelectedCoinUseCase {
   late final ISelectedCoinRepository _selectedCoinRepository;
 
   @override
-  RemoveSelectedCoin build() {
+  AddSelectedCoinUseCase build() {
     _selectedCoinRepository = ref.watch(selectedCoinRepositoryProvider);
 
     return this;
   }
 
   Future<void> call(SelectedCoin selectedCoin) =>
-      _selectedCoinRepository.removeSelectedCoin(selectedCoin);
+      _selectedCoinRepository.add(selectedCoin);
 }

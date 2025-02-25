@@ -9,15 +9,15 @@ part of '../listed_coin_dto.dart';
 _$ListedCoinDTOImpl _$$ListedCoinDTOImplFromJson(Map<String, dynamic> json) =>
     _$ListedCoinDTOImpl(
       symbol: json['symbol'] as String,
-      status: json['status'] as String,
       baseAsset: json['baseAsset'] as String,
       quoteAsset: json['quoteAsset'] as String,
+      status: json['status'] as String,
     );
 
 Map<String, dynamic> _$$ListedCoinDTOImplToJson(_$ListedCoinDTOImpl instance) =>
     <String, dynamic>{
       'symbol': instance.symbol,
-      'status': instance.status,
       'baseAsset': instance.baseAsset,
       'quoteAsset': instance.quoteAsset,
+      'status': instance.status,
     };

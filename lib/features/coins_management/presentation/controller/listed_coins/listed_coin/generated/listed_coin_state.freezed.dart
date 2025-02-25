@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ListedCoinState {
   ListedCoin get listedCoin => throw _privateConstructorUsedError;
+  CoinMetadata get metadata => throw _privateConstructorUsedError;
   bool get selected => throw _privateConstructorUsedError;
 
   /// Create a copy of ListedCoinState
@@ -34,9 +35,10 @@ abstract class $ListedCoinStateCopyWith<$Res> {
     $Res Function(ListedCoinState) then,
   ) = _$ListedCoinStateCopyWithImpl<$Res, ListedCoinState>;
   @useResult
-  $Res call({ListedCoin listedCoin, bool selected});
+  $Res call({ListedCoin listedCoin, CoinMetadata metadata, bool selected});
 
   $ListedCoinCopyWith<$Res> get listedCoin;
+  $CoinMetadataCopyWith<$Res> get metadata;
 }
 
 /// @nodoc
@@ -53,7 +55,11 @@ class _$ListedCoinStateCopyWithImpl<$Res, $Val extends ListedCoinState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? listedCoin = null, Object? selected = null}) {
+  $Res call({
+    Object? listedCoin = null,
+    Object? metadata = null,
+    Object? selected = null,
+  }) {
     return _then(
       _value.copyWith(
             listedCoin:
@@ -61,6 +67,11 @@ class _$ListedCoinStateCopyWithImpl<$Res, $Val extends ListedCoinState>
                     ? _value.listedCoin
                     : listedCoin // ignore: cast_nullable_to_non_nullable
                         as ListedCoin,
+            metadata:
+                null == metadata
+                    ? _value.metadata
+                    : metadata // ignore: cast_nullable_to_non_nullable
+                        as CoinMetadata,
             selected:
                 null == selected
                     ? _value.selected
@@ -80,6 +91,16 @@ class _$ListedCoinStateCopyWithImpl<$Res, $Val extends ListedCoinState>
       return _then(_value.copyWith(listedCoin: value) as $Val);
     });
   }
+
+  /// Create a copy of ListedCoinState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CoinMetadataCopyWith<$Res> get metadata {
+    return $CoinMetadataCopyWith<$Res>(_value.metadata, (value) {
+      return _then(_value.copyWith(metadata: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -91,10 +112,12 @@ abstract class _$$ListedCoinStateImplCopyWith<$Res>
   ) = __$$ListedCoinStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ListedCoin listedCoin, bool selected});
+  $Res call({ListedCoin listedCoin, CoinMetadata metadata, bool selected});
 
   @override
   $ListedCoinCopyWith<$Res> get listedCoin;
+  @override
+  $CoinMetadataCopyWith<$Res> get metadata;
 }
 
 /// @nodoc
@@ -110,7 +133,11 @@ class __$$ListedCoinStateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? listedCoin = null, Object? selected = null}) {
+  $Res call({
+    Object? listedCoin = null,
+    Object? metadata = null,
+    Object? selected = null,
+  }) {
     return _then(
       _$ListedCoinStateImpl(
         listedCoin:
@@ -118,6 +145,11 @@ class __$$ListedCoinStateImplCopyWithImpl<$Res>
                 ? _value.listedCoin
                 : listedCoin // ignore: cast_nullable_to_non_nullable
                     as ListedCoin,
+        metadata:
+            null == metadata
+                ? _value.metadata
+                : metadata // ignore: cast_nullable_to_non_nullable
+                    as CoinMetadata,
         selected:
             null == selected
                 ? _value.selected
@@ -133,17 +165,20 @@ class __$$ListedCoinStateImplCopyWithImpl<$Res>
 class _$ListedCoinStateImpl implements _ListedCoinState {
   const _$ListedCoinStateImpl({
     required this.listedCoin,
+    required this.metadata,
     required this.selected,
   });
 
   @override
   final ListedCoin listedCoin;
   @override
+  final CoinMetadata metadata;
+  @override
   final bool selected;
 
   @override
   String toString() {
-    return 'ListedCoinState(listedCoin: $listedCoin, selected: $selected)';
+    return 'ListedCoinState(listedCoin: $listedCoin, metadata: $metadata, selected: $selected)';
   }
 
   @override
@@ -153,12 +188,14 @@ class _$ListedCoinStateImpl implements _ListedCoinState {
             other is _$ListedCoinStateImpl &&
             (identical(other.listedCoin, listedCoin) ||
                 other.listedCoin == listedCoin) &&
+            (identical(other.metadata, metadata) ||
+                other.metadata == metadata) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, listedCoin, selected);
+  int get hashCode => Object.hash(runtimeType, listedCoin, metadata, selected);
 
   /// Create a copy of ListedCoinState
   /// with the given fields replaced by the non-null parameter values.
@@ -175,11 +212,14 @@ class _$ListedCoinStateImpl implements _ListedCoinState {
 abstract class _ListedCoinState implements ListedCoinState {
   const factory _ListedCoinState({
     required final ListedCoin listedCoin,
+    required final CoinMetadata metadata,
     required final bool selected,
   }) = _$ListedCoinStateImpl;
 
   @override
   ListedCoin get listedCoin;
+  @override
+  CoinMetadata get metadata;
   @override
   bool get selected;
 

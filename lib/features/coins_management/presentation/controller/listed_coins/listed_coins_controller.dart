@@ -1,6 +1,6 @@
 import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
-import 'package:crpto/features/coins_management/application/use_case/get_listed_coins_use_case.dart';
+import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,11 +15,11 @@ extension ListedCoinsControllerExtension on WidgetRef {
 
 @Riverpod(keepAlive: true)
 class ListedCoinsController extends _$ListedCoinsController {
-  late final GetListedCoinsUseCase _getListedCoinsUseCase;
+  late final GetListedCoinsUseCase _getListedCoins;
 
   @override
   ListedCoinsState build() {
-    _getListedCoinsUseCase = ref.watch(getListedCoinsUseCaseProvider);
+    _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
 
     return ListedCoinsState.initial();
   }
@@ -34,7 +34,7 @@ class ListedCoinsController extends _$ListedCoinsController {
       searchStatus: ListedCoinsSearchStatus.initial,
     );
 
-    final listedCoins = _lastListedCoins = await _getListedCoinsUseCase();
+    final listedCoins = _lastListedCoins = await _getListedCoins();
 
     state = state.copyWith(
       status: ListedCoinsStatus.loaded,

@@ -18,10 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ListedCoin {
   String get symbol => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
   String get baseAsset => throw _privateConstructorUsedError;
   String get quoteAsset => throw _privateConstructorUsedError;
-  bool get hasIcon => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
 
   /// Create a copy of ListedCoin
   /// with the given fields replaced by the non-null parameter values.
@@ -39,10 +38,9 @@ abstract class $ListedCoinCopyWith<$Res> {
   @useResult
   $Res call({
     String symbol,
-    String status,
     String baseAsset,
     String quoteAsset,
-    bool hasIcon,
+    String status,
   });
 }
 
@@ -62,10 +60,9 @@ class _$ListedCoinCopyWithImpl<$Res, $Val extends ListedCoin>
   @override
   $Res call({
     Object? symbol = null,
-    Object? status = null,
     Object? baseAsset = null,
     Object? quoteAsset = null,
-    Object? hasIcon = null,
+    Object? status = null,
   }) {
     return _then(
       _value.copyWith(
@@ -73,11 +70,6 @@ class _$ListedCoinCopyWithImpl<$Res, $Val extends ListedCoin>
                 null == symbol
                     ? _value.symbol
                     : symbol // ignore: cast_nullable_to_non_nullable
-                        as String,
-            status:
-                null == status
-                    ? _value.status
-                    : status // ignore: cast_nullable_to_non_nullable
                         as String,
             baseAsset:
                 null == baseAsset
@@ -89,11 +81,11 @@ class _$ListedCoinCopyWithImpl<$Res, $Val extends ListedCoin>
                     ? _value.quoteAsset
                     : quoteAsset // ignore: cast_nullable_to_non_nullable
                         as String,
-            hasIcon:
-                null == hasIcon
-                    ? _value.hasIcon
-                    : hasIcon // ignore: cast_nullable_to_non_nullable
-                        as bool,
+            status:
+                null == status
+                    ? _value.status
+                    : status // ignore: cast_nullable_to_non_nullable
+                        as String,
           )
           as $Val,
     );
@@ -111,10 +103,9 @@ abstract class _$$ListedCoinImplCopyWith<$Res>
   @useResult
   $Res call({
     String symbol,
-    String status,
     String baseAsset,
     String quoteAsset,
-    bool hasIcon,
+    String status,
   });
 }
 
@@ -133,10 +124,9 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? symbol = null,
-    Object? status = null,
     Object? baseAsset = null,
     Object? quoteAsset = null,
-    Object? hasIcon = null,
+    Object? status = null,
   }) {
     return _then(
       _$ListedCoinImpl(
@@ -144,11 +134,6 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
             null == symbol
                 ? _value.symbol
                 : symbol // ignore: cast_nullable_to_non_nullable
-                    as String,
-        status:
-            null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
                     as String,
         baseAsset:
             null == baseAsset
@@ -160,11 +145,11 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
                 ? _value.quoteAsset
                 : quoteAsset // ignore: cast_nullable_to_non_nullable
                     as String,
-        hasIcon:
-            null == hasIcon
-                ? _value.hasIcon
-                : hasIcon // ignore: cast_nullable_to_non_nullable
-                    as bool,
+        status:
+            null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                    as String,
       ),
     );
   }
@@ -175,27 +160,23 @@ class __$$ListedCoinImplCopyWithImpl<$Res>
 class _$ListedCoinImpl implements _ListedCoin {
   _$ListedCoinImpl({
     required this.symbol,
-    required this.status,
     required this.baseAsset,
     required this.quoteAsset,
-    this.hasIcon = false,
+    required this.status,
   });
 
   @override
   final String symbol;
   @override
-  final String status;
-  @override
   final String baseAsset;
   @override
   final String quoteAsset;
   @override
-  @JsonKey()
-  final bool hasIcon;
+  final String status;
 
   @override
   String toString() {
-    return 'ListedCoin(symbol: $symbol, status: $status, baseAsset: $baseAsset, quoteAsset: $quoteAsset, hasIcon: $hasIcon)';
+    return 'ListedCoin(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, status: $status)';
   }
 
   @override
@@ -204,17 +185,16 @@ class _$ListedCoinImpl implements _ListedCoin {
         (other.runtimeType == runtimeType &&
             other is _$ListedCoinImpl &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.baseAsset, baseAsset) ||
                 other.baseAsset == baseAsset) &&
             (identical(other.quoteAsset, quoteAsset) ||
                 other.quoteAsset == quoteAsset) &&
-            (identical(other.hasIcon, hasIcon) || other.hasIcon == hasIcon));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, symbol, status, baseAsset, quoteAsset, hasIcon);
+      Object.hash(runtimeType, symbol, baseAsset, quoteAsset, status);
 
   /// Create a copy of ListedCoin
   /// with the given fields replaced by the non-null parameter values.
@@ -228,22 +208,19 @@ class _$ListedCoinImpl implements _ListedCoin {
 abstract class _ListedCoin implements ListedCoin {
   factory _ListedCoin({
     required final String symbol,
-    required final String status,
     required final String baseAsset,
     required final String quoteAsset,
-    final bool hasIcon,
+    required final String status,
   }) = _$ListedCoinImpl;
 
   @override
   String get symbol;
   @override
-  String get status;
-  @override
   String get baseAsset;
   @override
   String get quoteAsset;
   @override
-  bool get hasIcon;
+  String get status;
 
   /// Create a copy of ListedCoin
   /// with the given fields replaced by the non-null parameter values.

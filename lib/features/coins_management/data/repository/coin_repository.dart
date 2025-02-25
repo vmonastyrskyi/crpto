@@ -20,10 +20,10 @@ class CoinRepository extends _$CoinRepository implements ICoinRepository {
 
   @override
   Future<List<ListedCoin>> getListedCoins() async {
-    final response = await _coinDataSource.getExchangeInfo();
+    final exchangeInfo = await _coinDataSource.getExchangeInfo();
 
     final listedCoins =
-        response.listedCoins.map((listedCoin) => listedCoin.toModel()).toList();
+        exchangeInfo.listedCoins.map(ListedCoinDTOMapper.toModel).toList();
 
     return listedCoins;
   }

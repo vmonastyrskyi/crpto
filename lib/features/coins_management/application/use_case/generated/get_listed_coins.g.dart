@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../get_listed_coins_use_case.dart';
+part of '../get_listed_coins.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$getListedCoinsUseCaseHash() =>
-    r'8011c1190ce4493bf2ffb74bb9b8eb70d1eee8e7';
+    r'f1829e1bd6491cdec12442e2225bd7acb8dc326e';
 
 /// See also [GetListedCoinsUseCase].
 @ProviderFor(GetListedCoinsUseCase)

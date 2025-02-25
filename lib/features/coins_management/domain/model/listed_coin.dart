@@ -6,9 +6,8 @@ part 'generated/listed_coin.freezed.dart';
 class ListedCoin with _$ListedCoin {
   factory ListedCoin({
     required String symbol,
-    required String status,
     required String baseAsset,
     required String quoteAsset,
-    @Default(false) bool hasIcon,
+    required String status,
   }) = _ListedCoin;
 }

@@ -24,18 +24,20 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(listedCoinControllerProvider(_listedCoin));
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (_listedCoin.hasIcon)
+          if (state.metadata.hasIcon)
             VectorGraphic(
               width: 40.0,
               height: 40.0,
               loader: AssetBytesLoader(
-                CryptoUtils.getSvgVecPath(_listedCoin.baseAsset),
+                CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
               ),
             ),
           const SizedBox(width: 16.0),
@@ -44,14 +46,14 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  _listedCoin.baseAsset,
+                  state.metadata.baseAsset,
                   style: AppFonts.medium.copyWith(
                     color: AppColors.primaryTextColor,
                     fontSize: 16.0,
                   ),
                 ),
                 Text(
-                  CryptoUtils.getDisplayName(_listedCoin.baseAsset),
+                  state.metadata.displayName,
                   style: AppFonts.regular.copyWith(
                     color: AppColors.secondaryTextColor,
                     fontSize: 14.0,

@@ -1,5 +1,5 @@
 import 'package:crpto/core/data/local/database/database.dart';
-import 'package:crpto/shared/data/source/i_selected_coin_data_source.dart';
+import 'package:crpto/shared/data/source/selected_coin/i_selected_coin_data_source.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/drift_selected_coin_data_source.g.dart';
@@ -11,7 +11,7 @@ class DriftSelectedCoinDataSource extends _$DriftSelectedCoinDataSource
   ISelectedCoinDataSource build() => this;
 
   @override
-  List<SelectedCoinDTO> getAll() => [...crptoDB.selectedCoins.cache];
+  List<SelectedCoinDTO> getAll() => crptoDB.selectedCoins.getAll();
 
   @override
   Future<void> insert(SelectedCoinDTO selectedCoinDTO) =>

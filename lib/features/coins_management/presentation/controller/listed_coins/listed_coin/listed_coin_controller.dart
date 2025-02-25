@@ -1,8 +1,9 @@
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coin/listed_coin_state.dart';
-import 'package:crpto/shared/application/use_case/add_selected_coin.dart';
-import 'package:crpto/shared/application/use_case/get_selected_coins.dart';
-import 'package:crpto/shared/application/use_case/remove_selected_coin.dart';
+import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
+import 'package:crpto/shared/application/use_case/selected_coin/add_selected_coin.dart';
+import 'package:crpto/shared/application/use_case/selected_coin/get_selected_coins.dart';
+import 'package:crpto/shared/application/use_case/selected_coin/remove_selected_coin.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,33 +17,38 @@ extension ListedCoinControllerExtension on WidgetRef {
 
 @riverpod
 class ListedCoinController extends _$ListedCoinController {
-  late final GetSelectedCoins _getSelectedCoins;
-  late final AddSelectedCoin _addSelectedCoin;
-  late final RemoveSelectedCoin _removeSelectedCoin;
+  late final GetCoinMetadataUseCase _getCoinMetadata;
+  late final GetSelectedCoinsUseCase _getSelectedCoins;
+  late final AddSelectedCoinUseCase _addSelectedCoin;
+  late final RemoveSelectedCoinUseCase _removeSelectedCoin;
 
   @override
   ListedCoinState build(ListedCoin listedCoin) {
-    _getSelectedCoins = ref.watch(getSelectedCoinsProvider);
-    _addSelectedCoin = ref.watch(addSelectedCoinProvider);
-    _removeSelectedCoin = ref.watch(removeSelectedCoinProvider);
+    _getCoinMetadata = ref.watch(getCoinMetadataUseCaseProvider);
+    _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
+    _addSelectedCoin = ref.watch(addSelectedCoinUseCaseProvider);
+    _removeSelectedCoin = ref.watch(removeSelectedCoinUseCaseProvider);
+
+    final metadata = _getCoinMetadata.call(listedCoin.symbol);
+
+    final initialState = ListedCoinState.initial(
+      listedCoin: listedCoin,
+      metadata: metadata,
+    );
 
     final selectedCoins = _getSelectedCoins();
 
     if (selectedCoins.any(
       (selectedCoin) => selectedCoin.symbol == listedCoin.symbol,
     )) {
-      return ListedCoinState.initial(listedCoin: listedCoin, selected: true);
+      return initialState.copyWith(selected: true);
     }
 
-    return ListedCoinState.initial(listedCoin: listedCoin);
+    return initialState;
   }
 
   Future<void> select(bool selected) async {
-    final selectedCoin = SelectedCoin(
-      symbol: listedCoin.symbol,
-      baseAsset: listedCoin.baseAsset,
-      quoteAsset: listedCoin.quoteAsset,
-    );
+    final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
 
     !selected
         ? await _removeSelectedCoin(selectedCoin)

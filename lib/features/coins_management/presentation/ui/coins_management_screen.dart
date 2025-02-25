@@ -27,7 +27,6 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _listedCoinsController.loadListedCoins();
     });
@@ -47,7 +46,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
               body: Column(
                 children: <Widget>[
                   _buildSearchBar(),
-                  const Expanded(child: ListedCoinList()),
+                  const ListedCoinList().expanded,
                 ],
               ),
             ),
@@ -63,7 +62,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[Flexible(child: _buildAppBarTitle())],
+        children: <Widget>[_buildAppBarTitle().flexible],
       ),
     );
   }

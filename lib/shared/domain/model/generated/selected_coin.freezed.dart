@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SelectedCoin {
   String get symbol => throw _privateConstructorUsedError;
-  String get baseAsset => throw _privateConstructorUsedError;
-  String get quoteAsset => throw _privateConstructorUsedError;
 
   /// Create a copy of SelectedCoin
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +33,7 @@ abstract class $SelectedCoinCopyWith<$Res> {
     $Res Function(SelectedCoin) then,
   ) = _$SelectedCoinCopyWithImpl<$Res, SelectedCoin>;
   @useResult
-  $Res call({String symbol, String baseAsset, String quoteAsset});
+  $Res call({String symbol});
 }
 
 /// @nodoc
@@ -52,27 +50,13 @@ class _$SelectedCoinCopyWithImpl<$Res, $Val extends SelectedCoin>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? symbol = null,
-    Object? baseAsset = null,
-    Object? quoteAsset = null,
-  }) {
+  $Res call({Object? symbol = null}) {
     return _then(
       _value.copyWith(
             symbol:
                 null == symbol
                     ? _value.symbol
                     : symbol // ignore: cast_nullable_to_non_nullable
-                        as String,
-            baseAsset:
-                null == baseAsset
-                    ? _value.baseAsset
-                    : baseAsset // ignore: cast_nullable_to_non_nullable
-                        as String,
-            quoteAsset:
-                null == quoteAsset
-                    ? _value.quoteAsset
-                    : quoteAsset // ignore: cast_nullable_to_non_nullable
                         as String,
           )
           as $Val,
@@ -89,7 +73,7 @@ abstract class _$$SelectedCoinImplCopyWith<$Res>
   ) = __$$SelectedCoinImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String symbol, String baseAsset, String quoteAsset});
+  $Res call({String symbol});
 }
 
 /// @nodoc
@@ -105,27 +89,13 @@ class __$$SelectedCoinImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? symbol = null,
-    Object? baseAsset = null,
-    Object? quoteAsset = null,
-  }) {
+  $Res call({Object? symbol = null}) {
     return _then(
       _$SelectedCoinImpl(
         symbol:
             null == symbol
                 ? _value.symbol
                 : symbol // ignore: cast_nullable_to_non_nullable
-                    as String,
-        baseAsset:
-            null == baseAsset
-                ? _value.baseAsset
-                : baseAsset // ignore: cast_nullable_to_non_nullable
-                    as String,
-        quoteAsset:
-            null == quoteAsset
-                ? _value.quoteAsset
-                : quoteAsset // ignore: cast_nullable_to_non_nullable
                     as String,
       ),
     );
@@ -135,22 +105,14 @@ class __$$SelectedCoinImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SelectedCoinImpl implements _SelectedCoin {
-  _$SelectedCoinImpl({
-    required this.symbol,
-    required this.baseAsset,
-    required this.quoteAsset,
-  });
+  _$SelectedCoinImpl({required this.symbol});
 
   @override
   final String symbol;
-  @override
-  final String baseAsset;
-  @override
-  final String quoteAsset;
 
   @override
   String toString() {
-    return 'SelectedCoin(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset)';
+    return 'SelectedCoin(symbol: $symbol)';
   }
 
   @override
@@ -158,15 +120,11 @@ class _$SelectedCoinImpl implements _SelectedCoin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SelectedCoinImpl &&
-            (identical(other.symbol, symbol) || other.symbol == symbol) &&
-            (identical(other.baseAsset, baseAsset) ||
-                other.baseAsset == baseAsset) &&
-            (identical(other.quoteAsset, quoteAsset) ||
-                other.quoteAsset == quoteAsset));
+            (identical(other.symbol, symbol) || other.symbol == symbol));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, symbol, baseAsset, quoteAsset);
+  int get hashCode => Object.hash(runtimeType, symbol);
 
   /// Create a copy of SelectedCoin
   /// with the given fields replaced by the non-null parameter values.
@@ -178,18 +136,10 @@ class _$SelectedCoinImpl implements _SelectedCoin {
 }
 
 abstract class _SelectedCoin implements SelectedCoin {
-  factory _SelectedCoin({
-    required final String symbol,
-    required final String baseAsset,
-    required final String quoteAsset,
-  }) = _$SelectedCoinImpl;
+  factory _SelectedCoin({required final String symbol}) = _$SelectedCoinImpl;
 
   @override
   String get symbol;
-  @override
-  String get baseAsset;
-  @override
-  String get quoteAsset;
 
   /// Create a copy of SelectedCoin
   /// with the given fields replaced by the non-null parameter values.
