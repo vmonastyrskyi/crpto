@@ -7,19 +7,17 @@ class SelectedCoins extends Table {
   final Set<SelectedCoinDTO> _cache = {};
 
   late final Column<String> symbol = text()();
-  late final Column<String> baseAsset = text()();
-  late final Column<String> quoteAsset = text()();
 
   @override
   Set<Column<Object>> get primaryKey => {symbol};
-
-  List<SelectedCoinDTO> get cache => List.unmodifiable(_cache);
 
   Future<void> loadCache() async {
     _cache
       ..clear()
       ..addAll(await crptoDB.selectedCoins.select().get());
   }
+
+  List<SelectedCoinDTO> getAll() => [..._cache];
 
   Future<void> insert(SelectedCoinDTO selectedCoinDTO) {
     _cache.add(selectedCoinDTO);
@@ -38,18 +36,10 @@ class SelectedCoins extends Table {
 
 extension SelectedCoinDTOMapper on SelectedCoinDTO {
   static SelectedCoinDTO fromModel(SelectedCoin selectedCoin) {
-    return SelectedCoinDTO(
-      symbol: selectedCoin.symbol,
-      baseAsset: selectedCoin.baseAsset,
-      quoteAsset: selectedCoin.quoteAsset,
-    );
+    return SelectedCoinDTO(symbol: selectedCoin.symbol);
   }
 
   static SelectedCoin toModel(SelectedCoinDTO selectedCoinDTO) {
-    return SelectedCoin(
-      symbol: selectedCoinDTO.symbol,
-      baseAsset: selectedCoinDTO.baseAsset,
-      quoteAsset: selectedCoinDTO.quoteAsset,
-    );
+    return SelectedCoin(symbol: selectedCoinDTO.symbol);
   }
 }
