@@ -5,15 +5,9 @@ import 'package:crpto/shared/application/use_case/selected_coin/add_selected_coi
 import 'package:crpto/shared/application/use_case/selected_coin/get_selected_coins.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/remove_selected_coin.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/listed_coin_controller.g.dart';
-
-extension ListedCoinControllerExtension on WidgetRef {
-  ListedCoinController listedCoinController(ListedCoin listedCoin) =>
-      read(listedCoinControllerProvider(listedCoin).notifier);
-}
 
 @riverpod
 class ListedCoinController extends _$ListedCoinController {

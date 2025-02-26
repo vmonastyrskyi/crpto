@@ -23,4 +23,7 @@ abstract final class AppColors {
   static const Color switchTrackOutlineColor = transparent;
 
   static const Color loaderColor = primaryTextColor;
+
+  static const Color positivePriceColor = Color(0xFF3BBD81);
+  static const Color negativePriceColor = Color(0xFFFF5B5B);
 }

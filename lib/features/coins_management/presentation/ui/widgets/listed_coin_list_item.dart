@@ -17,14 +17,15 @@ class ListedCoinListItem extends ConsumerStatefulWidget {
 }
 
 class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
-  ListedCoinController get _listedCoinController =>
-      ref.listedCoinController(widget.listedCoin);
+  ListedCoinControllerProvider get _listedCoinControllerProvider =>
+      listedCoinControllerProvider(widget.listedCoin);
 
-  ListedCoin get _listedCoin => widget.listedCoin;
+  ListedCoinController get _listedCoinController =>
+      ref.read(_listedCoinControllerProvider.notifier);
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(listedCoinControllerProvider(_listedCoin));
+    final state = ref.watch(_listedCoinControllerProvider);
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -54,7 +55,7 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
                 ),
                 Text(
                   state.metadata.displayName,
-                  style: AppFonts.regular.copyWith(
+                  style: AppFonts.medium.copyWith(
                     color: AppColors.secondaryTextColor,
                     fontSize: 14.0,
                   ),
@@ -70,9 +71,7 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
 
   Widget _buildSwitcher() {
     final selected = ref.watch(
-      listedCoinControllerProvider(
-        _listedCoin,
-      ).select((state) => state.selected),
+      _listedCoinControllerProvider.select((state) => state.selected),
     );
 
     return Switch(
