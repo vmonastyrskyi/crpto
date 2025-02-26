@@ -6,4 +6,6 @@ abstract interface class ISelectedCoinDataSource {
   Future<void> insert(SelectedCoinDTO selectedCoinDTO);
 
   Future<void> delete(SelectedCoinDTO selectedCoinDTO);
+
+  Stream<List<SelectedCoinDTO>> watch();
 }

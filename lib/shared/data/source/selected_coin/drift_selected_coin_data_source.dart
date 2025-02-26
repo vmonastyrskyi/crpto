@@ -20,4 +20,7 @@ class DriftSelectedCoinDataSource extends _$DriftSelectedCoinDataSource
   @override
   Future<void> delete(SelectedCoinDTO selectedCoinDTO) =>
       crptoDB.selectedCoins.delete(selectedCoinDTO);
+
+  @override
+  Stream<List<SelectedCoinDTO>> watch() => crptoDB.selectedCoins.watch();
 }

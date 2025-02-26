@@ -22,7 +22,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
   ListedCoinsController get _listedCoinsController =>
-      ref.listedCoinsController();
+      ref.read(listedCoinsControllerProvider.notifier);
 
   @override
   void initState() {

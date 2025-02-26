@@ -3,7 +3,6 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/coins_exchange_controller.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,17 +18,6 @@ class CoinsExchangeScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
-  CoinsExchangeController get _coinsExchangeController =>
-      ref.coinsExchangeController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _coinsExchangeController.loadCoinsExchangeStats();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(

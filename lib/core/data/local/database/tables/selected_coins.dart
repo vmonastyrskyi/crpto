@@ -32,6 +32,10 @@ class SelectedCoins extends Table {
       (e) => e.symbol.equals(selectedCoinDTO.symbol),
     );
   }
+
+  Stream<List<SelectedCoinDTO>> watch() {
+    return crptoDB.selectedCoins.select().watch();
+  }
 }
 
 extension SelectedCoinDTOMapper on SelectedCoinDTO {

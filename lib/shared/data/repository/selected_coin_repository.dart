@@ -42,4 +42,11 @@ class SelectedCoinRepository extends _$SelectedCoinRepository
 
     return _selectedCoinDataSource.delete(selectedCoinDTO);
   }
+
+  @override
+  Stream<List<SelectedCoin>> listen() {
+    return _selectedCoinDataSource.watch().map((selectedCoinDTOs) {
+      return [...selectedCoinDTOs.map(SelectedCoinDTOMapper.toModel)];
+    });
+  }
 }

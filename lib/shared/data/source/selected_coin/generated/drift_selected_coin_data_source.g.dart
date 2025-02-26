@@ -7,7 +7,7 @@ part of '../drift_selected_coin_data_source.dart';
 // **************************************************************************
 
 String _$driftSelectedCoinDataSourceHash() =>
-    r'66ecc7fb7b882a963b973d7550c7ffd500336842';
+    r'ede4b344416725c15030104e1b96de1436652a74';
 
 /// See also [DriftSelectedCoinDataSource].
 @ProviderFor(DriftSelectedCoinDataSource)

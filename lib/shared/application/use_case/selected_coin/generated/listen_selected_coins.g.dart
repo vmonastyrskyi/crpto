@@ -1,30 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../selected_coin_repository.dart';
+part of '../listen_selected_coins.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedCoinRepositoryHash() =>
-    r'667943964e4b879e3467cc79e0c05e0d64c71cb2';
+String _$listenSelectedCoinsUseCaseHash() =>
+    r'55b0af0d7bfc3273c8cc696be70995754e4dd010';
 
-/// See also [SelectedCoinRepository].
-@ProviderFor(SelectedCoinRepository)
-final selectedCoinRepositoryProvider = AutoDisposeNotifierProvider<
-  SelectedCoinRepository,
-  ISelectedCoinRepository
+/// See also [ListenSelectedCoinsUseCase].
+@ProviderFor(ListenSelectedCoinsUseCase)
+final listenSelectedCoinsUseCaseProvider = AutoDisposeNotifierProvider<
+  ListenSelectedCoinsUseCase,
+  ListenSelectedCoinsUseCase
 >.internal(
-  SelectedCoinRepository.new,
-  name: r'selectedCoinRepositoryProvider',
+  ListenSelectedCoinsUseCase.new,
+  name: r'listenSelectedCoinsUseCaseProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$selectedCoinRepositoryHash,
+          : _$listenSelectedCoinsUseCaseHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedCoinRepository = AutoDisposeNotifier<ISelectedCoinRepository>;
+typedef _$ListenSelectedCoinsUseCase =
+    AutoDisposeNotifier<ListenSelectedCoinsUseCase>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

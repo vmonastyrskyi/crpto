@@ -7,7 +7,7 @@ part of '../coins_exchange_controller.dart';
 // **************************************************************************
 
 String _$coinsExchangeControllerHash() =>
-    r'f6cd7a369ed1524179366700aa44a269f8d2dbe9';
+    r'4f62dbcd4c4396c6e55fb6e151288efc40e06b05';
 
 /// See also [CoinsExchangeController].
 @ProviderFor(CoinsExchangeController)

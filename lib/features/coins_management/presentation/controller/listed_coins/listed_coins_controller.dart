@@ -3,15 +3,9 @@ import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_state.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/listed_coins_controller.g.dart';
-
-extension ListedCoinsControllerExtension on WidgetRef {
-  ListedCoinsController listedCoinsController() =>
-      read(listedCoinsControllerProvider.notifier);
-}
 
 @Riverpod(keepAlive: true)
 class ListedCoinsController extends _$ListedCoinsController {

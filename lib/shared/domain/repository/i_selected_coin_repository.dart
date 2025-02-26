@@ -6,4 +6,6 @@ abstract interface class ISelectedCoinRepository {
   Future<void> add(SelectedCoin selectedCoin);
 
   Future<void> remove(SelectedCoin selectedCoin);
+
+  Stream<List<SelectedCoin>> listen();
 }

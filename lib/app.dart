@@ -64,16 +64,17 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 }
 
 class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
+  ListedCoinsController get _listedCoinsController =>
+      ref.read(listedCoinsControllerProvider.notifier);
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.listedCoinsController().loadListedCoins();
+      _listedCoinsController.loadListedCoins();
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
+  Widget build(BuildContext context) => widget.child;
 }
