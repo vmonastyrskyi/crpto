@@ -1,4 +1,5 @@
 import 'package:crpto/core/utils/crypto_utils.dart';
+import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
@@ -9,11 +10,15 @@ part 'generated/listed_coins_controller.g.dart';
 
 @Riverpod(keepAlive: true)
 class ListedCoinsController extends _$ListedCoinsController {
+  final Debounce _searchListedCoinsDebounce = Debounce();
+
   late final GetListedCoinsUseCase _getListedCoins;
 
   @override
   ListedCoinsState build() {
     _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
+
+    ref.onDispose(() => _searchListedCoinsDebounce.cancel());
 
     return ListedCoinsState.initial();
   }
@@ -37,32 +42,36 @@ class ListedCoinsController extends _$ListedCoinsController {
   }
 
   void searchListedCoins(String searchValue) {
-    if (searchValue.isNotEmpty) {
-      if (searchValue == _lastSearchValue) return;
+    _searchListedCoinsDebounce(() {
+      final modifiedSearchValue = searchValue.trim();
 
-      state = state.copyWith(searchStatus: ListedCoinsSearchStatus.loading);
+      if (modifiedSearchValue.isNotEmpty) {
+        if (modifiedSearchValue == _lastSearchValue) return;
 
-      final searchedListedCoins =
-          _lastListedCoins.where((listedCoin) {
-            final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
-            final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
-            final searchRegExp = RegExp(searchValue, caseSensitive: false);
+        state = state.copyWith(searchStatus: ListedCoinsSearchStatus.loading);
 
-            return searchRegExp.hasMatch(coinBaseAsset) ||
-                searchRegExp.hasMatch(coinDisplayName);
-          }).toList();
+        final searchedListedCoins =
+            _lastListedCoins.where((listedCoin) {
+              final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
+              final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
+              final searchRegExp = RegExp(modifiedSearchValue, caseSensitive: false);
 
-      state = state.copyWith(
-        searchStatus: ListedCoinsSearchStatus.searched,
-        listedCoins: searchedListedCoins,
-      );
-    } else {
-      state = state.copyWith(
-        status: ListedCoinsStatus.loaded,
-        listedCoins: _lastListedCoins,
-      );
-    }
+              return searchRegExp.hasMatch(coinBaseAsset) ||
+                  searchRegExp.hasMatch(coinDisplayName);
+            }).toList();
 
-    _lastSearchValue = searchValue;
+        state = state.copyWith(
+          searchStatus: ListedCoinsSearchStatus.searched,
+          listedCoins: searchedListedCoins,
+        );
+      } else {
+        state = state.copyWith(
+          status: ListedCoinsStatus.loaded,
+          listedCoins: _lastListedCoins,
+        );
+      }
+
+      _lastSearchValue = modifiedSearchValue;
+    }, const Duration(milliseconds: 250));
   }
 }

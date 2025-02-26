@@ -1,6 +1,5 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/search_bar.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
@@ -19,8 +18,6 @@ class CoinsManagementScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
-  final Debounce _searchListedCoinsDebounce = Debounce();
-
   ListedCoinsController get _listedCoinsController =>
       ref.read(listedCoinsControllerProvider.notifier);
 
@@ -93,12 +90,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   Widget _buildSearchBar() {
     return CrptoSearchBar(
       hintText: 'Search',
-      onChanged: (searchValue) {
-        _searchListedCoinsDebounce(
-          () => _listedCoinsController.searchListedCoins(searchValue.trim()),
-          const Duration(milliseconds: 250),
-        );
-      },
+      onChanged: _listedCoinsController.searchListedCoins,
     ).withPaddingAll(16.0);
   }
 }

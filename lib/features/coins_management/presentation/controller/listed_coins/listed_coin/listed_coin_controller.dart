@@ -1,3 +1,4 @@
+import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coin/listed_coin_state.dart';
 import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
@@ -11,6 +12,8 @@ part 'generated/listed_coin_controller.g.dart';
 
 @riverpod
 class ListedCoinController extends _$ListedCoinController {
+  final Debounce _selectListedCoinDebounce = Debounce();
+
   late final GetCoinMetadataUseCase _getCoinMetadata;
   late final GetSelectedCoinsUseCase _getSelectedCoins;
   late final AddSelectedCoinUseCase _addSelectedCoin;
@@ -22,6 +25,8 @@ class ListedCoinController extends _$ListedCoinController {
     _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
     _addSelectedCoin = ref.watch(addSelectedCoinUseCaseProvider);
     _removeSelectedCoin = ref.watch(removeSelectedCoinUseCaseProvider);
+
+    ref.onDispose(() => _selectListedCoinDebounce.cancel());
 
     final metadata = _getCoinMetadata.call(listedCoin.symbol);
 
@@ -41,12 +46,14 @@ class ListedCoinController extends _$ListedCoinController {
     return initialState;
   }
 
-  Future<void> select(bool selected) async {
-    final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
+  void select(bool selected) {
+    _selectListedCoinDebounce(() {
+      final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
 
-    !selected
-        ? await _removeSelectedCoin(selectedCoin)
-        : await _addSelectedCoin(selectedCoin);
+      !selected
+          ? _removeSelectedCoin(selectedCoin)
+          : _addSelectedCoin(selectedCoin);
+    }, const Duration(milliseconds: 250));
 
     state = state.copyWith(selected: selected);
   }
