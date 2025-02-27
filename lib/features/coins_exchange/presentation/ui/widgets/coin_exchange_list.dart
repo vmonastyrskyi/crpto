@@ -5,14 +5,23 @@ import 'package:crpto/features/coins_exchange/domain/model/coin_exchange_stats.d
 import 'package:crpto/features/coins_exchange/presentation/controller/coins_exchange_controller.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coins_exchange_state.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_list_item.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CoinExchangeList extends ConsumerWidget {
+class CoinExchangeList extends ConsumerStatefulWidget {
   const CoinExchangeList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CoinExchangeList> createState() => _CoinExchangeListState();
+}
+
+class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
+  CoinsExchangeController get _coinsExchangeController =>
+      ref.read(coinsExchangeControllerProvider.notifier);
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(coinsExchangeControllerProvider);
 
     return switch (state) {
@@ -30,7 +39,7 @@ class CoinExchangeList extends ConsumerWidget {
           when status == CoinsExchangeStatus.loaded ||
               coinsExchangeStats.isNotEmpty =>
         _buildCoinExchangeList(coinsExchangeStats),
-      _ => _buildNoListedCoinsFoundWarning(),
+      _ => _buildNoCoinsSelectedWarning(),
     };
   }
 
@@ -43,28 +52,32 @@ class CoinExchangeList extends ConsumerWidget {
     );
   }
 
-  Widget _buildCoinExchangeList(
-    List<CoinExchangeStats> coinsExchangeStats,
-  ) {
-    return ListView.builder(
-      itemBuilder: (_, index) {
-        final coinExchangeStats = coinsExchangeStats[index];
+  Widget _buildCoinExchangeList(List<CoinExchangeStats> coinsExchangeStats) {
+    return CustomMaterialIndicator(
+      displacement: 16.0,
+      color: AppColors.bodyBackgroundColor,
+      backgroundColor: AppColors.primaryTextColor,
+      onRefresh: _coinsExchangeController.loadCoinsExchangeStats,
+      child: ListView.builder(
+        itemBuilder: (_, index) {
+          final coinExchangeStats = coinsExchangeStats[index];
 
-        return KeepAliveChild(
-          child: CoinExchangeListItem(
-            key: ObjectKey(coinExchangeStats),
-            coinExchangeStats: coinExchangeStats,
-          ),
-        );
-      },
-      itemCount: coinsExchangeStats.length,
+          return KeepAliveChild(
+            child: CoinExchangeListItem(
+              key: ObjectKey(coinExchangeStats),
+              coinExchangeStats: coinExchangeStats,
+            ),
+          );
+        },
+        itemCount: coinsExchangeStats.length,
+      ),
     );
   }
 
-  Widget _buildNoListedCoinsFoundWarning() {
+  Widget _buildNoCoinsSelectedWarning() {
     return Center(
       child: Text(
-        'No listed coins found',
+        'No coins selected yet',
         style: AppFonts.regular.copyWith(
           color: AppColors.secondaryTextColor,
           fontSize: 14.0,

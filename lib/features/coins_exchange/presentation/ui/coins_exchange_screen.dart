@@ -31,13 +31,13 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
               appBar: _buildAppBar(),
               body: Column(
                 children: <Widget>[
+                  const CoinExchangeList().expanded,
                   ElevatedButton(
                     onPressed: () {
                       context.pushNamed(RouteNames.coinsManagement);
                     },
                     child: const Text('Go to Coins Screen'),
                   ),
-                  const CoinExchangeList().expanded,
                 ],
               ),
             ),
@@ -52,10 +52,13 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
       preferredSize: const Size.fromHeight(double.maxFinite),
       child: SizedBox.fromSize(
         size: const Size.fromHeight(56.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[_buildAppBarTitle().expanded],
+        child: Container(
+          color: AppColors.bodyBackgroundColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[_buildAppBarTitle().expanded],
+          ),
         ),
       ),
     );
