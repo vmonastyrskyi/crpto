@@ -30,15 +30,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
             child: Scaffold(
               appBar: _buildAppBar(),
               body: Column(
-                children: <Widget>[
-                  const CoinExchangeList().expanded,
-                  ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed(RouteNames.coinsManagement);
-                    },
-                    child: const Text('Go to Coins Screen'),
-                  ),
-                ],
+                children: <Widget>[const CoinExchangeList().expanded()],
               ),
             ),
           ),
@@ -54,10 +46,12 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
         size: const Size.fromHeight(56.0),
         child: Container(
           color: AppColors.bodyBackgroundColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[_buildAppBarTitle().expanded],
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Center(child: _buildAppBarTitle()),
+              Positioned(right: 0.0, child: _buildManageCoinsButton()),
+            ],
           ),
         ),
       ),
@@ -65,18 +59,35 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
   }
 
   Widget _buildAppBarTitle() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'crpto',
-          style: AppFonts.bold.copyWith(
-            color: AppColors.primaryTextColor,
-            fontSize: 20.0,
-          ),
+    return Center(
+      child: RichText(
+        text: TextSpan(
+          children: <InlineSpan>[
+            TextSpan(
+              text: 'crp',
+              style: AppFonts.bold.copyWith(
+                color: AppColors.primaryTextColor,
+                fontSize: 20.0,
+              ),
+            ),
+            TextSpan(
+              text: 'to',
+              style: AppFonts.bold.copyWith(
+                color: AppColors.primaryColor,
+                fontSize: 20.0,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildManageCoinsButton() {
+    return IconButton(
+      onPressed: () => context.pushNamed(RouteNames.coinsManagement),
+      icon: const Icon(Icons.settings),
+      color: AppColors.iconColor,
     );
   }
 }

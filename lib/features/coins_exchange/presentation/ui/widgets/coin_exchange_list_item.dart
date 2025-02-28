@@ -1,6 +1,7 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/crypto_utils.dart';
+import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/domain/model/coin_exchange_stats.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange/coin_exchange_controller.dart';
@@ -59,7 +60,7 @@ class _CoinExchangeListItemState extends ConsumerState<CoinExchangeListItem> {
                 ),
               ),
             ],
-          ).expanded,
+          ).expanded(),
           const SizedBox(width: 16.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -73,7 +74,7 @@ class _CoinExchangeListItemState extends ConsumerState<CoinExchangeListItem> {
   Widget _buildLastPrice() {
     final state = ref.watch(_coinExchangeControllerProvider);
 
-    final lastPrice = state.exchangeStats.lastPrice.toStringAsFixed(2);
+    final lastPrice = StringX.formatCurrency(state.exchangeStats.lastPrice);
 
     return Text(
       '\$$lastPrice',

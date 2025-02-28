@@ -43,7 +43,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
               body: Column(
                 children: <Widget>[
                   _buildSearchBar(),
-                  const ListedCoinList().expanded,
+                  const ListedCoinList().expanded(),
                 ],
               ),
             ),
@@ -59,7 +59,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[_buildAppBarTitle().flexible],
+        children: <Widget>[_buildAppBarTitle().flexible()],
       ),
     );
   }

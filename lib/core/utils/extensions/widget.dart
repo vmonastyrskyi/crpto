@@ -126,7 +126,7 @@ extension WidgetExtenstion on Widget {
         );
   }
 
-  Widget get flexible => Flexible(child: this);
+  Widget flexible({int flex = 1}) => Flexible(flex: flex, child: this);
 
-  Widget get expanded => Expanded(child: this);
+  Widget expanded({int flex = 1}) => Expanded(flex: flex, child: this);
 }
