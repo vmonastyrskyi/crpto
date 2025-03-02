@@ -5,13 +5,27 @@ part 'generated/listed_coin_dto.freezed.dart';
 part 'generated/listed_coin_dto.g.dart';
 
 @freezed
+@JsonSerializable(createToJson: false)
 class ListedCoinDTO with _$ListedCoinDTO {
-  factory ListedCoinDTO({
-    @JsonKey(name: 'symbol') required String symbol,
-    @JsonKey(name: 'baseAsset') required String baseAsset,
-    @JsonKey(name: 'quoteAsset') required String quoteAsset,
-    @JsonKey(name: 'status') required String status,
-  }) = _ListedCoinDTO;
+  const ListedCoinDTO({
+    required this.symbol,
+    required this.baseAsset,
+    required this.quoteAsset,
+    required this.status,
+  });
+
+  @override
+  @JsonKey(name: 'symbol')
+  final String symbol;
+  @override
+  @JsonKey(name: 'baseAsset')
+  final String baseAsset;
+  @override
+  @JsonKey(name: 'quoteAsset')
+  final String quoteAsset;
+  @override
+  @JsonKey(name: 'status')
+  final String status;
 
   factory ListedCoinDTO.fromJson(Map<String, dynamic> json) =>
       _$ListedCoinDTOFromJson(json);

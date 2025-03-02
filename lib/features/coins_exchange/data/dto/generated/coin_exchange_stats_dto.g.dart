@@ -6,30 +6,16 @@ part of '../coin_exchange_stats_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CoinExchangeStatsDTOImpl _$$CoinExchangeStatsDTOImplFromJson(
+CoinExchangeStatsDTO _$CoinExchangeStatsDTOFromJson(
   Map<String, dynamic> json,
-) => _$CoinExchangeStatsDTOImpl(
+) => CoinExchangeStatsDTO(
   symbol: json['symbol'] as String,
-  priceChange: json['priceChange'] as String,
-  priceChangePercent: json['priceChangePercent'] as String,
-  lastPrice: json['lastPrice'] as String,
-  openPrice: json['openPrice'] as String,
-  highPrice: json['highPrice'] as String,
-  lowPrice: json['lowPrice'] as String,
+  priceChange: json['price_change'] as String,
+  priceChangePercent: json['price_change_percent'] as String,
+  lastPrice: json['last_price'] as String,
+  openPrice: json['open_price'] as String,
+  highPrice: json['high_price'] as String,
+  lowPrice: json['low_price'] as String,
   volume: json['volume'] as String,
-  quoteVolume: json['quoteVolume'] as String,
+  quoteVolume: json['quote_volume'] as String,
 );
-
-Map<String, dynamic> _$$CoinExchangeStatsDTOImplToJson(
-  _$CoinExchangeStatsDTOImpl instance,
-) => <String, dynamic>{
-  'symbol': instance.symbol,
-  'priceChange': instance.priceChange,
-  'priceChangePercent': instance.priceChangePercent,
-  'lastPrice': instance.lastPrice,
-  'openPrice': instance.openPrice,
-  'highPrice': instance.highPrice,
-  'lowPrice': instance.lowPrice,
-  'volume': instance.volume,
-  'quoteVolume': instance.quoteVolume,
-};

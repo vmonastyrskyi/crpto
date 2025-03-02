@@ -6,16 +6,18 @@ part 'generated/coin_exchange_state.freezed.dart';
 
 @freezed
 class CoinExchangeState with _$CoinExchangeState {
-  const factory CoinExchangeState({
-    required CoinExchangeStats exchangeStats,
-    required CoinMetadata metadata,
-  }) = _CoinExchangeState;
+  const CoinExchangeState._({
+    required this.exchangeStats,
+    required this.metadata,
+  });
 
-  factory CoinExchangeState.initial({
+  const CoinExchangeState.initial({
     required CoinExchangeStats exchangeStats,
     required CoinMetadata metadata,
-  }) => CoinExchangeState(
-    exchangeStats: exchangeStats,
-    metadata: metadata,
-  );
+  }) : this._(exchangeStats: exchangeStats, metadata: metadata);
+
+  @override
+  final CoinExchangeStats exchangeStats;
+  @override
+  final CoinMetadata metadata;
 }

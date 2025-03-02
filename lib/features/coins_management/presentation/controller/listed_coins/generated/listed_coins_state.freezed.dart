@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,216 +10,69 @@ part of '../listed_coins_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$ListedCoinsState {
-  ListedCoinsStatus get status => throw _privateConstructorUsedError;
-  ListedCoinsSearchStatus get searchStatus =>
-      throw _privateConstructorUsedError;
-  List<ListedCoin> get listedCoins => throw _privateConstructorUsedError;
 
-  /// Create a copy of ListedCoinsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ListedCoinsStateCopyWith<ListedCoinsState> get copyWith =>
-      throw _privateConstructorUsedError;
+ ListedCoinsStatus get status; ListedCoinsSearchStatus get searchStatus; List<ListedCoin> get listedCoins;
+/// Create a copy of ListedCoinsState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ListedCoinsStateCopyWith<ListedCoinsState> get copyWith => _$ListedCoinsStateCopyWithImpl<ListedCoinsState>(this as ListedCoinsState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinsState&&(identical(other.status, status) || other.status == status)&&(identical(other.searchStatus, searchStatus) || other.searchStatus == searchStatus)&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,status,searchStatus,const DeepCollectionEquality().hash(listedCoins));
+
+@override
+String toString() {
+  return 'ListedCoinsState(status: $status, searchStatus: $searchStatus, listedCoins: $listedCoins)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ListedCoinsStateCopyWith<$Res> {
-  factory $ListedCoinsStateCopyWith(
-    ListedCoinsState value,
-    $Res Function(ListedCoinsState) then,
-  ) = _$ListedCoinsStateCopyWithImpl<$Res, ListedCoinsState>;
-  @useResult
-  $Res call({
-    ListedCoinsStatus status,
-    ListedCoinsSearchStatus searchStatus,
-    List<ListedCoin> listedCoins,
-  });
-}
+abstract mixin class $ListedCoinsStateCopyWith<$Res>  {
+  factory $ListedCoinsStateCopyWith(ListedCoinsState value, $Res Function(ListedCoinsState) _then) = _$ListedCoinsStateCopyWithImpl;
+@useResult
+$Res call({
+ ListedCoinsStatus status, ListedCoinsSearchStatus searchStatus, List<ListedCoin> listedCoins
+});
 
+
+
+
+}
 /// @nodoc
-class _$ListedCoinsStateCopyWithImpl<$Res, $Val extends ListedCoinsState>
+class _$ListedCoinsStateCopyWithImpl<$Res>
     implements $ListedCoinsStateCopyWith<$Res> {
-  _$ListedCoinsStateCopyWithImpl(this._value, this._then);
+  _$ListedCoinsStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ListedCoinsState _self;
+  final $Res Function(ListedCoinsState) _then;
 
-  /// Create a copy of ListedCoinsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? searchStatus = null,
-    Object? listedCoins = null,
-  }) {
-    return _then(
-      _value.copyWith(
-            status:
-                null == status
-                    ? _value.status
-                    : status // ignore: cast_nullable_to_non_nullable
-                        as ListedCoinsStatus,
-            searchStatus:
-                null == searchStatus
-                    ? _value.searchStatus
-                    : searchStatus // ignore: cast_nullable_to_non_nullable
-                        as ListedCoinsSearchStatus,
-            listedCoins:
-                null == listedCoins
-                    ? _value.listedCoins
-                    : listedCoins // ignore: cast_nullable_to_non_nullable
-                        as List<ListedCoin>,
-          )
-          as $Val,
-    );
-  }
+/// Create a copy of ListedCoinsState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? searchStatus = null,Object? listedCoins = null,}) {
+  return _then(ListedCoinsState._(
+status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as ListedCoinsStatus,searchStatus: null == searchStatus ? _self.searchStatus : searchStatus // ignore: cast_nullable_to_non_nullable
+as ListedCoinsSearchStatus,listedCoins: null == listedCoins ? _self.listedCoins : listedCoins // ignore: cast_nullable_to_non_nullable
+as List<ListedCoin>,
+  ));
 }
 
-/// @nodoc
-abstract class _$$ListedCoinsStateImplCopyWith<$Res>
-    implements $ListedCoinsStateCopyWith<$Res> {
-  factory _$$ListedCoinsStateImplCopyWith(
-    _$ListedCoinsStateImpl value,
-    $Res Function(_$ListedCoinsStateImpl) then,
-  ) = __$$ListedCoinsStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({
-    ListedCoinsStatus status,
-    ListedCoinsSearchStatus searchStatus,
-    List<ListedCoin> listedCoins,
-  });
 }
 
-/// @nodoc
-class __$$ListedCoinsStateImplCopyWithImpl<$Res>
-    extends _$ListedCoinsStateCopyWithImpl<$Res, _$ListedCoinsStateImpl>
-    implements _$$ListedCoinsStateImplCopyWith<$Res> {
-  __$$ListedCoinsStateImplCopyWithImpl(
-    _$ListedCoinsStateImpl _value,
-    $Res Function(_$ListedCoinsStateImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of ListedCoinsState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? status = null,
-    Object? searchStatus = null,
-    Object? listedCoins = null,
-  }) {
-    return _then(
-      _$ListedCoinsStateImpl(
-        status:
-            null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                    as ListedCoinsStatus,
-        searchStatus:
-            null == searchStatus
-                ? _value.searchStatus
-                : searchStatus // ignore: cast_nullable_to_non_nullable
-                    as ListedCoinsSearchStatus,
-        listedCoins:
-            null == listedCoins
-                ? _value._listedCoins
-                : listedCoins // ignore: cast_nullable_to_non_nullable
-                    as List<ListedCoin>,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$ListedCoinsStateImpl implements _ListedCoinsState {
-  const _$ListedCoinsStateImpl({
-    required this.status,
-    required this.searchStatus,
-    required final List<ListedCoin> listedCoins,
-  }) : _listedCoins = listedCoins;
-
-  @override
-  final ListedCoinsStatus status;
-  @override
-  final ListedCoinsSearchStatus searchStatus;
-  final List<ListedCoin> _listedCoins;
-  @override
-  List<ListedCoin> get listedCoins {
-    if (_listedCoins is EqualUnmodifiableListView) return _listedCoins;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listedCoins);
-  }
-
-  @override
-  String toString() {
-    return 'ListedCoinsState(status: $status, searchStatus: $searchStatus, listedCoins: $listedCoins)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ListedCoinsStateImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.searchStatus, searchStatus) ||
-                other.searchStatus == searchStatus) &&
-            const DeepCollectionEquality().equals(
-              other._listedCoins,
-              _listedCoins,
-            ));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    status,
-    searchStatus,
-    const DeepCollectionEquality().hash(_listedCoins),
-  );
-
-  /// Create a copy of ListedCoinsState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ListedCoinsStateImplCopyWith<_$ListedCoinsStateImpl> get copyWith =>
-      __$$ListedCoinsStateImplCopyWithImpl<_$ListedCoinsStateImpl>(
-        this,
-        _$identity,
-      );
-}
-
-abstract class _ListedCoinsState implements ListedCoinsState {
-  const factory _ListedCoinsState({
-    required final ListedCoinsStatus status,
-    required final ListedCoinsSearchStatus searchStatus,
-    required final List<ListedCoin> listedCoins,
-  }) = _$ListedCoinsStateImpl;
-
-  @override
-  ListedCoinsStatus get status;
-  @override
-  ListedCoinsSearchStatus get searchStatus;
-  @override
-  List<ListedCoin> get listedCoins;
-
-  /// Create a copy of ListedCoinsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ListedCoinsStateImplCopyWith<_$ListedCoinsStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

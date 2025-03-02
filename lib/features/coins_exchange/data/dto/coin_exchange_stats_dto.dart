@@ -5,18 +5,38 @@ part 'generated/coin_exchange_stats_dto.freezed.dart';
 part 'generated/coin_exchange_stats_dto.g.dart';
 
 @freezed
+@JsonSerializable(createToJson: false)
 class CoinExchangeStatsDTO with _$CoinExchangeStatsDTO {
-  factory CoinExchangeStatsDTO({
-    @JsonKey(name: 'symbol') required String symbol,
-    @JsonKey(name: 'priceChange') required String priceChange,
-    @JsonKey(name: 'priceChangePercent') required String priceChangePercent,
-    @JsonKey(name: 'lastPrice') required String lastPrice,
-    @JsonKey(name: 'openPrice') required String openPrice,
-    @JsonKey(name: 'highPrice') required String highPrice,
-    @JsonKey(name: 'lowPrice') required String lowPrice,
-    @JsonKey(name: 'volume') required String volume,
-    @JsonKey(name: 'quoteVolume') required String quoteVolume,
-  }) = _CoinExchangeStatsDTO;
+  const CoinExchangeStatsDTO({
+    required this.symbol,
+    required this.priceChange,
+    required this.priceChangePercent,
+    required this.lastPrice,
+    required this.openPrice,
+    required this.highPrice,
+    required this.lowPrice,
+    required this.volume,
+    required this.quoteVolume,
+  });
+
+  @override
+  final String symbol;
+  @override
+  final String priceChange;
+  @override
+  final String priceChangePercent;
+  @override
+  final String lastPrice;
+  @override
+  final String openPrice;
+  @override
+  final String highPrice;
+  @override
+  final String lowPrice;
+  @override
+  final String volume;
+  @override
+  final String quoteVolume;
 
   factory CoinExchangeStatsDTO.fromJson(Map<String, dynamic> json) =>
       _$CoinExchangeStatsDTOFromJson(json);

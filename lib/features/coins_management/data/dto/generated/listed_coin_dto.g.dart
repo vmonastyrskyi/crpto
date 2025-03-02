@@ -6,18 +6,10 @@ part of '../listed_coin_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ListedCoinDTOImpl _$$ListedCoinDTOImplFromJson(Map<String, dynamic> json) =>
-    _$ListedCoinDTOImpl(
+ListedCoinDTO _$ListedCoinDTOFromJson(Map<String, dynamic> json) =>
+    ListedCoinDTO(
       symbol: json['symbol'] as String,
       baseAsset: json['baseAsset'] as String,
       quoteAsset: json['quoteAsset'] as String,
       status: json['status'] as String,
     );
-
-Map<String, dynamic> _$$ListedCoinDTOImplToJson(_$ListedCoinDTOImpl instance) =>
-    <String, dynamic>{
-      'symbol': instance.symbol,
-      'baseAsset': instance.baseAsset,
-      'quoteAsset': instance.quoteAsset,
-      'status': instance.status,
-    };

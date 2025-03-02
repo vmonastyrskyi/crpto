@@ -4,12 +4,25 @@ part 'generated/coin_metadata.freezed.dart';
 
 @freezed
 class CoinMetadata with _$CoinMetadata {
-  factory CoinMetadata({
-    required String symbol,
-    required String baseAsset,
-    required String quoteAsset,
-    required String displayName,
-    required String status,
-    required bool hasIcon,
-  }) = _CoinMetadata;
+  const CoinMetadata({
+    required this.symbol,
+    required this.baseAsset,
+    required this.quoteAsset,
+    required this.displayName,
+    required this.status,
+    required this.hasIcon,
+  });
+
+  @override
+  final String symbol;
+  @override
+  final String baseAsset;
+  @override
+  final String quoteAsset;
+  @override
+  final String displayName;
+  @override
+  final String status;
+  @override
+  final bool hasIcon;
 }

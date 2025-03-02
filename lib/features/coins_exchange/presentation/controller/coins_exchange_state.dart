@@ -7,13 +7,16 @@ enum CoinsExchangeStatus { initial, loading, loaded, error }
 
 @freezed
 class CoinsExchangeState with _$CoinsExchangeState {
-  const factory CoinsExchangeState({
-    required CoinsExchangeStatus status,
-    required List<CoinExchangeStats> coinsExchangeStats,
-  }) = _CoinsExchangeState;
+  const CoinsExchangeState._({
+    required this.status,
+    required this.coinsExchangeStats,
+  });
 
-  factory CoinsExchangeState.initial() => const CoinsExchangeState(
-    status: CoinsExchangeStatus.initial,
-    coinsExchangeStats: [],
-  );
+  const CoinsExchangeState.initial()
+    : this._(status: CoinsExchangeStatus.initial, coinsExchangeStats: const []);
+
+  @override
+  final CoinsExchangeStatus status;
+  @override
+  final List<CoinExchangeStats> coinsExchangeStats;
 }

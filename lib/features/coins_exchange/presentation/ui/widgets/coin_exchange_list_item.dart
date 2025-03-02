@@ -5,6 +5,7 @@ import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/domain/model/coin_exchange_stats.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange/coin_exchange_controller.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_graphics/vector_graphics.dart';
@@ -62,11 +63,45 @@ class _CoinExchangeListItemState extends ConsumerState<CoinExchangeListItem> {
             ],
           ).expanded(),
           const SizedBox(width: 16.0),
+          _buildPriceLineChart().expanded(),
+          const SizedBox(width: 16.0),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[_buildLastPrice(), _buildPriceChangePercent()],
-          ),
+          ).expanded(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildPriceLineChart() {
+    return SizedBox(
+      height: 96,
+      child: LineChart(
+        LineChartData(
+          lineBarsData: [
+            LineChartBarData(
+              spots: const [
+                FlSpot(0, 100),
+                FlSpot(1, 120),
+                FlSpot(2, 130),
+                FlSpot(3, 110),
+                FlSpot(4, 140),
+              ],
+              dotData: const FlDotData(show: false),
+              preventCurveOverShooting: true,
+              isStrokeJoinRound: true,
+              isStrokeCapRound: true,
+              isCurved: true,
+              barWidth: 5,
+            ),
+          ],
+          lineTouchData: const LineTouchData(enabled: false),
+          titlesData: const FlTitlesData(show: false),
+          gridData: const FlGridData(show: false),
+          // borderData: FlBorderData(show: false),
+        ),
       ),
     );
   }

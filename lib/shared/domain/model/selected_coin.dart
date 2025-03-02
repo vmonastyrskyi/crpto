@@ -4,5 +4,8 @@ part 'generated/selected_coin.freezed.dart';
 
 @freezed
 class SelectedCoin with _$SelectedCoin {
-  factory SelectedCoin({required String symbol}) = _SelectedCoin;
+  const SelectedCoin({required this.symbol});
+
+  @override
+  final String symbol;
 }

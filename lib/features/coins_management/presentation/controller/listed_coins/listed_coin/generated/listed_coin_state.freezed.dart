@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,224 +10,69 @@ part of '../listed_coin_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
 /// @nodoc
 mixin _$ListedCoinState {
-  ListedCoin get listedCoin => throw _privateConstructorUsedError;
-  CoinMetadata get metadata => throw _privateConstructorUsedError;
-  bool get selected => throw _privateConstructorUsedError;
 
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ListedCoinStateCopyWith<ListedCoinState> get copyWith =>
-      throw _privateConstructorUsedError;
+ ListedCoin get listedCoin; CoinMetadata get metadata; bool get selected;
+/// Create a copy of ListedCoinState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$ListedCoinStateCopyWith<ListedCoinState> get copyWith => _$ListedCoinStateCopyWithImpl<ListedCoinState>(this as ListedCoinState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinState&&(identical(other.listedCoin, listedCoin) || other.listedCoin == listedCoin)&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.selected, selected) || other.selected == selected));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,listedCoin,metadata,selected);
+
+@override
+String toString() {
+  return 'ListedCoinState(listedCoin: $listedCoin, metadata: $metadata, selected: $selected)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $ListedCoinStateCopyWith<$Res> {
-  factory $ListedCoinStateCopyWith(
-    ListedCoinState value,
-    $Res Function(ListedCoinState) then,
-  ) = _$ListedCoinStateCopyWithImpl<$Res, ListedCoinState>;
-  @useResult
-  $Res call({ListedCoin listedCoin, CoinMetadata metadata, bool selected});
+abstract mixin class $ListedCoinStateCopyWith<$Res>  {
+  factory $ListedCoinStateCopyWith(ListedCoinState value, $Res Function(ListedCoinState) _then) = _$ListedCoinStateCopyWithImpl;
+@useResult
+$Res call({
+ ListedCoin listedCoin, CoinMetadata metadata, bool selected
+});
 
-  $ListedCoinCopyWith<$Res> get listedCoin;
-  $CoinMetadataCopyWith<$Res> get metadata;
+
+
+
 }
-
 /// @nodoc
-class _$ListedCoinStateCopyWithImpl<$Res, $Val extends ListedCoinState>
+class _$ListedCoinStateCopyWithImpl<$Res>
     implements $ListedCoinStateCopyWith<$Res> {
-  _$ListedCoinStateCopyWithImpl(this._value, this._then);
+  _$ListedCoinStateCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final ListedCoinState _self;
+  final $Res Function(ListedCoinState) _then;
 
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? listedCoin = null,
-    Object? metadata = null,
-    Object? selected = null,
-  }) {
-    return _then(
-      _value.copyWith(
-            listedCoin:
-                null == listedCoin
-                    ? _value.listedCoin
-                    : listedCoin // ignore: cast_nullable_to_non_nullable
-                        as ListedCoin,
-            metadata:
-                null == metadata
-                    ? _value.metadata
-                    : metadata // ignore: cast_nullable_to_non_nullable
-                        as CoinMetadata,
-            selected:
-                null == selected
-                    ? _value.selected
-                    : selected // ignore: cast_nullable_to_non_nullable
-                        as bool,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ListedCoinCopyWith<$Res> get listedCoin {
-    return $ListedCoinCopyWith<$Res>(_value.listedCoin, (value) {
-      return _then(_value.copyWith(listedCoin: value) as $Val);
-    });
-  }
-
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CoinMetadataCopyWith<$Res> get metadata {
-    return $CoinMetadataCopyWith<$Res>(_value.metadata, (value) {
-      return _then(_value.copyWith(metadata: value) as $Val);
-    });
-  }
+/// Create a copy of ListedCoinState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? listedCoin = null,Object? metadata = null,Object? selected = null,}) {
+  return _then(ListedCoinState._(
+listedCoin: null == listedCoin ? _self.listedCoin : listedCoin // ignore: cast_nullable_to_non_nullable
+as ListedCoin,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as CoinMetadata,selected: null == selected ? _self.selected : selected // ignore: cast_nullable_to_non_nullable
+as bool,
+  ));
 }
 
-/// @nodoc
-abstract class _$$ListedCoinStateImplCopyWith<$Res>
-    implements $ListedCoinStateCopyWith<$Res> {
-  factory _$$ListedCoinStateImplCopyWith(
-    _$ListedCoinStateImpl value,
-    $Res Function(_$ListedCoinStateImpl) then,
-  ) = __$$ListedCoinStateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ListedCoin listedCoin, CoinMetadata metadata, bool selected});
-
-  @override
-  $ListedCoinCopyWith<$Res> get listedCoin;
-  @override
-  $CoinMetadataCopyWith<$Res> get metadata;
 }
 
-/// @nodoc
-class __$$ListedCoinStateImplCopyWithImpl<$Res>
-    extends _$ListedCoinStateCopyWithImpl<$Res, _$ListedCoinStateImpl>
-    implements _$$ListedCoinStateImplCopyWith<$Res> {
-  __$$ListedCoinStateImplCopyWithImpl(
-    _$ListedCoinStateImpl _value,
-    $Res Function(_$ListedCoinStateImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? listedCoin = null,
-    Object? metadata = null,
-    Object? selected = null,
-  }) {
-    return _then(
-      _$ListedCoinStateImpl(
-        listedCoin:
-            null == listedCoin
-                ? _value.listedCoin
-                : listedCoin // ignore: cast_nullable_to_non_nullable
-                    as ListedCoin,
-        metadata:
-            null == metadata
-                ? _value.metadata
-                : metadata // ignore: cast_nullable_to_non_nullable
-                    as CoinMetadata,
-        selected:
-            null == selected
-                ? _value.selected
-                : selected // ignore: cast_nullable_to_non_nullable
-                    as bool,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$ListedCoinStateImpl implements _ListedCoinState {
-  const _$ListedCoinStateImpl({
-    required this.listedCoin,
-    required this.metadata,
-    required this.selected,
-  });
-
-  @override
-  final ListedCoin listedCoin;
-  @override
-  final CoinMetadata metadata;
-  @override
-  final bool selected;
-
-  @override
-  String toString() {
-    return 'ListedCoinState(listedCoin: $listedCoin, metadata: $metadata, selected: $selected)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ListedCoinStateImpl &&
-            (identical(other.listedCoin, listedCoin) ||
-                other.listedCoin == listedCoin) &&
-            (identical(other.metadata, metadata) ||
-                other.metadata == metadata) &&
-            (identical(other.selected, selected) ||
-                other.selected == selected));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, listedCoin, metadata, selected);
-
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ListedCoinStateImplCopyWith<_$ListedCoinStateImpl> get copyWith =>
-      __$$ListedCoinStateImplCopyWithImpl<_$ListedCoinStateImpl>(
-        this,
-        _$identity,
-      );
-}
-
-abstract class _ListedCoinState implements ListedCoinState {
-  const factory _ListedCoinState({
-    required final ListedCoin listedCoin,
-    required final CoinMetadata metadata,
-    required final bool selected,
-  }) = _$ListedCoinStateImpl;
-
-  @override
-  ListedCoin get listedCoin;
-  @override
-  CoinMetadata get metadata;
-  @override
-  bool get selected;
-
-  /// Create a copy of ListedCoinState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ListedCoinStateImplCopyWith<_$ListedCoinStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

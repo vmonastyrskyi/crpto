@@ -6,19 +6,21 @@ part 'generated/listed_coin_state.freezed.dart';
 
 @freezed
 class ListedCoinState with _$ListedCoinState {
-  const factory ListedCoinState({
-    required ListedCoin listedCoin,
-    required CoinMetadata metadata,
-    required bool selected,
-  }) = _ListedCoinState;
+  const ListedCoinState._({
+    required this.listedCoin,
+    required this.metadata,
+    required this.selected,
+  });
 
-  factory ListedCoinState.initial({
+  const ListedCoinState.initial({
     required ListedCoin listedCoin,
     required CoinMetadata metadata,
-    bool selected = false,
-  }) => ListedCoinState(
-    listedCoin: listedCoin,
-    metadata: metadata,
-    selected: selected,
-  );
+  }) : this._(listedCoin: listedCoin, metadata: metadata, selected: false);
+
+  @override
+  final ListedCoin listedCoin;
+  @override
+  final CoinMetadata metadata;
+  @override
+  final bool selected;
 }

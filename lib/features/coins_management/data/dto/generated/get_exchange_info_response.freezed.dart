@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,190 +10,68 @@ part of '../get_exchange_info_response.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
-
-GetExchangeInfoResponse _$GetExchangeInfoResponseFromJson(
-  Map<String, dynamic> json,
-) {
-  return _GetExchangeInfoResponse.fromJson(json);
-}
 
 /// @nodoc
 mixin _$GetExchangeInfoResponse {
-  @JsonKey(name: 'symbols')
-  List<ListedCoinDTO> get listedCoins => throw _privateConstructorUsedError;
 
-  /// Serializes this GetExchangeInfoResponse to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+ List<ListedCoinDTO> get listedCoins;
+/// Create a copy of GetExchangeInfoResponse
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GetExchangeInfoResponseCopyWith<GetExchangeInfoResponse> get copyWith => _$GetExchangeInfoResponseCopyWithImpl<GetExchangeInfoResponse>(this as GetExchangeInfoResponse, _$identity);
 
-  /// Create a copy of GetExchangeInfoResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $GetExchangeInfoResponseCopyWith<GetExchangeInfoResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetExchangeInfoResponse&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(listedCoins));
+
+@override
+String toString() {
+  return 'GetExchangeInfoResponse(listedCoins: $listedCoins)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $GetExchangeInfoResponseCopyWith<$Res> {
-  factory $GetExchangeInfoResponseCopyWith(
-    GetExchangeInfoResponse value,
-    $Res Function(GetExchangeInfoResponse) then,
-  ) = _$GetExchangeInfoResponseCopyWithImpl<$Res, GetExchangeInfoResponse>;
-  @useResult
-  $Res call({@JsonKey(name: 'symbols') List<ListedCoinDTO> listedCoins});
-}
+abstract mixin class $GetExchangeInfoResponseCopyWith<$Res>  {
+  factory $GetExchangeInfoResponseCopyWith(GetExchangeInfoResponse value, $Res Function(GetExchangeInfoResponse) _then) = _$GetExchangeInfoResponseCopyWithImpl;
+@useResult
+$Res call({
+ List<ListedCoinDTO> listedCoins
+});
 
+
+
+
+}
 /// @nodoc
-class _$GetExchangeInfoResponseCopyWithImpl<
-  $Res,
-  $Val extends GetExchangeInfoResponse
->
+class _$GetExchangeInfoResponseCopyWithImpl<$Res>
     implements $GetExchangeInfoResponseCopyWith<$Res> {
-  _$GetExchangeInfoResponseCopyWithImpl(this._value, this._then);
+  _$GetExchangeInfoResponseCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final GetExchangeInfoResponse _self;
+  final $Res Function(GetExchangeInfoResponse) _then;
 
-  /// Create a copy of GetExchangeInfoResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? listedCoins = null}) {
-    return _then(
-      _value.copyWith(
-            listedCoins:
-                null == listedCoins
-                    ? _value.listedCoins
-                    : listedCoins // ignore: cast_nullable_to_non_nullable
-                        as List<ListedCoinDTO>,
-          )
-          as $Val,
-    );
-  }
+/// Create a copy of GetExchangeInfoResponse
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? listedCoins = null,}) {
+  return _then(GetExchangeInfoResponse(
+listedCoins: null == listedCoins ? _self.listedCoins : listedCoins // ignore: cast_nullable_to_non_nullable
+as List<ListedCoinDTO>,
+  ));
 }
 
-/// @nodoc
-abstract class _$$GetExchangeInfoResponseImplCopyWith<$Res>
-    implements $GetExchangeInfoResponseCopyWith<$Res> {
-  factory _$$GetExchangeInfoResponseImplCopyWith(
-    _$GetExchangeInfoResponseImpl value,
-    $Res Function(_$GetExchangeInfoResponseImpl) then,
-  ) = __$$GetExchangeInfoResponseImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'symbols') List<ListedCoinDTO> listedCoins});
 }
 
-/// @nodoc
-class __$$GetExchangeInfoResponseImplCopyWithImpl<$Res>
-    extends
-        _$GetExchangeInfoResponseCopyWithImpl<
-          $Res,
-          _$GetExchangeInfoResponseImpl
-        >
-    implements _$$GetExchangeInfoResponseImplCopyWith<$Res> {
-  __$$GetExchangeInfoResponseImplCopyWithImpl(
-    _$GetExchangeInfoResponseImpl _value,
-    $Res Function(_$GetExchangeInfoResponseImpl) _then,
-  ) : super(_value, _then);
 
-  /// Create a copy of GetExchangeInfoResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? listedCoins = null}) {
-    return _then(
-      _$GetExchangeInfoResponseImpl(
-        listedCoins:
-            null == listedCoins
-                ? _value._listedCoins
-                : listedCoins // ignore: cast_nullable_to_non_nullable
-                    as List<ListedCoinDTO>,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$GetExchangeInfoResponseImpl implements _GetExchangeInfoResponse {
-  _$GetExchangeInfoResponseImpl({
-    @JsonKey(name: 'symbols') required final List<ListedCoinDTO> listedCoins,
-  }) : _listedCoins = listedCoins;
-
-  factory _$GetExchangeInfoResponseImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GetExchangeInfoResponseImplFromJson(json);
-
-  final List<ListedCoinDTO> _listedCoins;
-  @override
-  @JsonKey(name: 'symbols')
-  List<ListedCoinDTO> get listedCoins {
-    if (_listedCoins is EqualUnmodifiableListView) return _listedCoins;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listedCoins);
-  }
-
-  @override
-  String toString() {
-    return 'GetExchangeInfoResponse(listedCoins: $listedCoins)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetExchangeInfoResponseImpl &&
-            const DeepCollectionEquality().equals(
-              other._listedCoins,
-              _listedCoins,
-            ));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_listedCoins),
-  );
-
-  /// Create a copy of GetExchangeInfoResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GetExchangeInfoResponseImplCopyWith<_$GetExchangeInfoResponseImpl>
-  get copyWith => __$$GetExchangeInfoResponseImplCopyWithImpl<
-    _$GetExchangeInfoResponseImpl
-  >(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GetExchangeInfoResponseImplToJson(this);
-  }
-}
-
-abstract class _GetExchangeInfoResponse implements GetExchangeInfoResponse {
-  factory _GetExchangeInfoResponse({
-    @JsonKey(name: 'symbols') required final List<ListedCoinDTO> listedCoins,
-  }) = _$GetExchangeInfoResponseImpl;
-
-  factory _GetExchangeInfoResponse.fromJson(Map<String, dynamic> json) =
-      _$GetExchangeInfoResponseImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'symbols')
-  List<ListedCoinDTO> get listedCoins;
-
-  /// Create a copy of GetExchangeInfoResponse
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetExchangeInfoResponseImplCopyWith<_$GetExchangeInfoResponseImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
+// dart format on

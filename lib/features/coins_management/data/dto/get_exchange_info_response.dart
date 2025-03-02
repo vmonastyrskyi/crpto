@@ -5,10 +5,13 @@ part 'generated/get_exchange_info_response.freezed.dart';
 part 'generated/get_exchange_info_response.g.dart';
 
 @freezed
+@JsonSerializable(createToJson: false)
 class GetExchangeInfoResponse with _$GetExchangeInfoResponse {
-  factory GetExchangeInfoResponse({
-    @JsonKey(name: 'symbols') required List<ListedCoinDTO> listedCoins,
-  }) = _GetExchangeInfoResponse;
+  const GetExchangeInfoResponse({required this.listedCoins});
+
+  @override
+  @JsonKey(name: 'symbols')
+  final List<ListedCoinDTO> listedCoins;
 
   factory GetExchangeInfoResponse.fromJson(Map<String, dynamic> json) =>
       _$GetExchangeInfoResponseFromJson(json);

@@ -9,15 +9,23 @@ enum ListedCoinsSearchStatus { initial, loading, searched, error }
 
 @freezed
 class ListedCoinsState with _$ListedCoinsState {
-  const factory ListedCoinsState({
-    required ListedCoinsStatus status,
-    required ListedCoinsSearchStatus searchStatus,
-    required List<ListedCoin> listedCoins,
-  }) = _ListedCoinsState;
+  const ListedCoinsState._({
+    required this.status,
+    required this.searchStatus,
+    required this.listedCoins,
+  });
 
-  factory ListedCoinsState.initial() => const ListedCoinsState(
-    status: ListedCoinsStatus.initial,
-    searchStatus: ListedCoinsSearchStatus.initial,
-    listedCoins: [],
-  );
+  const ListedCoinsState.initial()
+    : this._(
+        status: ListedCoinsStatus.initial,
+        searchStatus: ListedCoinsSearchStatus.initial,
+        listedCoins: const [],
+      );
+
+  @override
+  final ListedCoinsStatus status;
+  @override
+  final ListedCoinsSearchStatus searchStatus;
+  @override
+  final List<ListedCoin> listedCoins;
 }
