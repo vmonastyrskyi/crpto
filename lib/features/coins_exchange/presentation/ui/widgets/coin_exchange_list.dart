@@ -50,6 +50,8 @@ class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
   Widget _buildCoinExchangeList(CoinExchangeListState state) {
     final coinsExchangeStats = state.coinsExchangeStats;
 
+    coinsExchangeStats.sort((a, b) => b.quoteVolume.compareTo(a.quoteVolume));
+
     return CustomMaterialIndicator(
       displacement: 16.0,
       color: AppColors.bodyBackgroundColor,
