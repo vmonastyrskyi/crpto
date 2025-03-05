@@ -26,15 +26,6 @@ class ListedCoinList extends ConsumerWidget {
     };
   }
 
-  Widget _buildLoadingIndicator() {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: CircularProgressIndicator(color: AppColors.loaderColor),
-      ),
-    );
-  }
-
   Widget _buildListedCoinList(List<ListedCoin> listedCoins) {
     return ListView.builder(
       itemBuilder: (_, index) {
@@ -48,6 +39,15 @@ class ListedCoinList extends ConsumerWidget {
         );
       },
       itemCount: listedCoins.length,
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: CircularProgressIndicator(color: AppColors.loaderColor),
+      ),
     );
   }
 

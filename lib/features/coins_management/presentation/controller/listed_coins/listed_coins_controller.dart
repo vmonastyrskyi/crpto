@@ -20,7 +20,7 @@ class ListedCoinsController extends _$ListedCoinsController {
 
     ref.onDispose(() => _searchListedCoinsDebounce.cancel());
 
-    return ListedCoinsState.initial();
+    return const ListedCoinsState.initial();
   }
 
   List<ListedCoin> _lastListedCoins = const [];

@@ -28,7 +28,7 @@ class ListedCoinController extends _$ListedCoinController {
 
     ref.onDispose(() => _selectListedCoinDebounce.cancel());
 
-    final metadata = _getCoinMetadata.call(listedCoin.symbol);
+    final metadata = _getCoinMetadata(listedCoin.symbol);
 
     final initialState = ListedCoinState.initial(
       listedCoin: listedCoin,

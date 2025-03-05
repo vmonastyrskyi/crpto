@@ -1,10 +1,9 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
-import 'package:crpto/features/coins_exchange/domain/model/coin_exchange_stats.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/coins_exchange_controller.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/coins_exchange_state.dart';
-import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_list_item.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/list/coin_exchange_list_controller.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/list/coin_exchange_list_state.dart';
+import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_item.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,30 +16,26 @@ class CoinExchangeList extends ConsumerStatefulWidget {
 }
 
 class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
-  CoinsExchangeController get _coinsExchangeController =>
-      ref.read(coinsExchangeControllerProvider.notifier);
-
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(coinsExchangeControllerProvider);
+    final asyncState = ref.watch(coinExchangeListControllerProvider);
 
-    return switch (state) {
-      CoinsExchangeState(
-        status: final status,
-        coinsExchangeStats: final coinsExchangeStats,
-      )
-          when status == CoinsExchangeStatus.loading &&
-              coinsExchangeStats.isEmpty =>
-        _buildLoadingIndicator(),
-      CoinsExchangeState(
-        status: final status,
-        coinsExchangeStats: final coinsExchangeStats,
-      )
-          when status == CoinsExchangeStatus.loaded ||
-              coinsExchangeStats.isNotEmpty =>
-        _buildCoinExchangeList(coinsExchangeStats),
-      _ => _buildNoCoinsSelectedWarning(),
-    };
+    switch (asyncState) {
+      case AsyncLoading(value: final state):
+        if (state == null || state.coinsExchangeStats.isEmpty) {
+          return _buildLoadingIndicator();
+        }
+
+        if (state.coinsExchangeStats.isNotEmpty) {
+          return _buildCoinExchangeList(state);
+        }
+      case AsyncData(value: final state):
+        if (state.coinsExchangeStats.isNotEmpty) {
+          return _buildCoinExchangeList(state);
+        }
+    }
+
+    return _buildNoCoinsSelectedWarning();
   }
 
   Widget _buildLoadingIndicator() {
@@ -52,19 +47,24 @@ class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
     );
   }
 
-  Widget _buildCoinExchangeList(List<CoinExchangeStats> coinsExchangeStats) {
+  Widget _buildCoinExchangeList(CoinExchangeListState state) {
+    final coinsExchangeStats = state.coinsExchangeStats;
+
     return CustomMaterialIndicator(
       displacement: 16.0,
       color: AppColors.bodyBackgroundColor,
       backgroundColor: AppColors.primaryTextColor,
-      onRefresh: _coinsExchangeController.loadCoinsExchangeStats,
+      onRefresh:
+          ref
+              .read(coinExchangeListControllerProvider.notifier)
+              .loadCoinsExchangeStats,
       child: ListView.builder(
         itemBuilder: (_, index) {
           final coinExchangeStats = coinsExchangeStats[index];
 
           return KeepAliveChild(
-            child: CoinExchangeListItem(
-              key: ObjectKey(coinExchangeStats),
+            child: CoinExchangeItem(
+              key: ValueKey(coinExchangeStats.symbol),
               coinExchangeStats: coinExchangeStats,
             ),
           );

@@ -7,7 +7,7 @@ part of '../listed_coins_controller.dart';
 // **************************************************************************
 
 String _$listedCoinsControllerHash() =>
-    r'7280c3733a547822d783ce61ad54e563d3e2d74a';
+    r'c7a6422723495c16a05fbd8fe25fa45beb68e389';
 
 /// See also [ListedCoinsController].
 @ProviderFor(ListedCoinsController)

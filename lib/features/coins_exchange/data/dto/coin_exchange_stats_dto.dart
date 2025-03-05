@@ -20,22 +20,31 @@ class CoinExchangeStatsDTO with _$CoinExchangeStatsDTO {
   });
 
   @override
+  @JsonKey(name: 'symbol')
   final String symbol;
   @override
+  @JsonKey(name: 'priceChange')
   final String priceChange;
   @override
+  @JsonKey(name: 'priceChangePercent')
   final String priceChangePercent;
   @override
+  @JsonKey(name: 'lastPrice')
   final String lastPrice;
   @override
+  @JsonKey(name: 'openPrice')
   final String openPrice;
   @override
+  @JsonKey(name: 'highPrice')
   final String highPrice;
   @override
+  @JsonKey(name: 'lowPrice')
   final String lowPrice;
   @override
+  @JsonKey(name: 'volume')
   final String volume;
   @override
+  @JsonKey(name: 'quoteVolume')
   final String quoteVolume;
 
   factory CoinExchangeStatsDTO.fromJson(Map<String, dynamic> json) =>
