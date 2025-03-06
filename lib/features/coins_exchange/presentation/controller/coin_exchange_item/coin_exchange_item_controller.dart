@@ -1,5 +1,5 @@
 import 'package:crpto/features/coins_exchange/domain/model/coin_exchange_stats.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/item/coin_exchange_item_state.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_item/coin_exchange_item_state.dart';
 import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

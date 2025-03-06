@@ -1,5 +1,5 @@
 import 'package:cron/cron.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/item/klines/coin_exchange_item_klines_state.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_item/klines/coin_exchange_item_klines_state.dart';
 import 'package:crpto/shared/application/use_case/kline/get_klines_by_symbol.dart';
 import 'package:crpto/shared/domain/model/kline/kline_interval.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

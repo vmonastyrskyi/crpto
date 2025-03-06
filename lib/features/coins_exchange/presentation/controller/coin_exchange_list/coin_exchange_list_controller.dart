@@ -1,6 +1,6 @@
 import 'package:cron/cron.dart';
 import 'package:crpto/features/coins_exchange/application/use_case/get_coins_exchange_stats.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/list/coin_exchange_list_state.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_state.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/get_selected_coins.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/listen_selected_coins.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -1,8 +1,8 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/list/coin_exchange_list_controller.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/list/coin_exchange_list_state.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_controller.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_state.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_item.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
