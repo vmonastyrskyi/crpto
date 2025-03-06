@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../listed_coin_controller.dart';
+part of '../listed_coin_item_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listedCoinControllerHash() =>
-    r'9bd42c9cb7180b2d44ef1aed8f459d964f7a27a4';
+String _$listedCoinItemControllerHash() =>
+    r'60abe58f606bdf7413e30dad82c68d9d608ecaa6';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,30 +30,30 @@ class _SystemHash {
   }
 }
 
-abstract class _$ListedCoinController
-    extends BuildlessAutoDisposeNotifier<ListedCoinState> {
+abstract class _$ListedCoinItemController
+    extends BuildlessAutoDisposeNotifier<ListedCoinItemState> {
   late final ListedCoin listedCoin;
 
-  ListedCoinState build(ListedCoin listedCoin);
+  ListedCoinItemState build(ListedCoin listedCoin);
 }
 
-/// See also [ListedCoinController].
-@ProviderFor(ListedCoinController)
-const listedCoinControllerProvider = ListedCoinControllerFamily();
+/// See also [ListedCoinItemController].
+@ProviderFor(ListedCoinItemController)
+const listedCoinItemControllerProvider = ListedCoinItemControllerFamily();
 
-/// See also [ListedCoinController].
-class ListedCoinControllerFamily extends Family<ListedCoinState> {
-  /// See also [ListedCoinController].
-  const ListedCoinControllerFamily();
+/// See also [ListedCoinItemController].
+class ListedCoinItemControllerFamily extends Family<ListedCoinItemState> {
+  /// See also [ListedCoinItemController].
+  const ListedCoinItemControllerFamily();
 
-  /// See also [ListedCoinController].
-  ListedCoinControllerProvider call(ListedCoin listedCoin) {
-    return ListedCoinControllerProvider(listedCoin);
+  /// See also [ListedCoinItemController].
+  ListedCoinItemControllerProvider call(ListedCoin listedCoin) {
+    return ListedCoinItemControllerProvider(listedCoin);
   }
 
   @override
-  ListedCoinControllerProvider getProviderOverride(
-    covariant ListedCoinControllerProvider provider,
+  ListedCoinItemControllerProvider getProviderOverride(
+    covariant ListedCoinItemControllerProvider provider,
   ) {
     return call(provider.listedCoin);
   }
@@ -70,30 +70,33 @@ class ListedCoinControllerFamily extends Family<ListedCoinState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'listedCoinControllerProvider';
+  String? get name => r'listedCoinItemControllerProvider';
 }
 
-/// See also [ListedCoinController].
-class ListedCoinControllerProvider
+/// See also [ListedCoinItemController].
+class ListedCoinItemControllerProvider
     extends
-        AutoDisposeNotifierProviderImpl<ListedCoinController, ListedCoinState> {
-  /// See also [ListedCoinController].
-  ListedCoinControllerProvider(ListedCoin listedCoin)
+        AutoDisposeNotifierProviderImpl<
+          ListedCoinItemController,
+          ListedCoinItemState
+        > {
+  /// See also [ListedCoinItemController].
+  ListedCoinItemControllerProvider(ListedCoin listedCoin)
     : this._internal(
-        () => ListedCoinController()..listedCoin = listedCoin,
-        from: listedCoinControllerProvider,
-        name: r'listedCoinControllerProvider',
+        () => ListedCoinItemController()..listedCoin = listedCoin,
+        from: listedCoinItemControllerProvider,
+        name: r'listedCoinItemControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$listedCoinControllerHash,
-        dependencies: ListedCoinControllerFamily._dependencies,
+                : _$listedCoinItemControllerHash,
+        dependencies: ListedCoinItemControllerFamily._dependencies,
         allTransitiveDependencies:
-            ListedCoinControllerFamily._allTransitiveDependencies,
+            ListedCoinItemControllerFamily._allTransitiveDependencies,
         listedCoin: listedCoin,
       );
 
-  ListedCoinControllerProvider._internal(
+  ListedCoinItemControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -106,15 +109,17 @@ class ListedCoinControllerProvider
   final ListedCoin listedCoin;
 
   @override
-  ListedCoinState runNotifierBuild(covariant ListedCoinController notifier) {
+  ListedCoinItemState runNotifierBuild(
+    covariant ListedCoinItemController notifier,
+  ) {
     return notifier.build(listedCoin);
   }
 
   @override
-  Override overrideWith(ListedCoinController Function() create) {
+  Override overrideWith(ListedCoinItemController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: ListedCoinControllerProvider._internal(
+      override: ListedCoinItemControllerProvider._internal(
         () => create()..listedCoin = listedCoin,
         from: from,
         name: null,
@@ -127,14 +132,17 @@ class ListedCoinControllerProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<ListedCoinController, ListedCoinState>
+  AutoDisposeNotifierProviderElement<
+    ListedCoinItemController,
+    ListedCoinItemState
+  >
   createElement() {
-    return _ListedCoinControllerProviderElement(this);
+    return _ListedCoinItemControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ListedCoinControllerProvider &&
+    return other is ListedCoinItemControllerProvider &&
         other.listedCoin == listedCoin;
   }
 
@@ -149,24 +157,24 @@ class ListedCoinControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ListedCoinControllerRef
-    on AutoDisposeNotifierProviderRef<ListedCoinState> {
+mixin ListedCoinItemControllerRef
+    on AutoDisposeNotifierProviderRef<ListedCoinItemState> {
   /// The parameter `listedCoin` of this provider.
   ListedCoin get listedCoin;
 }
 
-class _ListedCoinControllerProviderElement
+class _ListedCoinItemControllerProviderElement
     extends
         AutoDisposeNotifierProviderElement<
-          ListedCoinController,
-          ListedCoinState
+          ListedCoinItemController,
+          ListedCoinItemState
         >
-    with ListedCoinControllerRef {
-  _ListedCoinControllerProviderElement(super.provider);
+    with ListedCoinItemControllerRef {
+  _ListedCoinItemControllerProviderElement(super.provider);
 
   @override
   ListedCoin get listedCoin =>
-      (origin as ListedCoinControllerProvider).listedCoin;
+      (origin as ListedCoinItemControllerProvider).listedCoin;
 }
 
 // ignore_for_file: type=lint

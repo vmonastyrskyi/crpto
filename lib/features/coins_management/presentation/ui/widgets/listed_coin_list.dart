@@ -2,24 +2,29 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_controller.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_state.dart';
-import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_list_item.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
+import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ListedCoinList extends ConsumerWidget {
+class ListedCoinList extends ConsumerStatefulWidget {
   const ListedCoinList({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(listedCoinsControllerProvider);
+  ConsumerState<ListedCoinList> createState() => _ListedCoinListState();
+}
+
+class _ListedCoinListState extends ConsumerState<ListedCoinList> {
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(listedCoinListControllerProvider);
 
     return switch (state) {
-      ListedCoinsState(status: final status, listedCoins: final listedCoins)
+      ListedCoinListState(status: final status, listedCoins: final listedCoins)
           when status == ListedCoinsStatus.loading && listedCoins.isEmpty =>
         _buildLoadingIndicator(),
-      ListedCoinsState(status: final status, listedCoins: final listedCoins)
+      ListedCoinListState(status: final status, listedCoins: final listedCoins)
           when status == ListedCoinsStatus.loaded || listedCoins.isNotEmpty =>
         _buildListedCoinList(listedCoins),
       _ => _buildNoListedCoinsFoundWarning(),
@@ -33,7 +38,7 @@ class ListedCoinList extends ConsumerWidget {
 
         return KeepAliveChild(
           child: ListedCoinListItem(
-            key: ObjectKey(listedCoin),
+            key: ValueKey(listedCoin.symbol),
             listedCoin: listedCoin,
           ),
         );

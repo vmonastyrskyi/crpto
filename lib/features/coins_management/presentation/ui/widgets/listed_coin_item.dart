@@ -1,8 +1,9 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/crypto_utils.dart';
+import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coin/listed_coin_controller.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vector_graphics/vector_graphics.dart';
@@ -17,19 +18,16 @@ class ListedCoinListItem extends ConsumerStatefulWidget {
 }
 
 class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
-  ListedCoinControllerProvider get _listedCoinControllerProvider =>
-      listedCoinControllerProvider(widget.listedCoin);
-
-  ListedCoinController get _listedCoinController =>
-      ref.read(_listedCoinControllerProvider.notifier);
+  ListedCoin get _listedCoin => widget.listedCoin;
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(_listedCoinControllerProvider);
+    final state = ref.watch(listedCoinItemControllerProvider(_listedCoin));
 
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Row(
+        spacing: 16.0,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -41,28 +39,25 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
                 CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
               ),
             ),
-          const SizedBox(width: 16.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  state.metadata.baseAsset,
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.primaryTextColor,
-                    fontSize: 16.0,
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                state.metadata.baseAsset,
+                style: AppFonts.medium.copyWith(
+                  color: AppColors.primaryTextColor,
+                  fontSize: 16.0,
                 ),
-                Text(
-                  state.metadata.displayName,
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.secondaryTextColor,
-                    fontSize: 14.0,
-                  ),
+              ),
+              Text(
+                state.metadata.displayName,
+                style: AppFonts.medium.copyWith(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 14.0,
                 ),
-              ],
-            ),
-          ),
+              ),
+            ],
+          ).expanded(),
           _buildSwitcher(),
         ],
       ),
@@ -71,12 +66,17 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
 
   Widget _buildSwitcher() {
     final selected = ref.watch(
-      _listedCoinControllerProvider.select((state) => state.selected),
+      listedCoinItemControllerProvider(
+        _listedCoin,
+      ).select((state) => state.selected),
     );
 
     return Switch(
       value: selected,
-      onChanged: _listedCoinController.select,
+      onChanged:
+          ref
+              .read(listedCoinItemControllerProvider(_listedCoin).notifier)
+              .select,
       activeColor: AppColors.switchActiveColor,
       activeTrackColor: AppColors.switchActiveTrackColor,
       inactiveThumbColor: AppColors.switchInactiveThumbColor,

@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of '../listed_coins_state.dart';
+part of '../listed_coin_list_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,20 +13,20 @@ part of '../listed_coins_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ListedCoinsState {
+mixin _$ListedCoinListState {
 
  ListedCoinsStatus get status; ListedCoinsSearchStatus get searchStatus; List<ListedCoin> get listedCoins;
-/// Create a copy of ListedCoinsState
+/// Create a copy of ListedCoinListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ListedCoinsStateCopyWith<ListedCoinsState> get copyWith => _$ListedCoinsStateCopyWithImpl<ListedCoinsState>(this as ListedCoinsState, _$identity);
+$ListedCoinListStateCopyWith<ListedCoinListState> get copyWith => _$ListedCoinListStateCopyWithImpl<ListedCoinListState>(this as ListedCoinListState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinsState&&(identical(other.status, status) || other.status == status)&&(identical(other.searchStatus, searchStatus) || other.searchStatus == searchStatus)&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinListState&&(identical(other.status, status) || other.status == status)&&(identical(other.searchStatus, searchStatus) || other.searchStatus == searchStatus)&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
 }
 
 
@@ -35,15 +35,15 @@ int get hashCode => Object.hash(runtimeType,status,searchStatus,const DeepCollec
 
 @override
 String toString() {
-  return 'ListedCoinsState(status: $status, searchStatus: $searchStatus, listedCoins: $listedCoins)';
+  return 'ListedCoinListState(status: $status, searchStatus: $searchStatus, listedCoins: $listedCoins)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ListedCoinsStateCopyWith<$Res>  {
-  factory $ListedCoinsStateCopyWith(ListedCoinsState value, $Res Function(ListedCoinsState) _then) = _$ListedCoinsStateCopyWithImpl;
+abstract mixin class $ListedCoinListStateCopyWith<$Res>  {
+  factory $ListedCoinListStateCopyWith(ListedCoinListState value, $Res Function(ListedCoinListState) _then) = _$ListedCoinListStateCopyWithImpl;
 @useResult
 $Res call({
  ListedCoinsStatus status, ListedCoinsSearchStatus searchStatus, List<ListedCoin> listedCoins
@@ -54,17 +54,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$ListedCoinsStateCopyWithImpl<$Res>
-    implements $ListedCoinsStateCopyWith<$Res> {
-  _$ListedCoinsStateCopyWithImpl(this._self, this._then);
+class _$ListedCoinListStateCopyWithImpl<$Res>
+    implements $ListedCoinListStateCopyWith<$Res> {
+  _$ListedCoinListStateCopyWithImpl(this._self, this._then);
 
-  final ListedCoinsState _self;
-  final $Res Function(ListedCoinsState) _then;
+  final ListedCoinListState _self;
+  final $Res Function(ListedCoinListState) _then;
 
-/// Create a copy of ListedCoinsState
+/// Create a copy of ListedCoinListState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? searchStatus = null,Object? listedCoins = null,}) {
-  return _then(ListedCoinsState._(
+  return _then(ListedCoinListState._(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ListedCoinsStatus,searchStatus: null == searchStatus ? _self.searchStatus : searchStatus // ignore: cast_nullable_to_non_nullable
 as ListedCoinsSearchStatus,listedCoins: null == listedCoins ? _self.listedCoins : listedCoins // ignore: cast_nullable_to_non_nullable

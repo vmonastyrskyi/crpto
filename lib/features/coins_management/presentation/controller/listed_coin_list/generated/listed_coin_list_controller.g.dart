@@ -1,28 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../listed_coins_controller.dart';
+part of '../listed_coin_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listedCoinsControllerHash() =>
-    r'c7a6422723495c16a05fbd8fe25fa45beb68e389';
+String _$listedCoinListControllerHash() =>
+    r'396edf9498fcca2052fc12439ff9ed69702be27c';
 
-/// See also [ListedCoinsController].
-@ProviderFor(ListedCoinsController)
-final listedCoinsControllerProvider =
-    NotifierProvider<ListedCoinsController, ListedCoinsState>.internal(
-      ListedCoinsController.new,
-      name: r'listedCoinsControllerProvider',
+/// See also [ListedCoinListController].
+@ProviderFor(ListedCoinListController)
+final listedCoinListControllerProvider =
+    NotifierProvider<ListedCoinListController, ListedCoinListState>.internal(
+      ListedCoinListController.new,
+      name: r'listedCoinListControllerProvider',
       debugGetCreateSourceHash:
           const bool.fromEnvironment('dart.vm.product')
               ? null
-              : _$listedCoinsControllerHash,
+              : _$listedCoinListControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$ListedCoinsController = Notifier<ListedCoinsState>;
+typedef _$ListedCoinListController = Notifier<ListedCoinListState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

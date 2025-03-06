@@ -1,6 +1,6 @@
 import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coin/listed_coin_state.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_state.dart';
 import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/add_selected_coin.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/get_selected_coins.dart';
@@ -8,10 +8,10 @@ import 'package:crpto/shared/application/use_case/selected_coin/remove_selected_
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/listed_coin_controller.g.dart';
+part 'generated/listed_coin_item_controller.g.dart';
 
 @riverpod
-class ListedCoinController extends _$ListedCoinController {
+class ListedCoinItemController extends _$ListedCoinItemController {
   final Debounce _selectListedCoinDebounce = Debounce();
 
   late final GetCoinMetadataUseCase _getCoinMetadata;
@@ -20,7 +20,7 @@ class ListedCoinController extends _$ListedCoinController {
   late final RemoveSelectedCoinUseCase _removeSelectedCoin;
 
   @override
-  ListedCoinState build(ListedCoin listedCoin) {
+  ListedCoinItemState build(ListedCoin listedCoin) {
     _getCoinMetadata = ref.watch(getCoinMetadataUseCaseProvider);
     _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
     _addSelectedCoin = ref.watch(addSelectedCoinUseCaseProvider);
@@ -30,7 +30,7 @@ class ListedCoinController extends _$ListedCoinController {
 
     final metadata = _getCoinMetadata(listedCoin.symbol);
 
-    final initialState = ListedCoinState.initial(
+    final initialState = ListedCoinItemState.initial(
       listedCoin: listedCoin,
       metadata: metadata,
     );
@@ -47,6 +47,8 @@ class ListedCoinController extends _$ListedCoinController {
   }
 
   void select(bool selected) {
+    state = state.copyWith(selected: selected);
+
     _selectListedCoinDebounce(() {
       final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
 
@@ -54,7 +56,5 @@ class ListedCoinController extends _$ListedCoinController {
           ? _removeSelectedCoin(selectedCoin)
           : _addSelectedCoin(selectedCoin);
     }, const Duration(milliseconds: 250));
-
-    state = state.copyWith(selected: selected);
   }
 }

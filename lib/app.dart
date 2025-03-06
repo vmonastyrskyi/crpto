@@ -1,4 +1,4 @@
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_controller.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,16 +64,13 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 }
 
 class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
-  ListedCoinsController get _listedCoinsController =>
-      ref.read(listedCoinsControllerProvider.notifier);
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _listedCoinsController.loadListedCoins();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     ref.read(listedCoinListControllerProvider.notifier).loadListedCoins();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) => widget.child;

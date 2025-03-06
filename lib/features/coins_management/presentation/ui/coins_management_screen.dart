@@ -3,7 +3,7 @@ import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/search_bar.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_controller.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,14 +18,11 @@ class CoinsManagementScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
-  ListedCoinsController get _listedCoinsController =>
-      ref.read(listedCoinsControllerProvider.notifier);
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _listedCoinsController.loadListedCoins();
+      ref.read(listedCoinListControllerProvider.notifier).loadListedCoins();
     });
   }
 
@@ -90,7 +87,8 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   Widget _buildSearchBar() {
     return CrptoSearchBar(
       hintText: 'Search',
-      onChanged: _listedCoinsController.searchListedCoins,
+      onChanged:
+          ref.read(listedCoinListControllerProvider.notifier).searchListedCoins,
     ).withPaddingAll(16.0);
   }
 }

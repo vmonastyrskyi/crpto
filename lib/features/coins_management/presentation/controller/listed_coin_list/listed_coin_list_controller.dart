@@ -3,24 +3,25 @@ import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coins/listed_coins_state.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/listed_coins_controller.g.dart';
+part 'generated/listed_coin_list_controller.g.dart';
 
 @Riverpod(keepAlive: true)
-class ListedCoinsController extends _$ListedCoinsController {
+class ListedCoinListController extends _$ListedCoinListController {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
   late final GetListedCoinsUseCase _getListedCoins;
 
   @override
-  ListedCoinsState build() {
+  ListedCoinListState build() {
     _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
 
     ref.onDispose(() => _searchListedCoinsDebounce.cancel());
 
-    return const ListedCoinsState.initial();
+    return const ListedCoinListState.initial();
   }
 
   List<ListedCoin> _lastListedCoins = const [];
@@ -33,11 +34,15 @@ class ListedCoinsController extends _$ListedCoinsController {
       searchStatus: ListedCoinsSearchStatus.initial,
     );
 
-    final listedCoins = _lastListedCoins = await _getListedCoins();
+    _lastListedCoins = _sortListedCoins(_lastListedCoins);
+
+    state = state.copyWith(listedCoins: _lastListedCoins);
+
+    _lastListedCoins = _sortListedCoins(await _getListedCoins());
 
     state = state.copyWith(
       status: ListedCoinsStatus.loaded,
-      listedCoins: listedCoins,
+      listedCoins: _lastListedCoins,
     );
   }
 
@@ -54,7 +59,10 @@ class ListedCoinsController extends _$ListedCoinsController {
             _lastListedCoins.where((listedCoin) {
               final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
               final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
-              final searchRegExp = RegExp(modifiedSearchValue, caseSensitive: false);
+              final searchRegExp = RegExp(
+                caseSensitive: false,
+                modifiedSearchValue,
+              );
 
               return searchRegExp.hasMatch(coinBaseAsset) ||
                   searchRegExp.hasMatch(coinDisplayName);
@@ -73,5 +81,26 @@ class ListedCoinsController extends _$ListedCoinsController {
 
       _lastSearchValue = modifiedSearchValue;
     }, const Duration(milliseconds: 250));
+  }
+
+  List<ListedCoin> _sortListedCoins(List<ListedCoin> listedCoins) {
+    final unselectedListedCoins = <ListedCoin>[];
+
+    final selectedListedCoins =
+        listedCoins.where((listedCoin) {
+            final isSelected =
+                ref.read(listedCoinItemControllerProvider(listedCoin)).selected;
+
+            if (!isSelected) {
+              unselectedListedCoins.add(listedCoin);
+            }
+
+            return isSelected;
+          }).toList()
+          ..sort((a, b) => a.symbol.compareTo(b.symbol));
+
+    unselectedListedCoins.sort((a, b) => a.symbol.compareTo(b.symbol));
+
+    return [...selectedListedCoins, ...unselectedListedCoins];
   }
 }
