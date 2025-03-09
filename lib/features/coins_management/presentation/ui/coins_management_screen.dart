@@ -19,14 +19,6 @@ class CoinsManagementScreen extends ConsumerStatefulWidget {
 
 class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(listedCoinListControllerProvider.notifier).loadListedCoins();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.bodyBackgroundColor,

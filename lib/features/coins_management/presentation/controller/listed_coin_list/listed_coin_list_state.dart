@@ -3,27 +3,39 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/listed_coin_list_state.freezed.dart';
 
-enum ListedCoinsStatus { initial, loading, loaded, error }
-
 enum ListedCoinsSearchStatus { initial, loading, searched, error }
 
 @freezed
 class ListedCoinListState with _$ListedCoinListState {
   const ListedCoinListState._({
-    required this.status,
     required this.searchStatus,
     required this.listedCoins,
   });
 
   const ListedCoinListState.initial()
     : this._(
-        status: ListedCoinsStatus.initial,
         searchStatus: ListedCoinsSearchStatus.initial,
         listedCoins: const [],
       );
 
-  @override
-  final ListedCoinsStatus status;
+  const ListedCoinListState.data({required List<ListedCoin> listedCoins})
+    : this._(
+        searchStatus: ListedCoinsSearchStatus.initial,
+        listedCoins: listedCoins,
+      );
+
+  const ListedCoinListState.searching()
+    : this._(
+        searchStatus: ListedCoinsSearchStatus.loading,
+        listedCoins: const [],
+      );
+
+  const ListedCoinListState.searchedData({required List<ListedCoin> listedCoins})
+    : this._(
+        searchStatus: ListedCoinsSearchStatus.searched,
+        listedCoins: listedCoins,
+      );
+
   @override
   final ListedCoinsSearchStatus searchStatus;
   @override

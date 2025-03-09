@@ -7,7 +7,7 @@ part of '../coin_exchange_item_klines_controller.dart';
 // **************************************************************************
 
 String _$coinExchangeItemKlinesControllerHash() =>
-    r'67ee4f582c1846358299ad3a064b78c3ff73f484';
+    r'63263cb9609d802e3ae4b3b78a9990cb60887349';
 
 /// Copied from Dart SDK
 class _SystemHash {

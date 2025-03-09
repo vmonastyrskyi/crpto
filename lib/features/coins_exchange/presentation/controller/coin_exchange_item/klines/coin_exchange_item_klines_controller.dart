@@ -14,7 +14,7 @@ class CoinExchangeItemKlinesController
   late final GetKlinesBySymbolUseCase _getKlinesBySymbol;
 
   @override
-  FutureOr<CoinExchangeItemKlinesState> build(String symbol) async {
+  FutureOr<CoinExchangeItemKlinesState> build(String symbol) {
     _getKlinesBySymbol = ref.watch(getKlinesBySymbolUseCaseProvider);
 
     final loadKlinesScheduledTask = Cron().schedule(

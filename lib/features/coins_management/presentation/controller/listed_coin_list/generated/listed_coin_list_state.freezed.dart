@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ListedCoinListState {
 
- ListedCoinsStatus get status; ListedCoinsSearchStatus get searchStatus; List<ListedCoin> get listedCoins;
+ ListedCoinsSearchStatus get searchStatus; List<ListedCoin> get listedCoins;
 /// Create a copy of ListedCoinListState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ListedCoinListStateCopyWith<ListedCoinListState> get copyWith => _$ListedCoinLi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinListState&&(identical(other.status, status) || other.status == status)&&(identical(other.searchStatus, searchStatus) || other.searchStatus == searchStatus)&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListedCoinListState&&(identical(other.searchStatus, searchStatus) || other.searchStatus == searchStatus)&&const DeepCollectionEquality().equals(other.listedCoins, listedCoins));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,status,searchStatus,const DeepCollectionEquality().hash(listedCoins));
+int get hashCode => Object.hash(runtimeType,searchStatus,const DeepCollectionEquality().hash(listedCoins));
 
 @override
 String toString() {
-  return 'ListedCoinListState(status: $status, searchStatus: $searchStatus, listedCoins: $listedCoins)';
+  return 'ListedCoinListState(searchStatus: $searchStatus, listedCoins: $listedCoins)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $ListedCoinListStateCopyWith<$Res>  {
   factory $ListedCoinListStateCopyWith(ListedCoinListState value, $Res Function(ListedCoinListState) _then) = _$ListedCoinListStateCopyWithImpl;
 @useResult
 $Res call({
- ListedCoinsStatus status, ListedCoinsSearchStatus searchStatus, List<ListedCoin> listedCoins
+ ListedCoinsSearchStatus searchStatus, List<ListedCoin> listedCoins
 });
 
 
@@ -63,10 +63,9 @@ class _$ListedCoinListStateCopyWithImpl<$Res>
 
 /// Create a copy of ListedCoinListState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? searchStatus = null,Object? listedCoins = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? searchStatus = null,Object? listedCoins = null,}) {
   return _then(ListedCoinListState._(
-status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as ListedCoinsStatus,searchStatus: null == searchStatus ? _self.searchStatus : searchStatus // ignore: cast_nullable_to_non_nullable
+searchStatus: null == searchStatus ? _self.searchStatus : searchStatus // ignore: cast_nullable_to_non_nullable
 as ListedCoinsSearchStatus,listedCoins: null == listedCoins ? _self.listedCoins : listedCoins // ignore: cast_nullable_to_non_nullable
 as List<ListedCoin>,
   ));

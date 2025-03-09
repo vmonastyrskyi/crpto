@@ -1,4 +1,3 @@
-import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_state.dart';
 import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
@@ -12,8 +11,6 @@ part 'generated/listed_coin_item_controller.g.dart';
 
 @riverpod
 class ListedCoinItemController extends _$ListedCoinItemController {
-  final Debounce _selectListedCoinDebounce = Debounce();
-
   late final GetCoinMetadataUseCase _getCoinMetadata;
   late final GetSelectedCoinsUseCase _getSelectedCoins;
   late final AddSelectedCoinUseCase _addSelectedCoin;
@@ -25,8 +22,6 @@ class ListedCoinItemController extends _$ListedCoinItemController {
     _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
     _addSelectedCoin = ref.watch(addSelectedCoinUseCaseProvider);
     _removeSelectedCoin = ref.watch(removeSelectedCoinUseCaseProvider);
-
-    ref.onDispose(() => _selectListedCoinDebounce.cancel());
 
     final metadata = _getCoinMetadata(listedCoin.symbol);
 
@@ -47,14 +42,12 @@ class ListedCoinItemController extends _$ListedCoinItemController {
   }
 
   void select(bool selected) {
+    final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
+
+    !selected
+        ? _removeSelectedCoin(selectedCoin)
+        : _addSelectedCoin(selectedCoin);
+
     state = state.copyWith(selected: selected);
-
-    _selectListedCoinDebounce(() {
-      final selectedCoin = SelectedCoin(symbol: listedCoin.symbol);
-
-      !selected
-          ? _removeSelectedCoin(selectedCoin)
-          : _addSelectedCoin(selectedCoin);
-    }, const Duration(milliseconds: 250));
   }
 }

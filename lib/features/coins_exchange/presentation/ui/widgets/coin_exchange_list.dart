@@ -59,7 +59,7 @@ class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
       onRefresh:
           ref
               .read(coinExchangeListControllerProvider.notifier)
-              .loadCoinsExchangeStats,
+              .refreshCoinsExchangeStats,
       child: ListView.builder(
         itemBuilder: (_, index) {
           final coinExchangeStats = coinsExchangeStats[index];

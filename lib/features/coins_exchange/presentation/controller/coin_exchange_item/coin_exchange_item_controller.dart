@@ -18,12 +18,10 @@ class CoinExchangeItemController extends _$CoinExchangeItemController {
 
     final metadata = _loadCoinMetadata(symbol);
 
-    final initialState = CoinExchangeItemState.initial(
+    return CoinExchangeItemState.initial(
       coinExchangeStats: coinExchangeStats,
       metadata: metadata,
     );
-
-    return initialState;
   }
 
   CoinMetadata _loadCoinMetadata(String symbol) => _getCoinMetadata(symbol);

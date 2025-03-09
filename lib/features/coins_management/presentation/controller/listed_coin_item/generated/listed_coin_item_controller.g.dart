@@ -7,7 +7,7 @@ part of '../listed_coin_item_controller.dart';
 // **************************************************************************
 
 String _$listedCoinItemControllerHash() =>
-    r'60abe58f606bdf7413e30dad82c68d9d608ecaa6';
+    r'74d0e590ec674d0947b71ed4915ebfdf769afe4d';
 
 /// Copied from Dart SDK
 class _SystemHash {

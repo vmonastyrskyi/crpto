@@ -2,6 +2,7 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
@@ -18,20 +19,29 @@ class ListedCoinList extends ConsumerStatefulWidget {
 class _ListedCoinListState extends ConsumerState<ListedCoinList> {
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(listedCoinListControllerProvider);
+    final asyncState = ref.watch(listedCoinListControllerProvider);
 
-    return switch (state) {
-      ListedCoinListState(status: final status, listedCoins: final listedCoins)
-          when status == ListedCoinsStatus.loading && listedCoins.isEmpty =>
-        _buildLoadingIndicator(),
-      ListedCoinListState(status: final status, listedCoins: final listedCoins)
-          when status == ListedCoinsStatus.loaded || listedCoins.isNotEmpty =>
-        _buildListedCoinList(listedCoins),
-      _ => _buildNoListedCoinsFoundWarning(),
-    };
+    switch (asyncState) {
+      case AsyncLoading(value: final state):
+        if (state == null || state.listedCoins.isEmpty) {
+          return _buildLoadingIndicator();
+        }
+
+        if (state.listedCoins.isNotEmpty) {
+          return _buildListedCoinList(state);
+        }
+      case AsyncData(value: final state):
+        if (state.listedCoins.isNotEmpty) {
+          return _buildListedCoinList(state);
+        }
+    }
+
+    return _buildNoListedCoinsFoundWarning();
   }
 
-  Widget _buildListedCoinList(List<ListedCoin> listedCoins) {
+  Widget _buildListedCoinList(ListedCoinListState state) {
+    final listedCoins = _sortListedCoins(state.listedCoins);
+
     return ListView.builder(
       itemBuilder: (_, index) {
         final listedCoin = listedCoins[index];
@@ -66,5 +76,28 @@ class _ListedCoinListState extends ConsumerState<ListedCoinList> {
         ),
       ),
     );
+  }
+}
+
+extension _ListedCoinListStateX on _ListedCoinListState {
+  List<ListedCoin> _sortListedCoins(List<ListedCoin> listedCoins) {
+    final unselectedListedCoins = <ListedCoin>[];
+
+    final selectedListedCoins =
+        listedCoins.where((listedCoin) {
+            final isSelected =
+                ref.read(listedCoinItemControllerProvider(listedCoin)).selected;
+
+            if (!isSelected) {
+              unselectedListedCoins.add(listedCoin);
+            }
+
+            return isSelected;
+          }).toList()
+          ..sort((a, b) => a.symbol.compareTo(b.symbol));
+
+    unselectedListedCoins.sort((a, b) => a.symbol.compareTo(b.symbol));
+
+    return [...selectedListedCoins, ...unselectedListedCoins];
   }
 }
