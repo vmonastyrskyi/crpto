@@ -44,9 +44,13 @@ class SelectedCoinRepository extends _$SelectedCoinRepository
   }
 
   @override
-  Stream<List<SelectedCoin>> listen() {
-    return _selectedCoinDataSource.watch().map((selectedCoinDTOs) {
-      return [...selectedCoinDTOs.map(SelectedCoinDTOMapper.toModel)];
-    });
+  Stream<List<SelectedCoin>> listen({required bool getOnWatch}) {
+    return _selectedCoinDataSource
+        .watch(getOnWatch: getOnWatch)
+        .map(
+          (selectedCoinDTOs) => [
+            ...selectedCoinDTOs.map(SelectedCoinDTOMapper.toModel),
+          ],
+        );
   }
 }

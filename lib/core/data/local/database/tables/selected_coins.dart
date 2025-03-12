@@ -1,6 +1,7 @@
 import 'package:crpto/core/data/local/database/database.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:drift/drift.dart';
+import 'package:rxdart/rxdart.dart';
 
 @DataClassName('SelectedCoinDTO')
 class SelectedCoins extends Table {
@@ -19,13 +20,13 @@ class SelectedCoins extends Table {
 
   List<SelectedCoinDTO> getAll() => [..._cache];
 
-  Future<void> insert(SelectedCoinDTO selectedCoinDTO) {
+  Future<int> insert(SelectedCoinDTO selectedCoinDTO) {
     _cache.add(selectedCoinDTO);
 
     return crptoDB.selectedCoins.insertOnConflictUpdate(selectedCoinDTO);
   }
 
-  Future<void> delete(SelectedCoinDTO selectedCoinDTO) {
+  Future<int> delete(SelectedCoinDTO selectedCoinDTO) {
     _cache.removeWhere((e) => e.symbol == selectedCoinDTO.symbol);
 
     return crptoDB.selectedCoins.deleteWhere(
@@ -33,8 +34,37 @@ class SelectedCoins extends Table {
     );
   }
 
-  Stream<List<SelectedCoinDTO>> watch() {
-    return crptoDB.selectedCoins.select().watch();
+  Stream<List<SelectedCoinDTO>> watch({required bool getOnWatch}) async* {
+    if (getOnWatch) {
+      yield await crptoDB.selectedCoins.select(distinct: true).get();
+    }
+
+    final insertStream = crptoDB.tableUpdates(
+      TableUpdateQuery.onTable(
+        limitUpdateKind: UpdateKind.insert,
+        crptoDB.selectedCoins,
+      ),
+    );
+
+    final updateStream = crptoDB.tableUpdates(
+      TableUpdateQuery.onTable(
+        limitUpdateKind: UpdateKind.update,
+        crptoDB.selectedCoins,
+      ),
+    );
+
+    final deleteStream = crptoDB.tableUpdates(
+      TableUpdateQuery.onTable(
+        limitUpdateKind: UpdateKind.delete,
+        crptoDB.selectedCoins,
+      ),
+    );
+
+    final combinedStream = Rx.merge([insertStream, updateStream, deleteStream]);
+
+    await for (final _ in combinedStream) {
+      yield await crptoDB.selectedCoins.select(distinct: true).get();
+    }
   }
 }
 

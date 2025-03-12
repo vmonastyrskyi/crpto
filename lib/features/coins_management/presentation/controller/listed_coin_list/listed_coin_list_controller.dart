@@ -18,7 +18,7 @@ class ListedCoinListController extends _$ListedCoinListController {
   String _lastSearchValue = emptyString;
 
   @override
-  Future<ListedCoinListState> build() async {
+  Future<ListedCoinListState> build() {
     _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
 
     ref.onDispose(() => _searchListedCoinsDebounce.cancel());

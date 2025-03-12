@@ -7,5 +7,5 @@ abstract interface class ISelectedCoinDataSource {
 
   Future<void> delete(SelectedCoinDTO selectedCoinDTO);
 
-  Stream<List<SelectedCoinDTO>> watch();
+  Stream<List<SelectedCoinDTO>> watch({required bool getOnWatch});
 }

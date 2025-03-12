@@ -22,5 +22,6 @@ class DriftSelectedCoinDataSource extends _$DriftSelectedCoinDataSource
       crptoDB.selectedCoins.delete(selectedCoinDTO);
 
   @override
-  Stream<List<SelectedCoinDTO>> watch() => crptoDB.selectedCoins.watch();
+  Stream<List<SelectedCoinDTO>> watch({required bool getOnWatch}) =>
+      crptoDB.selectedCoins.watch(getOnWatch: getOnWatch);
 }

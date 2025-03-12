@@ -7,5 +7,5 @@ abstract interface class ISelectedCoinRepository {
 
   Future<void> remove(SelectedCoin selectedCoin);
 
-  Stream<List<SelectedCoin>> listen();
+  Stream<List<SelectedCoin>> listen({required bool getOnWatch});
 }

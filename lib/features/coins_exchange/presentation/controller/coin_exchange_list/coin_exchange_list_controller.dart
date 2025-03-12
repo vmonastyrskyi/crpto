@@ -22,7 +22,7 @@ class CoinExchangeListController extends _$CoinExchangeListController {
   late final GetCoinsExchangeStatsUseCase _getCoinsExchangeStats;
 
   @override
-  FutureOr<CoinExchangeListState> build() {
+  Future<CoinExchangeListState> build() {
     _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
     _listenSelectedCoins = ref.watch(listenSelectedCoinsUseCaseProvider);
     _getCoinsExchangeStats = ref.watch(getCoinsExchangeStatsUseCaseProvider);
@@ -41,17 +41,17 @@ class CoinExchangeListController extends _$CoinExchangeListController {
       ),
     );
 
-    return const CoinExchangeListState.initial();
+    return _loadCoinsExchangeStats();
   }
 
   Future<void> refreshCoinsExchangeStats() =>
       _loadCoinsExchangeStats(debounce: false);
 
-  Future<void> _loadCoinsExchangeStats({
+  Future<CoinExchangeListState> _loadCoinsExchangeStats({
     List<SelectedCoin>? optionalSelectedCoins,
     bool debounce = false,
   }) {
-    final completer = Completer<void>();
+    final completer = Completer<CoinExchangeListState>();
 
     _loadCoinsExchangeStatsDebounce(() async {
       final selectedCoins =
@@ -69,10 +69,10 @@ class CoinExchangeListController extends _$CoinExchangeListController {
 
         state = AsyncData(CoinExchangeListState.data(coinsExchangeStats));
       } else {
-        state = const AsyncData(CoinExchangeListState.data([]));
+        state = const AsyncData(CoinExchangeListState.empty());
       }
 
-      completer.complete();
+      completer.complete(await future);
     }, debounce ? const Duration(milliseconds: 250) : Duration.zero);
 
     return completer.future;

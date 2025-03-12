@@ -7,7 +7,7 @@ part of '../listen_selected_coins.dart';
 // **************************************************************************
 
 String _$listenSelectedCoinsUseCaseHash() =>
-    r'55b0af0d7bfc3273c8cc696be70995754e4dd010';
+    r'97de88da6a3171081610f141fbbef142707ae05c';
 
 /// See also [ListenSelectedCoinsUseCase].
 @ProviderFor(ListenSelectedCoinsUseCase)

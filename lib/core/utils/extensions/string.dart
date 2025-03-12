@@ -12,9 +12,11 @@ extension StringX on String {
   static String formatCurrency(double price) {
     final formatter = NumberFormat.currency(
       locale: 'en_US',
-      decimalDigits: 2,
       symbol: '',
     );
+
+    formatter.minimumFractionDigits = 2;
+    formatter.maximumFractionDigits = 6;
 
     String formatted = formatter.format(price);
 

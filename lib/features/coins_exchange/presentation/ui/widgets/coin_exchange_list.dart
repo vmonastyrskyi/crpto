@@ -4,7 +4,6 @@ import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_controller.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_state.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_item.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,27 +51,18 @@ class _CoinExchangeListState extends ConsumerState<CoinExchangeList> {
 
     coinsExchangeStats.sort((a, b) => b.quoteVolume.compareTo(a.quoteVolume));
 
-    return CustomMaterialIndicator(
-      displacement: 16.0,
-      color: AppColors.bodyBackgroundColor,
-      backgroundColor: AppColors.primaryTextColor,
-      onRefresh:
-          ref
-              .read(coinExchangeListControllerProvider.notifier)
-              .refreshCoinsExchangeStats,
-      child: ListView.builder(
-        itemBuilder: (_, index) {
-          final coinExchangeStats = coinsExchangeStats[index];
+    return ListView.builder(
+      itemBuilder: (_, index) {
+        final coinExchangeStats = coinsExchangeStats[index];
 
-          return KeepAliveChild(
-            child: CoinExchangeItem(
-              key: ValueKey(coinExchangeStats.symbol),
-              coinExchangeStats: coinExchangeStats,
-            ),
-          );
-        },
-        itemCount: coinsExchangeStats.length,
-      ),
+        return KeepAliveChild(
+          child: CoinExchangeItem(
+            key: ValueKey(coinExchangeStats.symbol),
+            coinExchangeStats: coinExchangeStats,
+          ),
+        );
+      },
+      itemCount: coinsExchangeStats.length,
     );
   }
 

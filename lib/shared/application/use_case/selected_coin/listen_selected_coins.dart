@@ -16,5 +16,6 @@ class ListenSelectedCoinsUseCase extends _$ListenSelectedCoinsUseCase {
     return this;
   }
 
-  Stream<List<SelectedCoin>> call() => _selectedCoinRepository.listen();
+  Stream<List<SelectedCoin>> call({bool getOnWatch = false}) =>
+      _selectedCoinRepository.listen(getOnWatch: getOnWatch);
 }
