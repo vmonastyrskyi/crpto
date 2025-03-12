@@ -4,6 +4,7 @@ import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_controller.dart';
+import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_state.dart';
 import 'package:crpto/shared/domain/model/trade_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,8 +28,6 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       recentTradeItemControllerProvider(_recentTrade.symbol),
     );
 
-    final recentTrade = state.recentTrade ?? _recentTrade;
-
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -43,101 +42,133 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         color: AppColors.widgetBackgroundColor,
       ),
       child: Column(
+        spacing: 16.0,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 16.0,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              if (state.metadata.hasIcon)
-                VectorGraphic(
-                  width: 40.0,
-                  height: 40.0,
-                  loader: AssetBytesLoader(
-                    CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
-                  ),
-                ),
-              const SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    state.metadata.baseAsset,
-                    style: AppFonts.medium.copyWith(
-                      color: AppColors.primaryTextColor,
-                      fontSize: 16.0,
+                  if (state.metadata.hasIcon)
+                    VectorGraphic(
+                      width: 40.0,
+                      height: 40.0,
+                      loader: AssetBytesLoader(
+                        CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
+                      ),
                     ),
-                  ),
-                  Text(
-                    state.metadata.displayName,
-                    style: AppFonts.regular.copyWith(
-                      color: AppColors.secondaryTextColor,
-                      fontSize: 14.0,
-                    ),
+                  const SizedBox(width: 16.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        state.metadata.baseAsset,
+                        style: AppFonts.medium.copyWith(
+                          color: AppColors.primaryTextColor,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              _buildTradeType(state),
             ],
           ),
-          const SizedBox(height: 8.0),
+          _buildTradePrice(state),
+          _buildTradeAmount(state),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTradeType(RecentTradeItemState state) {
+    final recentTrade = state.recentTrade ?? _recentTrade;
+
+    final tradeType = recentTrade.type;
+
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: (tradeType == TradeType.buy
+                ? AppColors.positivePriceColor
+                : AppColors.negativePriceColor)
+            .withValues(alpha: 0.25),
+      ),
+      child: Text(
+        tradeType.name.toUpperCase(),
+        style: AppFonts.semiBold.copyWith(
+          color:
+              tradeType == TradeType.buy
+                  ? AppColors.positivePriceColor
+                  : AppColors.negativePriceColor,
+          fontSize: 16.0,
+          height: 1.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRowItem({required String label, required String value}) {
+    return SizedBox(
+      height: 24.0,
+      child: Row(
+        spacing: 16.0,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0),
+              color: AppColors.secondaryTextColor.withValues(alpha: 0.25),
+            ),
+            child: Text(
+              label.toUpperCase(),
+              style: AppFonts.semiBold.copyWith(
+                color: AppColors.secondaryTextColor,
+                fontSize: 12.0,
+                height: 1.0,
+              ),
+            ),
+          ),
           Text(
-            '\$${StringX.formatCurrency(recentTrade.price)}',
+            value,
             style: AppFonts.medium.copyWith(
               color: AppColors.primaryTextColor,
               fontSize: 16.0,
+              height: 1.0,
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            'P: \$${StringX.formatCurrency(recentTrade.price * recentTrade.quantity)}',
-            style: AppFonts.medium.copyWith(
-              color: AppColors.primaryTextColor,
-              fontSize: 16.0,
-            ),
-          ),
-          const SizedBox(height: 8.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            spacing: 8.0,
-            children: [
-              Text(
-                'A: ${recentTrade.quantity}',
-                style: AppFonts.medium.copyWith(
-                  color: AppColors.primaryTextColor,
-                  fontSize: 16.0,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 2.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: (recentTrade.type == TradeType.buy
-                          ? AppColors.positivePriceColor
-                          : AppColors.negativePriceColor)
-                      .withValues(alpha: 0.25),
-                ),
-                child: Center(
-                  child: Text(
-                    recentTrade.type.name.toUpperCase(),
-                    style: AppFonts.semiBold.copyWith(
-                      color:
-                          recentTrade.type == TradeType.buy
-                              ? AppColors.positivePriceColor
-                              : AppColors.negativePriceColor,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildTradePrice(RecentTradeItemState state) {
+    final recentTrade = state.recentTrade ?? _recentTrade;
+
+    final tradePrice = StringX.formatCurrency(
+      recentTrade.price * recentTrade.quantity,
+    );
+
+    return _buildRowItem(label: 'Price', value: tradePrice);
+  }
+
+  Widget _buildTradeAmount(RecentTradeItemState state) {
+    final recentTrade = state.recentTrade ?? _recentTrade;
+
+    final amount = recentTrade.quantity;
+
+    return _buildRowItem(label: 'Amount', value: '$amount');
   }
 }

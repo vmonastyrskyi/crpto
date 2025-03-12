@@ -33,18 +33,18 @@ class _RecentTradeListState extends ConsumerState<RecentTradeList> {
         }
 
         return ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 244.0),
+          constraints: const BoxConstraints(maxHeight: 184.0),
           child: LayoutBuilder(
             builder: (context, cons) {
               return CarouselSlider.builder(
                 itemCount: recentTrades.length,
                 options: CarouselOptions(
-                  autoPlay: false,
+                  height: 184.0,
+                  enableInfiniteScroll: recentTrades.length > 1,
                   viewportFraction: 0.667,
                   disableCenter: true,
+                  autoPlay: false,
                   padEnds: false,
-                  height: 212,
-                  enableInfiniteScroll: recentTrades.length > 1,
                 ),
                 itemBuilder: (_, index, _) {
                   final recentTrade = [...recentTrades.values][index];

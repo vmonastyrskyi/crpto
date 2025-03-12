@@ -9,14 +9,15 @@ extension StringX on String {
     return '${this[0].toUpperCase()}${substring(1).toLowerCase()}';
   }
 
-  static String formatCurrency(double price) {
-    final formatter = NumberFormat.currency(
-      locale: 'en_US',
-      symbol: '',
-    );
+  static String formatCurrency(
+    double price, {
+    int minimumFractionDigits = 2,
+    int maximumFractionDigits = 6,
+  }) {
+    final formatter = NumberFormat.currency(locale: 'en_US', symbol: '');
 
-    formatter.minimumFractionDigits = 2;
-    formatter.maximumFractionDigits = 6;
+    formatter.minimumFractionDigits = minimumFractionDigits;
+    formatter.maximumFractionDigits = maximumFractionDigits;
 
     String formatted = formatter.format(price);
 
