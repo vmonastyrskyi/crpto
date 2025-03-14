@@ -18,6 +18,8 @@ class RecentTradeItemController extends _$RecentTradeItemController {
   RecentTradeItemState build(String symbol) {
     _getCoinMetadata = ref.watch(getCoinMetadataUseCaseProvider);
 
+    ref.onDispose(() => _tradeStreamController.close());
+
     final metadata = _loadCoinMetadata(symbol);
 
     ref.listen(recentTradeListControllerProvider, (_, next) {
@@ -30,18 +32,11 @@ class RecentTradeItemController extends _$RecentTradeItemController {
       });
     });
 
-    _tradeStreamController
-        .throttleTime(
-          const Duration(seconds: 1),
-          trailing: true,
-          leading: false,
-        )
-        .listen((recentTrade) {
-          state = RecentTradeItemState.data(
-            recentTrade: recentTrade,
-            metadata: metadata,
-          );
-        });
+    _tradeStreamController.throttleTime(const Duration(seconds: 1)).listen((
+      recentTrade,
+    ) {
+      state = RecentTradeItemState.data(metadata: metadata, trade: recentTrade);
+    });
 
     return RecentTradeItemState.initial(metadata: metadata);
   }

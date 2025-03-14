@@ -7,7 +7,7 @@ part of '../binance_trade_data_source.dart';
 // **************************************************************************
 
 String _$binanceTradeDataSourceHash() =>
-    r'e7cd874c2b4f3001434c4bc97607991d8de71c2d';
+    r'36d8f40b46e9c84facd81eb89b15c8a45166b738';
 
 /// See also [BinanceTradeDataSource].
 @ProviderFor(BinanceTradeDataSource)

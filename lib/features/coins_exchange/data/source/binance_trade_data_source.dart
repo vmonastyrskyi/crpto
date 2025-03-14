@@ -4,6 +4,7 @@ import 'package:crpto/core/data/network/web_socket_client.dart';
 import 'package:crpto/features/coins_exchange/data/dto/recent_trade_dto.dart';
 import 'package:crpto/features/coins_exchange/data/source/i_trade_data_source.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 
 part 'generated/binance_trade_data_source.g.dart';
 
@@ -34,11 +35,23 @@ class BinanceTradeDataSource extends _$BinanceTradeDataSource
         _previousTrades.toSet().difference(trades.toSet()).toList();
 
     if (tradesToUnsubscribe.isNotEmpty) {
-      _webSocket.unsubscribe(tradesToUnsubscribe);
+      final request = jsonEncode({
+        'method': 'UNSUBSCRIBE',
+        'params': tradesToUnsubscribe,
+        'id': const Uuid().v1(),
+      });
+
+      _webSocket.sendMessage(request);
     }
 
     if (tradesToSubscribe.isNotEmpty) {
-      _webSocket.subscribe(tradesToSubscribe);
+      final request = jsonEncode({
+        'method': 'SUBSCRIBE',
+        'params': tradesToSubscribe,
+        'id': const Uuid().v1(),
+      });
+
+      _webSocket.sendMessage(request);
     }
 
     _previousTrades = trades;

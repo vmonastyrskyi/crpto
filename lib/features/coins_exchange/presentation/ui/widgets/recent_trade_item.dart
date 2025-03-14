@@ -52,6 +52,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
+                spacing: 16.0,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
@@ -63,7 +64,6 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                         CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
                       ),
                     ),
-                  const SizedBox(width: 16.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -72,6 +72,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                         style: AppFonts.medium.copyWith(
                           color: AppColors.primaryTextColor,
                           fontSize: 16.0,
+                          height: 1.5,
                         ),
                       ),
                     ],
@@ -89,7 +90,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   }
 
   Widget _buildTradeType(RecentTradeItemState state) {
-    final recentTrade = state.recentTrade ?? _recentTrade;
+    final recentTrade = state.trade ?? _recentTrade;
 
     final tradeType = recentTrade.type;
 
@@ -126,8 +127,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
+            padding: const EdgeInsets.all(6.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               color: AppColors.secondaryTextColor.withValues(alpha: 0.25),
@@ -146,7 +146,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             style: AppFonts.medium.copyWith(
               color: AppColors.primaryTextColor,
               fontSize: 16.0,
-              height: 1.0,
+              height: 1.5,
             ),
           ),
         ],
@@ -155,7 +155,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   }
 
   Widget _buildTradePrice(RecentTradeItemState state) {
-    final recentTrade = state.recentTrade ?? _recentTrade;
+    final recentTrade = state.trade ?? _recentTrade;
 
     final tradePrice = StringX.formatCurrency(
       recentTrade.price * recentTrade.quantity,
@@ -165,7 +165,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   }
 
   Widget _buildTradeAmount(RecentTradeItemState state) {
-    final recentTrade = state.recentTrade ?? _recentTrade;
+    final recentTrade = state.trade ?? _recentTrade;
 
     final amount = recentTrade.quantity;
 

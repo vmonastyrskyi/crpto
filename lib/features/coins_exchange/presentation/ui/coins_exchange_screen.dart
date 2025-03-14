@@ -3,10 +3,8 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/coin_exchange_list/coin_exchange_list_controller.dart';
-import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_exchange_list.dart';
+import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list.dart';
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,21 +30,11 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
             bottom: false,
             child: Scaffold(
               appBar: _buildAppBar(),
-              body: CustomMaterialIndicator(
-                displacement: 16.0,
-                color: AppColors.bodyBackgroundColor,
-                backgroundColor: AppColors.primaryTextColor,
-                trailingScrollIndicatorVisible: false,
-                onRefresh:
-                    ref
-                        .read(coinExchangeListControllerProvider.notifier)
-                        .refreshCoinsExchangeStats,
-                child: Column(
-                  children: <Widget>[
-                    const RecentTradeList(),
-                    const CoinExchangeList().expanded(),
-                  ],
-                ),
+              body: Column(
+                children: <Widget>[
+                  const RecentTradeList(),
+                  const CoinTickerList().expanded(),
+                ],
               ),
             ),
           ),

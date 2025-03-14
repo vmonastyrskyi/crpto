@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../recent_trade_item_controller.dart';
+part of '../coin_ticker_item_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$recentTradeItemControllerHash() =>
-    r'c8b2504df27d9082f159373697c703cb3199fcbf';
+String _$coinTickerItemControllerHash() =>
+    r'd07c7ce79315cedddee48db04d260ed272c39c10';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -30,30 +30,30 @@ class _SystemHash {
   }
 }
 
-abstract class _$RecentTradeItemController
-    extends BuildlessAutoDisposeNotifier<RecentTradeItemState> {
+abstract class _$CoinTickerItemController
+    extends BuildlessAutoDisposeNotifier<CoinTickerItemState> {
   late final String symbol;
 
-  RecentTradeItemState build(String symbol);
+  CoinTickerItemState build(String symbol);
 }
 
-/// See also [RecentTradeItemController].
-@ProviderFor(RecentTradeItemController)
-const recentTradeItemControllerProvider = RecentTradeItemControllerFamily();
+/// See also [CoinTickerItemController].
+@ProviderFor(CoinTickerItemController)
+const coinTickerItemControllerProvider = CoinTickerItemControllerFamily();
 
-/// See also [RecentTradeItemController].
-class RecentTradeItemControllerFamily extends Family<RecentTradeItemState> {
-  /// See also [RecentTradeItemController].
-  const RecentTradeItemControllerFamily();
+/// See also [CoinTickerItemController].
+class CoinTickerItemControllerFamily extends Family<CoinTickerItemState> {
+  /// See also [CoinTickerItemController].
+  const CoinTickerItemControllerFamily();
 
-  /// See also [RecentTradeItemController].
-  RecentTradeItemControllerProvider call(String symbol) {
-    return RecentTradeItemControllerProvider(symbol);
+  /// See also [CoinTickerItemController].
+  CoinTickerItemControllerProvider call(String symbol) {
+    return CoinTickerItemControllerProvider(symbol);
   }
 
   @override
-  RecentTradeItemControllerProvider getProviderOverride(
-    covariant RecentTradeItemControllerProvider provider,
+  CoinTickerItemControllerProvider getProviderOverride(
+    covariant CoinTickerItemControllerProvider provider,
   ) {
     return call(provider.symbol);
   }
@@ -70,33 +70,33 @@ class RecentTradeItemControllerFamily extends Family<RecentTradeItemState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'recentTradeItemControllerProvider';
+  String? get name => r'coinTickerItemControllerProvider';
 }
 
-/// See also [RecentTradeItemController].
-class RecentTradeItemControllerProvider
+/// See also [CoinTickerItemController].
+class CoinTickerItemControllerProvider
     extends
         AutoDisposeNotifierProviderImpl<
-          RecentTradeItemController,
-          RecentTradeItemState
+          CoinTickerItemController,
+          CoinTickerItemState
         > {
-  /// See also [RecentTradeItemController].
-  RecentTradeItemControllerProvider(String symbol)
+  /// See also [CoinTickerItemController].
+  CoinTickerItemControllerProvider(String symbol)
     : this._internal(
-        () => RecentTradeItemController()..symbol = symbol,
-        from: recentTradeItemControllerProvider,
-        name: r'recentTradeItemControllerProvider',
+        () => CoinTickerItemController()..symbol = symbol,
+        from: coinTickerItemControllerProvider,
+        name: r'coinTickerItemControllerProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$recentTradeItemControllerHash,
-        dependencies: RecentTradeItemControllerFamily._dependencies,
+                : _$coinTickerItemControllerHash,
+        dependencies: CoinTickerItemControllerFamily._dependencies,
         allTransitiveDependencies:
-            RecentTradeItemControllerFamily._allTransitiveDependencies,
+            CoinTickerItemControllerFamily._allTransitiveDependencies,
         symbol: symbol,
       );
 
-  RecentTradeItemControllerProvider._internal(
+  CoinTickerItemControllerProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -109,17 +109,17 @@ class RecentTradeItemControllerProvider
   final String symbol;
 
   @override
-  RecentTradeItemState runNotifierBuild(
-    covariant RecentTradeItemController notifier,
+  CoinTickerItemState runNotifierBuild(
+    covariant CoinTickerItemController notifier,
   ) {
     return notifier.build(symbol);
   }
 
   @override
-  Override overrideWith(RecentTradeItemController Function() create) {
+  Override overrideWith(CoinTickerItemController Function() create) {
     return ProviderOverride(
       origin: this,
-      override: RecentTradeItemControllerProvider._internal(
+      override: CoinTickerItemControllerProvider._internal(
         () => create()..symbol = symbol,
         from: from,
         name: null,
@@ -133,16 +133,16 @@ class RecentTradeItemControllerProvider
 
   @override
   AutoDisposeNotifierProviderElement<
-    RecentTradeItemController,
-    RecentTradeItemState
+    CoinTickerItemController,
+    CoinTickerItemState
   >
   createElement() {
-    return _RecentTradeItemControllerProviderElement(this);
+    return _CoinTickerItemControllerProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is RecentTradeItemControllerProvider && other.symbol == symbol;
+    return other is CoinTickerItemControllerProvider && other.symbol == symbol;
   }
 
   @override
@@ -156,23 +156,23 @@ class RecentTradeItemControllerProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin RecentTradeItemControllerRef
-    on AutoDisposeNotifierProviderRef<RecentTradeItemState> {
+mixin CoinTickerItemControllerRef
+    on AutoDisposeNotifierProviderRef<CoinTickerItemState> {
   /// The parameter `symbol` of this provider.
   String get symbol;
 }
 
-class _RecentTradeItemControllerProviderElement
+class _CoinTickerItemControllerProviderElement
     extends
         AutoDisposeNotifierProviderElement<
-          RecentTradeItemController,
-          RecentTradeItemState
+          CoinTickerItemController,
+          CoinTickerItemState
         >
-    with RecentTradeItemControllerRef {
-  _RecentTradeItemControllerProviderElement(super.provider);
+    with CoinTickerItemControllerRef {
+  _CoinTickerItemControllerProviderElement(super.provider);
 
   @override
-  String get symbol => (origin as RecentTradeItemControllerProvider).symbol;
+  String get symbol => (origin as CoinTickerItemControllerProvider).symbol;
 }
 
 // ignore_for_file: type=lint

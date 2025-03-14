@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RecentTradeItemState {
 
- RecentTrade? get recentTrade; CoinMetadata get metadata;
+ CoinMetadata get metadata; RecentTrade? get trade;
 /// Create a copy of RecentTradeItemState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $RecentTradeItemStateCopyWith<RecentTradeItemState> get copyWith => _$RecentTrad
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecentTradeItemState&&(identical(other.recentTrade, recentTrade) || other.recentTrade == recentTrade)&&(identical(other.metadata, metadata) || other.metadata == metadata));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecentTradeItemState&&(identical(other.metadata, metadata) || other.metadata == metadata)&&(identical(other.trade, trade) || other.trade == trade));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recentTrade,metadata);
+int get hashCode => Object.hash(runtimeType,metadata,trade);
 
 @override
 String toString() {
-  return 'RecentTradeItemState(recentTrade: $recentTrade, metadata: $metadata)';
+  return 'RecentTradeItemState(metadata: $metadata, trade: $trade)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $RecentTradeItemStateCopyWith<$Res>  {
   factory $RecentTradeItemStateCopyWith(RecentTradeItemState value, $Res Function(RecentTradeItemState) _then) = _$RecentTradeItemStateCopyWithImpl;
 @useResult
 $Res call({
- RecentTrade? recentTrade, CoinMetadata metadata
+ CoinMetadata metadata, RecentTrade? trade
 });
 
 
@@ -63,11 +63,11 @@ class _$RecentTradeItemStateCopyWithImpl<$Res>
 
 /// Create a copy of RecentTradeItemState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? recentTrade = freezed,Object? metadata = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? metadata = null,Object? trade = freezed,}) {
   return _then(RecentTradeItemState._(
-recentTrade: freezed == recentTrade ? _self.recentTrade : recentTrade // ignore: cast_nullable_to_non_nullable
-as RecentTrade?,metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
-as CoinMetadata,
+metadata: null == metadata ? _self.metadata : metadata // ignore: cast_nullable_to_non_nullable
+as CoinMetadata,trade: freezed == trade ? _self.trade : trade // ignore: cast_nullable_to_non_nullable
+as RecentTrade?,
   ));
 }
 

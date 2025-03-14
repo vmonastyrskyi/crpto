@@ -1,31 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../recent_trade_list_controller.dart';
+part of '../coin_ticker_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$recentTradeListControllerHash() =>
-    r'f831f2a86437c49a4e256c75347043d9b7d36c4b';
+String _$coinTickerListControllerHash() =>
+    r'035b834017b285b9d631b9328647eff7c596fb62';
 
-/// See also [RecentTradeListController].
-@ProviderFor(RecentTradeListController)
-final recentTradeListControllerProvider = AutoDisposeStreamNotifierProvider<
-  RecentTradeListController,
-  RecentTradeListState
+/// See also [CoinTickerListController].
+@ProviderFor(CoinTickerListController)
+final coinTickerListControllerProvider = StreamNotifierProvider<
+  CoinTickerListController,
+  CoinTickerListState
 >.internal(
-  RecentTradeListController.new,
-  name: r'recentTradeListControllerProvider',
+  CoinTickerListController.new,
+  name: r'coinTickerListControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$recentTradeListControllerHash,
+          : _$coinTickerListControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RecentTradeListController =
-    AutoDisposeStreamNotifier<RecentTradeListState>;
+typedef _$CoinTickerListController = StreamNotifier<CoinTickerListState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

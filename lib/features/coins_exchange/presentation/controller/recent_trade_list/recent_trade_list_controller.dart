@@ -29,6 +29,12 @@ class RecentTradeListController extends _$RecentTradeListController {
     _listenRecentTrades = await ref.watch(listenRecentTradesUseCaseProvider);
     _listenSelectedCoins = ref.watch(listenSelectedCoinsUseCaseProvider);
 
+    ref.onDispose(() => _listenRecentTradesDebounce.cancel());
+
+    ref.onDispose(() => _recentTradesStreamSubscription?.cancel());
+
+    ref.onDispose(() => _streamController.close());
+
     _listenSelectedCoins(getOnWatch: true).listen((selectedCoins) {
       _listenRecentTradesDebounce(() {
         state.whenData((data) {

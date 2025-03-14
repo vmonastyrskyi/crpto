@@ -6,18 +6,18 @@ part 'generated/recent_trade_item_state.freezed.dart';
 
 @freezed
 class RecentTradeItemState with _$RecentTradeItemState {
-  const RecentTradeItemState._({this.recentTrade, required this.metadata});
+  const RecentTradeItemState._({required this.metadata, this.trade});
 
   const RecentTradeItemState.initial({required CoinMetadata metadata})
     : this._(metadata: metadata);
 
   const RecentTradeItemState.data({
-    RecentTrade? recentTrade,
     required CoinMetadata metadata,
-  }) : this._(recentTrade: recentTrade, metadata: metadata);
+    RecentTrade? trade,
+  }) : this._(metadata: metadata, trade: trade);
 
   @override
-  final RecentTrade? recentTrade;
-  @override
   final CoinMetadata metadata;
+  @override
+  final RecentTrade? trade;
 }
