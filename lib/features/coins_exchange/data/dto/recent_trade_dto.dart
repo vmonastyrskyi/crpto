@@ -3,10 +3,9 @@ import 'package:crpto/shared/domain/model/trade_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/recent_trade_dto.freezed.dart';
-part 'generated/recent_trade_dto.g.dart';
 
 @freezed
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createFactory: false, createToJson: false)
 class RecentTradeDTO with _$RecentTradeDTO {
   const RecentTradeDTO({
     required this.id,
@@ -17,23 +16,25 @@ class RecentTradeDTO with _$RecentTradeDTO {
   });
 
   @override
-  @JsonKey(name: 't')
   final int id;
   @override
-  @JsonKey(name: 's')
   final String symbol;
   @override
-  @JsonKey(name: 'p')
   final String price;
   @override
-  @JsonKey(name: 'q')
   final String quantity;
   @override
-  @JsonKey(name: 'm')
   final bool isBuyerMaker;
 
-  factory RecentTradeDTO.fromJson(Map<String, dynamic> json) =>
-      _$RecentTradeDTOFromJson(json);
+  factory RecentTradeDTO.fromJson(Map<String, dynamic> json) {
+    return RecentTradeDTO(
+      id: (json['id'] ??= json['t']) as int,
+      symbol: (json['symbol'] ??= json['s']) as String,
+      price: (json['price'] ??= json['p']) as String,
+      quantity: (json['qty'] ??= json['q']) as String,
+      isBuyerMaker: (json['isBuyerMaker'] ??= json['m']) as bool,
+    );
+  }
 }
 
 extension RecentTradeDTOMapper on RecentTradeDTO {

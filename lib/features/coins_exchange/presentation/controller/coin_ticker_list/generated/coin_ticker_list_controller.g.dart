@@ -7,7 +7,7 @@ part of '../coin_ticker_list_controller.dart';
 // **************************************************************************
 
 String _$coinTickerListControllerHash() =>
-    r'035b834017b285b9d631b9328647eff7c596fb62';
+    r'ce41a3cde975c5e211c1babc0d6a663fe406d99f';
 
 /// See also [CoinTickerListController].
 @ProviderFor(CoinTickerListController)

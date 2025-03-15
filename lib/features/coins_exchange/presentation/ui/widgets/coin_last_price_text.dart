@@ -93,7 +93,7 @@ class _CoinLastPriceTextState extends State<CoinLastPriceText>
             color: _bodyColorAnimation.value,
           ),
           child: Text(
-            lastPrice,
+            '\$$lastPrice',
             style: AppFonts.medium.copyWith(
               color: _textColorAnimation.value,
               fontSize: 16.0,

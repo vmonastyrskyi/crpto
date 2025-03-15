@@ -19,6 +19,19 @@ class TradeRepository extends _$TradeRepository implements ITradeRepository {
   }
 
   @override
+  Future<List<RecentTrade>> getRecentTrades(String symbol, {int? limit}) async {
+    final recentTradeDTOs = await _tradeDataSource.getRecentTrades(
+      limit: limit,
+      symbol,
+    );
+
+    final recentTrades =
+        recentTradeDTOs.map(RecentTradeDTOMapper.toModel).toList();
+
+    return recentTrades;
+  }
+
+  @override
   Stream<RecentTrade> listenRecentTrades(List<String> symbols) {
     final recentTradeStream = _tradeDataSource.watchRecentTrades(symbols);
 

@@ -13,6 +13,8 @@ class RecentTradeListState with _$RecentTradeListState {
     required Map<String, RecentTrade> recentTrades,
   }) : this._(recentTrades: recentTrades);
 
+  const RecentTradeListState.empty() : this._(recentTrades: const {});
+
   @override
   final Map<String, RecentTrade> recentTrades;
 }

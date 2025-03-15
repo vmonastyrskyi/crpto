@@ -1,5 +1,5 @@
 import 'package:crpto/shared/data/dto/ticker/coin_ticker_dto.dart';
-import 'package:crpto/shared/data/source/ticker/binance_coin_data_source.dart';
+import 'package:crpto/shared/data/source/ticker/binance_ticker_data_source.dart';
 import 'package:crpto/shared/data/source/ticker/i_ticker_data_source.dart';
 import 'package:crpto/shared/domain/model/ticker/coin_ticker.dart';
 import 'package:crpto/shared/domain/repository/i_ticker_repository.dart';

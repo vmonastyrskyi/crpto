@@ -7,11 +7,11 @@ part of '../recent_trade_list_controller.dart';
 // **************************************************************************
 
 String _$recentTradeListControllerHash() =>
-    r'f831f2a86437c49a4e256c75347043d9b7d36c4b';
+    r'12aac4cb25e6e3502d3235bfebbe7cb136ce1c6f';
 
 /// See also [RecentTradeListController].
 @ProviderFor(RecentTradeListController)
-final recentTradeListControllerProvider = AutoDisposeStreamNotifierProvider<
+final recentTradeListControllerProvider = AsyncNotifierProvider<
   RecentTradeListController,
   RecentTradeListState
 >.internal(
@@ -25,7 +25,6 @@ final recentTradeListControllerProvider = AutoDisposeStreamNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$RecentTradeListController =
-    AutoDisposeStreamNotifier<RecentTradeListState>;
+typedef _$RecentTradeListController = AsyncNotifier<RecentTradeListState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

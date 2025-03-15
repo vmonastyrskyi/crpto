@@ -41,7 +41,7 @@ class CoinTickerListController extends _$CoinTickerListController {
 
     yield await _loadCoinTickers();
 
-    _listenSelectedCoins(getOnWatch: true).listen((selectedCoins) async {
+    _listenSelectedCoins(getOnWatch: true).listen((selectedCoins) {
       _loadCoinTickersDebounce(() async {
         await _loadCoinTickers(selectedCoins);
 

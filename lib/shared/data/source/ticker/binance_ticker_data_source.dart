@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
-part 'generated/binance_coin_data_source.g.dart';
+part 'generated/binance_ticker_data_source.g.dart';
 
 @riverpod
 final class BinanceTickerDataSource extends _$BinanceTickerDataSource
