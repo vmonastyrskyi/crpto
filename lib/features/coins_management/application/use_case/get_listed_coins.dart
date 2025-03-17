@@ -26,6 +26,9 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
     List<ListedCoin> listedCoinList =
         (await _coinRepository.getListedCoins())
             .where((listedCoin) => listedCoin.quoteAsset == 'USDT')
+            .where(
+              (listedCoin) => CryptoUtils.isIconExists(listedCoin.baseAsset),
+            )
             .toList();
 
     final coinMetadataList =
@@ -42,7 +45,7 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
             baseAsset: baseAsset,
             quoteAsset: quoteAsset,
             displayName: displayName,
-            hasIcon: hasIcon,
+            hasIcon: true,
             status: status,
           );
         }).toList();

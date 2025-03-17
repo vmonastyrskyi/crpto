@@ -1,12 +1,11 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
+import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 
 class ListedCoinListItem extends ConsumerStatefulWidget {
   const ListedCoinListItem({super.key, required this.listedCoin});
@@ -31,15 +30,9 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (state.metadata.hasIcon)
-            VectorGraphic(
-              width: 40.0,
-              height: 40.0,
-              loader: AssetBytesLoader(
-                CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
-              ),
-            ),
+          TokenIcon(token: state.metadata.baseAsset),
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
@@ -47,6 +40,7 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
                 style: AppFonts.medium.copyWith(
                   color: AppColors.primaryTextColor,
                   fontSize: 16.0,
+                  height: 1.5,
                 ),
               ),
               Text(
@@ -54,6 +48,7 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
                 style: AppFonts.medium.copyWith(
                   color: AppColors.secondaryTextColor,
                   fontSize: 14.0,
+                  height: 1.5,
                 ),
               ),
             ],

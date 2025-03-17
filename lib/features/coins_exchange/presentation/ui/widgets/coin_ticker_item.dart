@@ -1,14 +1,14 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/coin_ticker_item/coin_ticker_item_controller.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_klines_chart.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_last_price_text.dart';
 import 'package:crpto/shared/domain/model/ticker/coin_ticker.dart';
+import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vector_graphics/vector_graphics.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CoinTickerItem extends ConsumerStatefulWidget {
   const CoinTickerItem({super.key, required this.coinTicker});
@@ -35,15 +35,9 @@ class _CoinTickerListItemState extends ConsumerState<CoinTickerItem> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (state.metadata.hasIcon)
-            VectorGraphic(
-              width: 40.0,
-              height: 40.0,
-              loader: AssetBytesLoader(
-                CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
-              ),
-            ),
+          TokenIcon(token: state.metadata.baseAsset),
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
@@ -95,16 +89,36 @@ class _CoinTickerListItemState extends ConsumerState<CoinTickerItem> {
     final isPriceChangePercentNegative = ticker.priceChangePercent.isNegative;
     final priceChangePercent = ticker.priceChangePercent.toStringAsFixed(2);
 
-    return Text(
-      '$priceChangePercent%',
-      style: AppFonts.medium.copyWith(
-        color:
+    return Row(
+      spacing: 4.0,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        SvgPicture.asset(
+          isPriceChangePercentNegative
+              ? 'assets/svgs/common/arrow_down.svg'
+              : 'assets/svgs/common/arrow_up.svg',
+          colorFilter: ColorFilter.mode(
             isPriceChangePercentNegative
                 ? AppColors.negativePriceColor
                 : AppColors.positivePriceColor,
-        fontSize: 14.0,
-        height: 1.5,
-      ),
+            BlendMode.srcIn,
+          ),
+          width: 8.0,
+        ),
+        Text(
+          '$priceChangePercent%',
+          style: AppFonts.medium.copyWith(
+            color:
+                isPriceChangePercentNegative
+                    ? AppColors.negativePriceColor
+                    : AppColors.positivePriceColor,
+            fontSize: 14.0,
+            height: 1.5,
+          ),
+        ),
+      ],
     ).withPaddingOnly(right: 6.0);
   }
 }

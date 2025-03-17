@@ -25,22 +25,31 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlinesChart> {
       coinKlineListControllerProvider(_coinTicker.symbol),
     );
 
+    Widget child = _buildNoDataWarning();
+
     switch (asyncState) {
       case AsyncLoading(value: final state):
         if (state == null || state.klines.isEmpty) {
-          return _buildLoadingIndicator();
-        }
-
-        if (state.klines.isNotEmpty) {
-          return _buildKlineChart(state);
+          child = SizedBox.shrink(key: UniqueKey());
+        } else if (state.klines.isNotEmpty) {
+          child = _buildKlineChart(state);
         }
       case AsyncData(value: final state):
         if (state.klines.isNotEmpty) {
-          return _buildKlineChart(state);
+          child = _buildKlineChart(state);
         }
     }
 
-    return _buildNoDataWarning();
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 500),
+      switchInCurve: Curves.fastOutSlowIn,
+      switchOutCurve: Curves.fastOutSlowIn,
+      transitionBuilder:
+          (child, animation) =>
+              FadeTransition(opacity: animation, child: child),
+      child: child,
+    );
   }
 
   Widget _buildKlineChart(CoinKlineListState state) {
@@ -79,9 +88,10 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlinesChart> {
                       ? AppColors.positivePriceColor
                       : AppColors.negativePriceColor,
               dotData: const FlDotData(show: false),
-              preventCurveOverShooting: true,
+              preventCurveOverShooting: false,
               isStrokeJoinRound: true,
               isStrokeCapRound: true,
+              curveSmoothness: 0.34,
               isCurved: true,
               barWidth: 2.0,
             ),
@@ -90,18 +100,6 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlinesChart> {
           titlesData: const FlTitlesData(show: false),
           gridData: const FlGridData(show: false),
           borderData: FlBorderData(show: false),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingIndicator() {
-    return const Center(
-      child: SizedBox.square(
-        dimension: 24.0,
-        child: CircularProgressIndicator(
-          color: AppColors.primaryTextColor,
-          strokeWidth: 2.0,
         ),
       ),
     );

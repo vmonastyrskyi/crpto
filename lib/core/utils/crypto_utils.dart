@@ -1,11 +1,7 @@
 import 'package:flutter/services.dart';
 
 abstract final class CryptoUtils {
-  static final RegExp _iconNameRegex = RegExp(
-    r'(?<=crypto_icons/)[^.]+(?=\.svg)',
-  );
-
-  static final List<String> _iconNames = [];
+  static final RegExp _iconNameRegex = RegExp(r'(?<=tokens/)[^.]+(?=\.svg)');
 
   static final Map<String, String> _displayNames = Map.unmodifiable({
     'btc': 'Bitcoin',
@@ -408,19 +404,23 @@ abstract final class CryptoUtils {
     'hei': 'Hei Token',
   });
 
+  static final Set<String> _iconNames = {};
+
   static Future<void> init() async {
     final assetManifest = await AssetManifest.loadFromAssetBundle(rootBundle);
-    final cryptoIconPaths =
-        assetManifest
-            .listAssets()
-            .where((path) => path.startsWith('assets/svgs/crypto_icons/'))
-            .toList();
+
+    final tokenPaths = [
+      ...assetManifest.listAssets().where(
+        (path) => path.startsWith('assets/svgs/tokens/'),
+      ),
+    ];
 
     _iconNames.addAll(
-      cryptoIconPaths
-          .map((path) => _iconNameRegex.firstMatch(path)?.group(0))
-          .nonNulls
-          .toList(),
+      tokenPaths
+          .map(
+            (path) => _iconNameRegex.firstMatch(path)?.group(0)?.toLowerCase(),
+          )
+          .nonNulls,
     );
   }
 
@@ -429,11 +429,11 @@ abstract final class CryptoUtils {
   }
 
   static String getSvgVecPath(String iconName) {
-    return 'assets/svgs_vec/crypto_icons/${iconName.toLowerCase()}.svg.vec';
+    return 'assets/svgs_vec/tokens/$iconName.svg.vec';
   }
 
   static String getSvgPath(String iconName) {
-    return 'assets/svgs/crypto_icons/${iconName.toLowerCase()}.svg';
+    return 'assets/svgs/tokens/$iconName.svg';
   }
 
   static bool isIconExists(String iconName) {

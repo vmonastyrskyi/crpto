@@ -15,61 +15,67 @@ class CoinLastPriceText extends StatefulWidget {
 class _CoinLastPriceTextState extends State<CoinLastPriceText>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
+  late final CurvedAnimation _fastOutSlowInAnimation;
 
   late Animation<Color?> _bodyColorAnimation;
   late Animation<Color?> _textColorAnimation;
 
-  late double _oldLastPrice;
+  late double _previousLastPrice;
 
   @override
   void initState() {
     super.initState();
-
-    _oldLastPrice = widget.lastPrice;
 
     _animationController = AnimationController(
       duration: const Duration(seconds: 1),
       vsync: this,
     );
 
+    _fastOutSlowInAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.fastOutSlowIn,
+    );
+
     _bodyColorAnimation = ColorTween(
       begin: AppColors.transparent,
       end: AppColors.transparent,
-    ).animate(_animationController);
+    ).animate(_fastOutSlowInAnimation);
     _textColorAnimation = ColorTween(
       begin: AppColors.primaryTextColor,
       end: AppColors.primaryTextColor,
-    ).animate(_animationController);
+    ).animate(_fastOutSlowInAnimation);
+
+    _previousLastPrice = widget.lastPrice;
   }
 
   @override
   void didUpdateWidget(covariant CoinLastPriceText oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.lastPrice != _oldLastPrice) {
-      if (widget.lastPrice > _oldLastPrice) {
+    if (widget.lastPrice != _previousLastPrice) {
+      if (widget.lastPrice > _previousLastPrice) {
         _bodyColorAnimation = ColorTween(
           begin: AppColors.positivePriceColor.withValues(alpha: 0.25),
           end: AppColors.transparent,
-        ).animate(_animationController);
+        ).animate(_fastOutSlowInAnimation);
         _textColorAnimation = ColorTween(
           begin: AppColors.positivePriceColor,
           end: AppColors.primaryTextColor,
-        ).animate(_animationController);
+        ).animate(_fastOutSlowInAnimation);
       } else {
         _bodyColorAnimation = ColorTween(
           begin: AppColors.negativePriceColor.withValues(alpha: 0.25),
           end: AppColors.transparent,
-        ).animate(_animationController);
+        ).animate(_fastOutSlowInAnimation);
         _textColorAnimation = ColorTween(
           begin: AppColors.negativePriceColor,
           end: AppColors.primaryTextColor,
-        ).animate(_animationController);
+        ).animate(_fastOutSlowInAnimation);
       }
 
       _animationController.forward(from: 0.0);
 
-      _oldLastPrice = widget.lastPrice;
+      _previousLastPrice = widget.lastPrice;
     }
   }
 

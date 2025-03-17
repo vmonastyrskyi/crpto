@@ -7,7 +7,7 @@ part of '../recent_trade_list_controller.dart';
 // **************************************************************************
 
 String _$recentTradeListControllerHash() =>
-    r'12aac4cb25e6e3502d3235bfebbe7cb136ce1c6f';
+    r'a4b5ac97ae21fab7c1a67237769ba1fd17fce09e';
 
 /// See also [RecentTradeListController].
 @ProviderFor(RecentTradeListController)

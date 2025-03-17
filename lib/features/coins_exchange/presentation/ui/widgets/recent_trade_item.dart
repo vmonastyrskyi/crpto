@@ -1,14 +1,14 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
+import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_controller.dart';
 import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_state.dart';
 import 'package:crpto/shared/domain/model/trade_type.dart';
+import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vector_graphics/vector_graphics.dart';
 
 class RecentTradeItem extends ConsumerStatefulWidget {
   const RecentTradeItem({super.key, required this.recentTrade});
@@ -39,7 +39,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             blurRadius: 4.0,
           ),
         ],
-        color: AppColors.widgetBackgroundColor,
+        color: AppColors.widgetBackgroundColorDark,
       ),
       child: Column(
         spacing: 16.0,
@@ -48,7 +48,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         children: <Widget>[
           Row(
             spacing: 16.0,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
@@ -56,29 +56,17 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  if (state.metadata.hasIcon)
-                    VectorGraphic(
-                      width: 40.0,
-                      height: 40.0,
-                      loader: AssetBytesLoader(
-                        CryptoUtils.getSvgVecPath(state.metadata.baseAsset),
-                      ),
+                  TokenIcon(token: state.metadata.baseAsset),
+                  Text(
+                    state.metadata.baseAsset,
+                    style: AppFonts.medium.copyWith(
+                      color: AppColors.primaryTextColor,
+                      fontSize: 16.0,
+                      height: 1.5,
                     ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        state.metadata.baseAsset,
-                        style: AppFonts.medium.copyWith(
-                          color: AppColors.primaryTextColor,
-                          fontSize: 16.0,
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
-              ),
+              ).expanded(),
               _buildTradeType(state),
             ],
           ),
