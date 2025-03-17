@@ -5,7 +5,7 @@ abstract final class AppColors {
   static const Color black = Color(0xFF232323);
   static const Color transparent = Color(0x00000000);
 
-  static const Color primaryColor = Color(0xFF734AC9);
+  static const Color primaryColor = Color(0xFF3BBD81);
 
   static const Color bodyBackgroundColor = Color(0xFF1B1B1B);
   static const Color widgetBackgroundColorDark = Color(0xFF2A2A2A);
