@@ -2,25 +2,25 @@ import 'dart:ui';
 
 abstract final class AppColors {
   static const Color white = Color(0xFFFFFFFF);
-  static const Color black = Color(0xFF232323);
+  static const Color black = Color(0xFF000000);
   static const Color transparent = Color(0x00000000);
 
   static const Color primaryColor = Color(0xFF3BBD81);
 
   static const Color bodyBackgroundColor = Color(0xFF1B1B1B);
-  static const Color widgetBackgroundColorDark = Color(0xFF2A2A2A);
-  static const Color widgetBackgroundColorLight = Color(0xFF393939);
+  static const Color widgetBackgroundColorDark = Color(0xFF242424);
+  static const Color widgetBackgroundColorLight = Color(0xFF2D2D2D);
 
-  static const Color primaryTextColor = Color(0xFFEAEAEA);
-  static const Color secondaryTextColor = Color(0xFF7C8186);
-  static const Color hintTextColor = Color(0xFF7C8186);
-  static const Color iconColor = Color(0xFF7C8186);
+  static const Color primaryTextColor = Color(0xFFE2E6EA);
+  static const Color secondaryTextColor = Color(0xFF83888D);
+  static const Color hintTextColor = secondaryTextColor;
+  static const Color iconColor = secondaryTextColor;
 
   static const Color shadowColor = Color(0xFF383838);
 
   static const Color switchActiveColor = white;
   static const Color switchActiveTrackColor = primaryColor;
-  static const Color switchInactiveTrackColor = Color(0xFF454D5A);
+  static const Color switchInactiveTrackColor = widgetBackgroundColorLight;
   static const Color switchInactiveThumbColor = white;
   static const Color switchTrackOutlineColor = transparent;
 
