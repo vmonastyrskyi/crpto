@@ -6,6 +6,18 @@ import 'core/navigation/router.dart';
 import 'core/utils/app_colors.dart';
 import 'flavors.dart';
 
+ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
+  primaryColor: AppColors.primaryColor,
+  scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
+  dividerTheme: const DividerThemeData(color: Colors.transparent),
+  pageTransitionsTheme: PageTransitionsTheme(
+    builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+      value: (_) => const FadeForwardsPageTransitionsBuilder(),
+      TargetPlatform.values,
+    ),
+  ),
+);
+
 class CrptoApp extends ConsumerWidget {
   const CrptoApp({super.key});
 
@@ -13,10 +25,13 @@ class CrptoApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
 
-    return MaterialApp.router(
-      routerConfig: appRouter,
-      builder: (_, child) => _buildFlavorBanner(show: kDebugMode, child: child),
-      theme: darkTheme,
+    return _EagerInitialization(
+      child: MaterialApp.router(
+        routerConfig: appRouter,
+        builder:
+            (_, child) => _buildFlavorBanner(show: kDebugMode, child: child),
+        theme: darkTheme,
+      ),
     );
   }
 
@@ -37,14 +52,17 @@ class CrptoApp extends ConsumerWidget {
   }
 }
 
-ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
-  primaryColor: AppColors.primaryColor,
-  scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
-  dividerTheme: const DividerThemeData(color: Colors.transparent),
-  pageTransitionsTheme: PageTransitionsTheme(
-    builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-      value: (_) => const FadeForwardsPageTransitionsBuilder(),
-      TargetPlatform.values,
-    ),
-  ),
-);
+class _EagerInitialization extends ConsumerStatefulWidget {
+  const _EagerInitialization({required this.child});
+
+  final Widget child;
+
+  @override
+  ConsumerState<_EagerInitialization> createState() =>
+      _EagerInitializationState();
+}
+
+class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
