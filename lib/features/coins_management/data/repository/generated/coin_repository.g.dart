@@ -6,7 +6,7 @@ part of '../coin_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinRepositoryHash() => r'152a20893d74eb4715105d06ee102c940917622d';
+String _$coinRepositoryHash() => r'24269e3a219459e2f74df6484a108addb22a3263';
 
 /// See also [CoinRepository].
 @ProviderFor(CoinRepository)

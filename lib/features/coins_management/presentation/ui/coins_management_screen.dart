@@ -32,7 +32,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
               body: Column(
                 children: <Widget>[
                   _buildSearchBar(),
-                  const ListedCoinList().expanded(),
+                  const ListedCoinListView().expanded(),
                 ],
               ),
             ),
@@ -55,6 +55,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
 
   Widget _buildAppBarTitle() {
     return Row(
+      spacing: 12.0,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -64,7 +65,6 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
           ),
           color: AppColors.iconColor,
         ).withPaddingAll(4.0),
-        const SizedBox(width: 16.0),
         Text(
           'Manage crypto',
           style: AppFonts.semiBold.copyWith(
@@ -81,6 +81,6 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
       hintText: 'Search',
       onChanged:
           ref.read(listedCoinListControllerProvider.notifier).searchListedCoins,
-    ).withPaddingAll(16.0);
+    ).withPaddingAll(12.0);
   }
 }

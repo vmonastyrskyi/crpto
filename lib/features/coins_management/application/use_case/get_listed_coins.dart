@@ -37,7 +37,6 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
           final baseAsset = listedCoin.baseAsset;
           final quoteAsset = listedCoin.quoteAsset;
           final displayName = CryptoUtils.getDisplayName(baseAsset);
-          final hasIcon = CryptoUtils.isIconExists(baseAsset);
           final status = listedCoin.status;
 
           return CoinMetadata(
@@ -45,7 +44,6 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
             baseAsset: baseAsset,
             quoteAsset: quoteAsset,
             displayName: displayName,
-            hasIcon: true,
             status: status,
           );
         }).toList();

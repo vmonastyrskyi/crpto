@@ -1,9 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path fill="url(#TGT__a)" d="M12.827 11.674 8.41 7.646 20.72 3zm4.421 4.033L3.281 21l9.546-9.326z"/>
+    <g clip-path="url(#TGT__a)">
+        <path fill="url(#TGT__b)" d="M24 0H0v24h24z"/>
+        <path fill="#fff" d="M12.735 11.71 8.81 8.13 19.75 4zm3.93 3.585L4.25 20l8.485-8.29z"/>
+    </g>
     <defs>
-        <linearGradient id="TGT__a" x1="3.281" x2="20.719" y1="21" y2="21" gradientUnits="userSpaceOnUse">
+        <linearGradient id="TGT__b" x1="4.25" x2="19.75" y1="20" y2="20" gradientUnits="userSpaceOnUse">
             <stop stop-color="#0CF"/>
             <stop offset="1" stop-color="#3F9"/>
         </linearGradient>
+        <clipPath id="TGT__a">
+            <path fill="#fff" d="M0 0h24v24H0z"/>
+        </clipPath>
     </defs>
 </svg>

@@ -3,40 +3,43 @@ import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ListedCoinListItem extends ConsumerStatefulWidget {
-  const ListedCoinListItem({super.key, required this.listedCoin});
+class ListedCoinItem extends ConsumerStatefulWidget {
+  const ListedCoinItem({super.key, required this.listedCoin});
 
   final ListedCoin listedCoin;
 
   @override
-  ConsumerState<ListedCoinListItem> createState() => _ListedCoinListItemState();
+  ConsumerState<ListedCoinItem> createState() => _ListedCoinItemState();
 }
 
-class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
+class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
   ListedCoin get _listedCoin => widget.listedCoin;
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(listedCoinItemControllerProvider(_listedCoin));
+    final symbol = _listedCoin.symbol;
+
+    final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Row(
-        spacing: 16.0,
+        spacing: 12.0,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          TokenIcon(token: state.metadata.baseAsset),
+          TokenIcon(token: coinMetadata.baseAsset),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                state.metadata.baseAsset,
+                coinMetadata.baseAsset,
                 style: AppFonts.medium.copyWith(
                   color: AppColors.primaryTextColor,
                   fontSize: 16.0,
@@ -44,7 +47,7 @@ class _ListedCoinListItemState extends ConsumerState<ListedCoinListItem> {
                 ),
               ),
               Text(
-                state.metadata.displayName,
+                coinMetadata.displayName,
                 style: AppFonts.medium.copyWith(
                   color: AppColors.secondaryTextColor,
                   fontSize: 14.0,

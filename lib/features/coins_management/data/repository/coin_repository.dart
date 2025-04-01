@@ -9,7 +9,7 @@ part 'generated/coin_repository.g.dart';
 
 @riverpod
 class CoinRepository extends _$CoinRepository implements ICoinRepository {
-  late final ICoinDataSource _coinDataSource;
+  late ICoinDataSource _coinDataSource;
 
   @override
   ICoinRepository build() {
@@ -20,10 +20,10 @@ class CoinRepository extends _$CoinRepository implements ICoinRepository {
 
   @override
   Future<List<ListedCoin>> getListedCoins() async {
-    final exchangeInfo = await _coinDataSource.getExchangeInfo();
+    final listedCoinDTOs = await _coinDataSource.getListedCoins();
 
     final listedCoins =
-        exchangeInfo.listedCoins.map(ListedCoinDTOMapper.toModel).toList();
+        listedCoinDTOs.map(ListedCoinDTOMapper.toModel).toList();
 
     return listedCoins;
   }

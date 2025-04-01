@@ -21,8 +21,6 @@ extension StringX on String {
 
     String formatted = formatter.format(price);
 
-    formatted = formatted.replaceAll(',', ' ');
-
     return formatted;
   }
 }

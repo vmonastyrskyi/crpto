@@ -1,15 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path fill="url(#SETH__a)" fill-rule="evenodd" d="M12 19.941a7.942 7.942 0 1 0 0-15.883 7.942 7.942 0 0 0 0 15.883M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18" clip-rule="evenodd"/>
-    <path fill="#627EEA" d="M12 18.883a6.882 6.882 0 1 0 0-13.765 6.882 6.882 0 0 0 0 13.765"/>
-    <path fill="#fff" d="M12.002 10.677v-3.97L8.825 12z"/>
-    <path fill="#C1CCF7" d="M12.002 10.677v-3.97L15.178 12zm0 0L8.825 12l3.177 1.853z"/>
-    <path fill="#8198EE" d="M12 13.852v-3.176l3.177 1.323z"/>
-    <path fill="#fff" d="m12.002 14.647-3.177-2.118 3.177 4.765z"/>
-    <path fill="#C1CCF7" d="M15.177 12.53 12 14.646v2.647z"/>
+    <g clip-path="url(#SETH__a)">
+        <path fill="#C1CCF7" d="M24 0H0v24h24z"/>
+        <path fill="#fff" fill-rule="evenodd" d="M16.991 16.991a7.06 7.06 0 1 1-9.983-9.984 7.06 7.06 0 0 1 9.983 9.984m.666.666A8 8 0 1 1 6.343 6.344a8 8 0 0 1 11.314 11.313m.46-5.657a6.118 6.118 0 1 1-12.234 0 6.118 6.118 0 0 1 12.235 0M12 7.294 9.177 12 12 13.647 14.824 12zm0 7.059L9.177 12.47 12 16.706l2.824-4.235z" clip-rule="evenodd"/>
+    </g>
     <defs>
-        <linearGradient id="SETH__a" x1="17.029" x2="6.706" y1="5.118" y2="19.147" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#269981"/>
-            <stop offset="1" stop-color="#142D44"/>
-        </linearGradient>
+        <clipPath id="SETH__a">
+            <path fill="#fff" d="M0 0h24v24H0z"/>
+        </clipPath>
     </defs>
 </svg>

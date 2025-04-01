@@ -24,6 +24,12 @@ abstract final class AppColors {
   static const Color switchInactiveThumbColor = white;
   static const Color switchTrackOutlineColor = transparent;
 
+  static const Color dividerColorDark = Color(0xFF242424);
+  static const Color dividerColorLight = Color(0xFF2D2D2D);
+
+  static const Color splashColorDark = Color(0xFF242424);
+  static const Color splashColorLight = Color(0xFF2D2D2D);
+
   static const Color loaderColor = primaryTextColor;
 
   static const Color positivePriceColor = Color(0xFF3BBD81);

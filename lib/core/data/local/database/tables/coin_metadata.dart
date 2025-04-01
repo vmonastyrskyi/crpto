@@ -9,7 +9,6 @@ class CoinsMetadata extends Table {
   late final Column<String> quoteAsset = text()();
   late final Column<String> displayName = text()();
   late final Column<String> status = text()();
-  late final Column<bool> hasIcon = boolean()();
 
   final Set<CoinMetadataDTO> _cache = {};
 
@@ -46,7 +45,6 @@ extension CoinMetadataDTOMapper on CoinMetadataDTO {
       quoteAsset: coinMetadata.quoteAsset,
       displayName: coinMetadata.displayName,
       status: coinMetadata.status,
-      hasIcon: coinMetadata.hasIcon,
     );
   }
 
@@ -57,7 +55,6 @@ extension CoinMetadataDTOMapper on CoinMetadataDTO {
       quoteAsset: coinMetadataDTO.quoteAsset,
       displayName: coinMetadataDTO.displayName,
       status: coinMetadataDTO.status,
-      hasIcon: coinMetadataDTO.hasIcon,
     );
   }
 }

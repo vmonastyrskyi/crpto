@@ -1,7 +1,7 @@
-import 'package:crpto/shared/data/dto/kline/kline_dto.dart';
+import 'package:crpto/shared/data/dto/coin_kline_dto.dart';
 
 abstract interface class IKlineDataSource {
-  Future<List<KlineDTO>> getAllBySymbol(
+  Future<List<CoinKlineDTO>> getAllBySymbol(
     String symbol, {
     required String interval,
     int? startTime,

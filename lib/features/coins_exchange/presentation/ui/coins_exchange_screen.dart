@@ -3,8 +3,8 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
-import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list.dart';
-import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list.dart';
+import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list_view.dart';
+import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,8 +32,8 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
               appBar: _buildAppBar(),
               body: Column(
                 children: <Widget>[
-                  const RecentTradeList(),
-                  const CoinTickerList().expanded(),
+                  const RecentTradeListView(),
+                  const CoinTickerListView().expanded(),
                 ],
               ),
             ),
@@ -72,6 +72,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
               style: AppFonts.bold.copyWith(
                 color: AppColors.primaryTextColor,
                 fontSize: 20.0,
+                height: 1.6,
               ),
             ),
             TextSpan(
@@ -79,6 +80,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
               style: AppFonts.bold.copyWith(
                 color: AppColors.primaryColor,
                 fontSize: 20.0,
+                height: 1.6,
               ),
             ),
           ],

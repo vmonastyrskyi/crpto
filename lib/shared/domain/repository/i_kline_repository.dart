@@ -1,8 +1,8 @@
-import 'package:crpto/shared/domain/model/kline/kline.dart';
-import 'package:crpto/shared/domain/model/kline/kline_interval.dart';
+import 'package:crpto/shared/domain/model/coin_kline.dart';
+import 'package:crpto/shared/domain/model/enum/kline_interval.dart';
 
 abstract interface class IKlineRepository {
-  Future<List<Kline>> getAllBySymbol(
+  Future<List<CoinKline>> getAllBySymbol(
     String symbol, {
     required KlineInterval interval,
     DateTime? startTime,

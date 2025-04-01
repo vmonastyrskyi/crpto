@@ -1,4 +1,4 @@
-import 'package:crpto/shared/domain/model/trade_type.dart';
+import 'package:crpto/shared/domain/model/enum/trade_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/recent_trade.freezed.dart';

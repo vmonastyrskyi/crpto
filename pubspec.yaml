@@ -18,6 +18,9 @@ dependencies:
   json_annotation: ^4.9.0
   custom_refresh_indicator: ^4.0.1
   carousel_slider: ^5.0.0
+  auto_size_text: ^3.0.0
+  equatable: ^2.0.7
+  decimal: ^3.2.1
   rxdart: ^0.28.0
   intl: ^0.20.2
   cron: ^0.6.1
@@ -25,13 +28,13 @@ dependencies:
 
   # state management
   flutter_riverpod: ^2.6.1
+  provider: ^6.1.4
 
   # routing
   go_router: ^14.8.1
 
   # network
   web_socket_channel: ^3.0.2
-  retrofit: ^4.4.2
   dio: ^5.8.0+1
 
   # graphics
@@ -42,7 +45,7 @@ dependencies:
   # local storage
   shared_preferences: ^2.5.2
   drift_flutter: ^0.2.4
-  drift: ^2.25.1
+  drift: ^2.26.0
 
   cupertino_icons: ^1.0.8
 
@@ -50,9 +53,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  freezed: ^3.0.2
+  freezed: ^3.0.4
   json_serializable: ^6.9.4
-  drift_dev: ^2.25.2
+  drift_dev: ^2.26.0
 
   riverpod_generator: ^2.6.5
   retrofit_generator: ^9.1.9

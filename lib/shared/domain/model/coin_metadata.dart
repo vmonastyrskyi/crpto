@@ -10,7 +10,6 @@ class CoinMetadata with _$CoinMetadata {
     required this.quoteAsset,
     required this.displayName,
     required this.status,
-    required this.hasIcon,
   });
 
   @override
@@ -23,6 +22,4 @@ class CoinMetadata with _$CoinMetadata {
   final String displayName;
   @override
   final String status;
-  @override
-  final bool hasIcon;
 }

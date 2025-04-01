@@ -3,9 +3,9 @@ import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_controller.dart';
-import 'package:crpto/features/coins_exchange/presentation/controller/recent_trade_item/recent_trade_item_state.dart';
-import 'package:crpto/shared/domain/model/trade_type.dart';
+import 'package:crpto/features/coins_exchange/presentation/provider/recent_trade_notifier.dart';
+import 'package:crpto/shared/domain/model/enum/trade_type.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,12 +24,13 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(
-      recentTradeItemControllerProvider(_recentTrade.symbol),
-    );
+    final coinMetadata = ref.watch(coinMetadataProvider(_recentTrade.symbol));
+    final recentTrade =
+        ref.watch(recentTradeNotifierProvider(_recentTrade.symbol)) ??
+        _recentTrade;
 
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: const <BoxShadow>[
@@ -42,23 +43,23 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         color: AppColors.widgetBackgroundColorDark,
       ),
       child: Column(
-        spacing: 16.0,
+        spacing: 12.0,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
-            spacing: 16.0,
+            spacing: 12.0,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Row(
-                spacing: 16.0,
+                spacing: 12.0,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  TokenIcon(token: state.metadata.baseAsset),
+                  TokenIcon(token: coinMetadata.baseAsset),
                   Text(
-                    state.metadata.baseAsset,
+                    coinMetadata.baseAsset,
                     style: AppFonts.medium.copyWith(
                       color: AppColors.primaryTextColor,
                       fontSize: 16.0,
@@ -67,19 +68,17 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                   ),
                 ],
               ).expanded(),
-              _buildTradeType(state),
+              _buildRecentTradeType(recentTrade),
             ],
           ),
-          _buildTradePrice(state),
-          _buildTradeAmount(state),
+          _buildRecentTradePrice(recentTrade),
+          _buildRecentTradeAmount(recentTrade),
         ],
       ),
     );
   }
 
-  Widget _buildTradeType(RecentTradeItemState state) {
-    final recentTrade = state.trade ?? _recentTrade;
-
+  Widget _buildRecentTradeType(RecentTrade recentTrade) {
     final tradeType = recentTrade.type;
 
     return Container(
@@ -110,7 +109,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
     return SizedBox(
       height: 24.0,
       child: Row(
-        spacing: 16.0,
+        spacing: 12.0,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -142,9 +141,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
     );
   }
 
-  Widget _buildTradePrice(RecentTradeItemState state) {
-    final recentTrade = state.trade ?? _recentTrade;
-
+  Widget _buildRecentTradePrice(RecentTrade recentTrade) {
     final tradePrice = StringX.formatCurrency(
       recentTrade.price * recentTrade.quantity,
     );
@@ -152,9 +149,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
     return _buildRowItem(label: 'Price', value: tradePrice);
   }
 
-  Widget _buildTradeAmount(RecentTradeItemState state) {
-    final recentTrade = state.trade ?? _recentTrade;
-
+  Widget _buildRecentTradeAmount(RecentTrade recentTrade) {
     final amount = recentTrade.quantity;
 
     return _buildRowItem(label: 'Amount', value: '$amount');
