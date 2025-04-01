@@ -142,11 +142,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                                 ? AppColors.positivePriceColor
                                 : AppColors.negativePriceColor,
                         dotData: const FlDotData(show: false),
-                        preventCurveOverShooting: false,
                         isStrokeJoinRound: true,
                         isStrokeCapRound: true,
-                        curveSmoothness: 0.34,
-                        isCurved: true,
+                        isCurved: false,
                         barWidth: 1.5,
                       ),
                     ],
@@ -258,7 +256,7 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                       horizontalInterval: horizontalInterval,
                       getDrawingHorizontalLine:
                           (_) => const FlLine(
-                            color: AppColors.widgetBackgroundColorLight,
+                            color: AppColors.dividerColorDark,
                             dashArray: [6, 3],
                             strokeWidth: 0.5,
                           ),

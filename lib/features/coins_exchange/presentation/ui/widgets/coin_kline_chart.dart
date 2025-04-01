@@ -78,11 +78,9 @@ class CoinKlineChart extends ConsumerWidget {
                       ? AppColors.positivePriceColor
                       : AppColors.negativePriceColor,
               dotData: const FlDotData(show: false),
-              preventCurveOverShooting: false,
               isStrokeJoinRound: true,
               isStrokeCapRound: true,
-              curveSmoothness: 0.34,
-              isCurved: true,
+              isCurved: false,
               barWidth: 1.5,
             ),
           ],

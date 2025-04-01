@@ -35,9 +35,9 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: const <BoxShadow>[
           BoxShadow(
-            color: Color(0xFF181818),
-            offset: Offset(0.0, 2.0),
-            blurRadius: 4.0,
+            color: AppColors.shadowColor,
+            offset: Offset(0.0, 3.0),
+            blurRadius: 6.0,
           ),
         ],
         color: AppColors.widgetBackgroundColorDark,

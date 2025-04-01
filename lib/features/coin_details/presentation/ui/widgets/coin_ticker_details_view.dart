@@ -119,25 +119,36 @@ class CoinTickerDetailsView extends StatelessWidget {
     List<CoinKline> coinKlines,
   ) {
     final initialCoinKline = coinKlines.first;
+
     final priceChange = StringX.formatCurrency(
       (selectedCoinKline.closePrice - initialCoinKline.closePrice).abs(),
     );
-    final priceChangePercent =
-        ((selectedCoinKline.closePrice - initialCoinKline.closePrice) /
-            initialCoinKline.closePrice) *
-        100.0;
-    final isPriceChangeNegative =
+    final priceChangePercent = (((selectedCoinKline.closePrice -
+                    initialCoinKline.closePrice) /
+                initialCoinKline.closePrice) *
+            100.0)
+        .abs()
+        .toStringAsFixed(2);
+    final isPriceNegative =
         (selectedCoinKline.closePrice - initialCoinKline.closePrice).isNegative;
+
+    final priceSign = isPriceNegative ? '-' : '+';
+
+    final priceChangeBuffer =
+        StringBuffer()..writeAll([
+          '$priceSign$priceChange\$',
+          '($priceSign$priceChangePercent%)',
+        ], ' ');
 
     return SizedBox(
       height: 21.0,
       child: Align(
         alignment: Alignment.centerRight,
         child: AutoSizeText(
-          '${!isPriceChangeNegative ? '+' : '-'}$priceChange\$ (${priceChangePercent.toStringAsFixed(2)}%)',
+          '$priceChangeBuffer',
           style: AppFonts.medium.copyWith(
             color:
-                isPriceChangeNegative
+                isPriceNegative
                     ? AppColors.negativePriceColor
                     : AppColors.positivePriceColor,
             fontSize: 14.0,
@@ -183,18 +194,28 @@ class CoinTickerDetailsView extends StatelessWidget {
 
   Widget _buildCoinPriceChange(CoinTicker coinTicker) {
     final priceChange = StringX.formatCurrency(coinTicker.priceChange.abs());
-    final priceChangePercent = coinTicker.priceChangePercent.toStringAsFixed(2);
-    final isPriceChangeNegative = coinTicker.priceChange.isNegative;
+    final priceChangePercent = coinTicker.priceChangePercent
+        .abs()
+        .toStringAsFixed(2);
+    final isPriceNegative = coinTicker.priceChange.isNegative;
+
+    final priceSign = isPriceNegative ? '-' : '+';
+
+    final priceChangeBuffer =
+        StringBuffer()..writeAll([
+          '$priceSign$priceChange\$',
+          '($priceSign$priceChangePercent%)',
+        ], ' ');
 
     return SizedBox(
       height: 21.0,
       child: Align(
         alignment: Alignment.centerRight,
         child: AutoSizeText(
-          '${!isPriceChangeNegative ? '+' : '-'}$priceChange\$ ($priceChangePercent%)',
+          '$priceChangeBuffer',
           style: AppFonts.medium.copyWith(
             color:
-                isPriceChangeNegative
+                isPriceNegative
                     ? AppColors.negativePriceColor
                     : AppColors.positivePriceColor,
             fontSize: 14.0,

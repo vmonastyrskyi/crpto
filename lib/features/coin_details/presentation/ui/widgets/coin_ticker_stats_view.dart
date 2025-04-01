@@ -106,7 +106,7 @@ class CoinTickerStatsView extends StatelessWidget {
       selectedCoinKline?.quoteVolume ?? coinTicker?.quoteVolume ?? 0.0,
     );
 
-    return _buildRowItem(label: 'Volume', value: coinQuoteVolume);
+    return _buildRowItem(label: 'Volume', value: '\$$coinQuoteVolume');
   }
 
   Widget _buildRowItem({required String label, required String value}) {

@@ -185,6 +185,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
           (_) => AppColors.splashColorDark,
         ),
         dividerColor: AppColors.dividerColorDark,
+        dividerHeight: 1.0,
         labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
         unselectedLabelColor: AppColors.secondaryTextColor,
         unselectedLabelStyle: AppFonts.medium.copyWith(
