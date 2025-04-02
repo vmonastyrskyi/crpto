@@ -1,19 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
+import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/widgets/unfocus_tap_area.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
+import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_price_performance_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_details_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_stats_view.dart';
 import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
+import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart' hide Consumer;
 
 class CoinDetailsScreen extends ConsumerStatefulWidget {
@@ -69,13 +73,18 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
                 appBar: _buildAppBar(),
                 body: SingleChildScrollView(
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const CoinTickerDetailsView(),
-                      const CoinTickerStatsView(),
                       const SizedBox(height: 12.0),
                       _buildKlineChart(),
                       const SizedBox(height: 12.0),
                       _buildKlinePeriodSelector(),
+                      const CoinTickerStatsView(),
+                      const CoinPricePerformanceView(),
+                      _buildCoinPriceDescription(),
                     ],
                   ),
                 ),
@@ -209,6 +218,45 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCoinPriceDescription() {
+    return Consumer(
+      builder: (context, ref, _) {
+        final symbol = context.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
+        final coinTicker = ref.watch(coinTickerNotifierProvider(symbol));
+
+        final coinBaseAsset = coinMetadata.baseAsset;
+        final coinLastPrice = coinTicker?.lastPrice ?? 0.0;
+        final coinQuoteVolume = coinTicker?.quoteVolume ?? 0.0;
+        final coinVolume = coinTicker?.volume ?? 0.0;
+
+        final formattedCoinLastPrice = StringX.formatCurrency(coinLastPrice);
+        final formattedCoinQuoteVolume = NumberFormat.compact().format(
+          coinQuoteVolume,
+        );
+        final formattedCoinVolume = NumberFormat.compact().format(coinVolume);
+
+        final coinPriceDescriptionBuffer =
+            StringBuffer()..writeAll([
+              'The live price of $coinBaseAsset is \$$formattedCoinLastPrice per ($coinBaseAsset/USD). ',
+              '24-hour trading volume is \$$formattedCoinQuoteVolume USD. ',
+              '$coinBaseAsset to USD price is updated in real-time. ',
+              '$coinBaseAsset is +0.56% in the last 24 hours ',
+              'with a circulating supply of $formattedCoinVolume.',
+            ]);
+
+        return Text(
+          '$coinPriceDescriptionBuffer',
+          style: AppFonts.regular.copyWith(
+            color: AppColors.secondaryTextColor,
+            fontSize: 14.0,
+          ),
+        ).withPaddingAll(12.0);
+      },
     );
   }
 }

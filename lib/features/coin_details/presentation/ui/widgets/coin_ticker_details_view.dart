@@ -21,38 +21,52 @@ class CoinTickerDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      spacing: 12.0,
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildTokenIcon(),
-        _buildTokenName().expanded(),
-        Consumer(
-          builder: (_, ref, _) {
-            final symbol = context.symbol;
+        Row(
+          spacing: 12.0,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            _buildTokenIcon(),
+            _buildTokenName().expanded(),
+            Consumer(
+              builder: (context, ref, _) {
+                final symbol = context.symbol;
 
-            final selectedCoinKline = ref.watch(
-              selectedCoinKlineNotifierProvider,
-            );
-            final selectedKlinePeriod = ref.read(
-              selectedKlinePeriodNotifierProvider,
-            );
+                final selectedCoinKline = ref.watch(
+                  selectedCoinKlineNotifierProvider,
+                );
+                final selectedKlinePeriod = ref.read(
+                  selectedKlinePeriodNotifierProvider,
+                );
 
-            final coinKlinesMap =
-                ref.read(coinKlinesNotifierProvider(symbol)).value;
+                final coinKlinesMap =
+                    ref.read(coinKlinesNotifierProvider(symbol)).value;
 
-            final coinKlines = coinKlinesMap?[selectedKlinePeriod] ?? [];
+                final coinKlines = coinKlinesMap?[selectedKlinePeriod] ?? [];
 
-            if (coinKlines.isNotEmpty && selectedCoinKline != null) {
-              return _buildSelectedCoinKlineInfo(selectedCoinKline, coinKlines);
-            }
+                if (coinKlines.isNotEmpty && selectedCoinKline != null) {
+                  return _buildSelectedCoinKlineInfo(
+                    selectedCoinKline,
+                    coinKlines,
+                  );
+                }
 
-            return _buildCoinTickerInfo();
-          },
-        ).expanded(),
+                return _buildCoinTickerInfo();
+              },
+            ).expanded(),
+          ],
+        ).withPadding(12.0, 12.0, 6.0, 12.0),
+        const Divider(
+          color: AppColors.dividerColorDark,
+          thickness: 1.0,
+          height: 1.0,
+        ),
       ],
-    ).withPadding(12.0, 12.0, 6.0, 12.0);
+    );
   }
 
   Widget _buildTokenIcon() {
@@ -62,7 +76,7 @@ class CoinTickerDetailsView extends StatelessWidget {
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
-        return TokenIcon(token: coinMetadata.baseAsset);
+        return TokenIcon(token: coinMetadata.baseAsset, size: 48.0);
       },
     );
   }

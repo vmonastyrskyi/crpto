@@ -75,8 +75,8 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
   }
 
   Widget _buildKlineChart(List<CoinKline> coinKlines) {
-    final lastClosePrice = coinKlines.last.closePrice;
     final firstClosePrice = coinKlines.first.closePrice;
+    final lastClosePrice = coinKlines.last.closePrice;
 
     final isLastClosePriceHigher = lastClosePrice > firstClosePrice;
 

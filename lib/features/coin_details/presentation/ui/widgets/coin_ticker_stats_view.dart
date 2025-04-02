@@ -18,19 +18,32 @@ class CoinTickerStatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Consumer(
-          builder: (_, ref, _) {
-            final selectedCoinKline = ref.watch(
-              selectedCoinKlineNotifierProvider,
-            );
+        Column(
+          spacing: 12.0,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'Price information (24h)',
+              style: AppFonts.semiBold.copyWith(
+                color: AppColors.primaryTextColor,
+                fontSize: 14.0,
+              ),
+            ),
+            Consumer(
+              builder: (_, ref, _) {
+                final selectedCoinKline = ref.watch(
+                  selectedCoinKlineNotifierProvider,
+                );
 
-            return _buildCoinData(selectedCoinKline);
-          },
-        ),
+                return _buildCoinData(selectedCoinKline);
+              },
+            ),
+          ],
+        ).withPaddingAll(12.0),
         const Divider(
           color: AppColors.dividerColorDark,
           thickness: 1.0,
@@ -52,7 +65,8 @@ class CoinTickerStatsView extends StatelessWidget {
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
         return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 24.0,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _buildCoinOpenPrice(coinTicker, selectedCoinKline),
@@ -137,6 +151,6 @@ class CoinTickerStatsView extends StatelessWidget {
           ),
         ),
       ],
-    ).withPadding(12.0, 0.0, 12.0, 12.0).expanded();
+    ).expanded();
   }
 }
