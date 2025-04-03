@@ -22,8 +22,7 @@ class CoinRepository extends _$CoinRepository implements ICoinRepository {
   Future<List<ListedCoin>> getListedCoins() async {
     final listedCoinDTOs = await _coinDataSource.getListedCoins();
 
-    final listedCoins =
-        listedCoinDTOs.map(ListedCoinDTOMapper.toModel).toList();
+    final listedCoins = [...listedCoinDTOs.map(ListedCoinDTOMapper.toModel)];
 
     return listedCoins;
   }

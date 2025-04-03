@@ -7,7 +7,7 @@ part 'generated/listen_selected_coins.g.dart';
 
 @riverpod
 class ListenSelectedCoinsUseCase extends _$ListenSelectedCoinsUseCase {
-  late final ISelectedCoinRepository _selectedCoinRepository;
+  late ISelectedCoinRepository _selectedCoinRepository;
 
   @override
   ListenSelectedCoinsUseCase build() {

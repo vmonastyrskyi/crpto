@@ -10,7 +10,7 @@ part 'generated/kline_repository.g.dart';
 
 @riverpod
 class KlineRepository extends _$KlineRepository implements IKlineRepository {
-  late final IKlineDataSource _klineDataSource;
+  late IKlineDataSource _klineDataSource;
 
   @override
   IKlineRepository build() {

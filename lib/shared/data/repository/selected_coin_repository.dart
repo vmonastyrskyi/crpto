@@ -10,7 +10,7 @@ part 'generated/selected_coin_repository.g.dart';
 @riverpod
 class SelectedCoinRepository extends _$SelectedCoinRepository
     implements ISelectedCoinRepository {
-  late final ISelectedCoinDataSource _selectedCoinDataSource;
+  late ISelectedCoinDataSource _selectedCoinDataSource;
 
   @override
   ISelectedCoinRepository build() {

@@ -7,7 +7,7 @@ part of '../remove_selected_coin.dart';
 // **************************************************************************
 
 String _$removeSelectedCoinUseCaseHash() =>
-    r'ccfe0686828f92371265aa7a69b106a80961ce15';
+    r'c33146bae65c270c2116576d002fbc9b33c96113';
 
 /// See also [RemoveSelectedCoinUseCase].
 @ProviderFor(RemoveSelectedCoinUseCase)

@@ -10,9 +10,9 @@ part 'generated/listed_coin_item_controller.g.dart';
 
 @riverpod
 class ListedCoinItemController extends _$ListedCoinItemController {
-  late final GetSelectedCoinsUseCase _getSelectedCoins;
-  late final AddSelectedCoinUseCase _addSelectedCoin;
-  late final RemoveSelectedCoinUseCase _removeSelectedCoin;
+  late GetSelectedCoinsUseCase _getSelectedCoins;
+  late AddSelectedCoinUseCase _addSelectedCoin;
+  late RemoveSelectedCoinUseCase _removeSelectedCoin;
 
   @override
   ListedCoinItemState build(ListedCoin listedCoin) {

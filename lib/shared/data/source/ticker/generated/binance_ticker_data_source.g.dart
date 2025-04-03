@@ -7,7 +7,7 @@ part of '../binance_ticker_data_source.dart';
 // **************************************************************************
 
 String _$binanceTickerDataSourceHash() =>
-    r'f7d11e525adc035c5670e8df843f35e2f7104955';
+    r'9b51d2e64d280b76d73340278b95708027cd9c84';
 
 /// See also [BinanceTickerDataSource].
 @ProviderFor(BinanceTickerDataSource)

@@ -7,7 +7,7 @@ part 'generated/listen_recent_trades.g.dart';
 
 @riverpod
 class ListenRecentTradesUseCase extends _$ListenRecentTradesUseCase {
-  late final ITradeRepository _tradeRepository;
+  late ITradeRepository _tradeRepository;
 
   @override
   Raw<Future<ListenRecentTradesUseCase>> build() async {

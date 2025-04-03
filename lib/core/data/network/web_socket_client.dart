@@ -9,7 +9,7 @@ part 'generated/web_socket_client.g.dart';
 class WebSocketClient extends _$WebSocketClient {
   final StreamController _streamController = StreamController.broadcast();
 
-  late final WebSocketChannel _channel;
+  late WebSocketChannel _channel;
 
   @override
   Raw<Future<WebSocketClient>> build({required String url}) async {

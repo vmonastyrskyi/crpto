@@ -7,7 +7,7 @@ part of '../listen_recent_trades.dart';
 // **************************************************************************
 
 String _$listenRecentTradesUseCaseHash() =>
-    r'bdc407db6d1254b03a2c9a9ebd9208485675d920';
+    r'a6cfda18adf91753c72d041859fa008b73c4e52a';
 
 /// See also [ListenRecentTradesUseCase].
 @ProviderFor(ListenRecentTradesUseCase)

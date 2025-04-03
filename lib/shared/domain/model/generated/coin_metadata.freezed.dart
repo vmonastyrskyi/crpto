@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CoinMetadata {
 
- String get symbol; String get baseAsset; String get quoteAsset; String get displayName; String get status;
+ String get symbol; String get baseAsset; String get quoteAsset; String get displayName; String get status; List<String> get relatedSymbols;
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CoinMetadataCopyWith<CoinMetadata> get copyWith => _$CoinMetadataCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.relatedSymbols, relatedSymbols));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,symbol,baseAsset,quoteAsset,displayName,status);
+int get hashCode => Object.hash(runtimeType,symbol,baseAsset,quoteAsset,displayName,status,const DeepCollectionEquality().hash(relatedSymbols));
 
 @override
 String toString() {
-  return 'CoinMetadata(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, displayName: $displayName, status: $status)';
+  return 'CoinMetadata(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, displayName: $displayName, status: $status, relatedSymbols: $relatedSymbols)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CoinMetadataCopyWith<$Res>  {
   factory $CoinMetadataCopyWith(CoinMetadata value, $Res Function(CoinMetadata) _then) = _$CoinMetadataCopyWithImpl;
 @useResult
 $Res call({
- String symbol, String baseAsset, String quoteAsset, String displayName, String status
+ String symbol, String baseAsset, String quoteAsset, String displayName, String status, List<String> relatedSymbols
 });
 
 
@@ -63,14 +63,15 @@ class _$CoinMetadataCopyWithImpl<$Res>
 
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? displayName = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? displayName = null,Object? status = null,Object? relatedSymbols = null,}) {
   return _then(CoinMetadata(
 symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
 as String,baseAsset: null == baseAsset ? _self.baseAsset : baseAsset // ignore: cast_nullable_to_non_nullable
 as String,quoteAsset: null == quoteAsset ? _self.quoteAsset : quoteAsset // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,
+as String,relatedSymbols: null == relatedSymbols ? _self.relatedSymbols : relatedSymbols // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

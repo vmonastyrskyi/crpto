@@ -7,7 +7,7 @@ part of '../coin_metadata_repository.dart';
 // **************************************************************************
 
 String _$coinMetadataRepositoryHash() =>
-    r'085432490ebfa46a7b1a5b33582de9112862c90e';
+    r'3654a32240db24cada7888bbbceb4bc05c6889d7';
 
 /// See also [CoinMetadataRepository].
 @ProviderFor(CoinMetadataRepository)

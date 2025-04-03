@@ -28,6 +28,15 @@ class TickerRepository extends _$TickerRepository implements ITickerRepository {
   }
 
   @override
+  Future<List<CoinTicker>> getCoinTickers([List<String>? symbols]) async {
+    final coinTickerDTOs = await _tickerDataSource.getCoinTickers(symbols);
+
+    final coinTickers = [...coinTickerDTOs.map(CoinTickerDTOMapper.toModel)];
+
+    return coinTickers;
+  }
+
+  @override
   Stream<CoinTicker> listenCoinTickers(List<String> symbols) {
     final coinTickerDTOsStream = _tickerDataSource.watchCoinTickers(symbols);
 

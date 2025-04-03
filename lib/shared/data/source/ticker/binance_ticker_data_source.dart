@@ -43,6 +43,25 @@ final class BinanceTickerDataSource extends _$BinanceTickerDataSource
   }
 
   @override
+  Future<List<CoinTickerDTO>> getCoinTickers([List<String>? symbols]) async {
+    const url = '/ticker/24hr';
+
+    final queryParameters = <String, dynamic>{
+      if (symbols != null && symbols.isNotEmpty) 'symbols': jsonEncode(symbols),
+    };
+
+    final response = await _dio.get(url, queryParameters: queryParameters);
+
+    final recentTradeDTOs = [
+      ...List.from(response.data ?? const []).map((json) {
+        return CoinTickerDTO.fromJson(json);
+      }),
+    ];
+
+    return recentTradeDTOs;
+  }
+
+  @override
   Stream<CoinTickerDTO> watchCoinTickers(List<String> symbols) async* {
     final tickers =
         symbols.map((symbol) => '${symbol.toLowerCase()}@ticker').toList();

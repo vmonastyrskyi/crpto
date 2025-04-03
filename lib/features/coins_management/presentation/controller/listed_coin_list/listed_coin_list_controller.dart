@@ -12,7 +12,7 @@ part 'generated/listed_coin_list_controller.g.dart';
 class ListedCoinListController extends _$ListedCoinListController {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
-  late final GetListedCoinsUseCase _getListedCoins;
+  late GetListedCoinsUseCase _getListedCoins;
 
   List<ListedCoin> _lastListedCoins = const [];
   String _lastSearchValue = emptyString;

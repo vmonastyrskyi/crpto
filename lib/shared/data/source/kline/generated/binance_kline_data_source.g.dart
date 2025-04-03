@@ -7,7 +7,7 @@ part of '../binance_kline_data_source.dart';
 // **************************************************************************
 
 String _$binanceKlineDataSourceHash() =>
-    r'b4fa2abcf8f8bed0229ca32a0ca6b6355cfed66d';
+    r'4f7875ef9953b4516ee01fdf861adfae61f2c3ce';
 
 /// See also [BinanceKlineDataSource].
 @ProviderFor(BinanceKlineDataSource)

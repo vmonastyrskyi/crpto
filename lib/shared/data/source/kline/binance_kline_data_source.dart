@@ -9,7 +9,7 @@ part 'generated/binance_kline_data_source.g.dart';
 @riverpod
 final class BinanceKlineDataSource extends _$BinanceKlineDataSource
     implements IKlineDataSource {
-  late final Dio _dio;
+  late Dio _dio;
 
   @override
   IKlineDataSource build() {

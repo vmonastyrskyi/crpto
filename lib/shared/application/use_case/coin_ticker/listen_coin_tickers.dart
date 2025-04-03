@@ -7,7 +7,7 @@ part 'generated/listen_coin_tickers.g.dart';
 
 @riverpod
 class ListenCoinTickersUseCase extends _$ListenCoinTickersUseCase {
-  late final ITickerRepository _tickerRepository;
+  late ITickerRepository _tickerRepository;
 
   @override
   Raw<Future<ListenCoinTickersUseCase>> build() async {

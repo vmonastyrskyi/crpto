@@ -7,7 +7,7 @@ part of '../listen_coin_tickers.dart';
 // **************************************************************************
 
 String _$listenCoinTickersUseCaseHash() =>
-    r'cbf3765983f9cf438582509528dea595bd503500';
+    r'0346f70a60cb5636df7ae88fe305457473eedcf3';
 
 /// See also [ListenCoinTickersUseCase].
 @ProviderFor(ListenCoinTickersUseCase)

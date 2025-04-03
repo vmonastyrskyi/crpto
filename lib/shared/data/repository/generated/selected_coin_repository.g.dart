@@ -7,7 +7,7 @@ part of '../selected_coin_repository.dart';
 // **************************************************************************
 
 String _$selectedCoinRepositoryHash() =>
-    r'30a1ac585ddcd081b62e80501851ebf004e54b1e';
+    r'828804bba26032728c58665be9e572126b38d1e7';
 
 /// See also [SelectedCoinRepository].
 @ProviderFor(SelectedCoinRepository)

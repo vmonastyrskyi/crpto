@@ -7,7 +7,7 @@ part 'generated/get_recent_trades.g.dart';
 
 @riverpod
 class GetRecentTradesUseCase extends _$GetRecentTradesUseCase {
-  late final ITradeRepository _tradeRepository;
+  late ITradeRepository _tradeRepository;
 
   @override
   Raw<Future<GetRecentTradesUseCase>> build() async {
