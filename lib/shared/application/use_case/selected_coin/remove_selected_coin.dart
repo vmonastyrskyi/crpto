@@ -7,7 +7,7 @@ part 'generated/remove_selected_coin.g.dart';
 
 @riverpod
 class RemoveSelectedCoinUseCase extends _$RemoveSelectedCoinUseCase {
-  late final ISelectedCoinRepository _selectedCoinRepository;
+  late ISelectedCoinRepository _selectedCoinRepository;
 
   @override
   RemoveSelectedCoinUseCase build() {

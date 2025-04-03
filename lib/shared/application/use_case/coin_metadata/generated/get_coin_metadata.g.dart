@@ -7,7 +7,7 @@ part of '../get_coin_metadata.dart';
 // **************************************************************************
 
 String _$getCoinMetadataUseCaseHash() =>
-    r'306c282d432a2241ecf5554e4da35237c1a58dca';
+    r'4424837df90a9e0b87aee3addbeed20c3d33b0d3';
 
 /// See also [GetCoinMetadataUseCase].
 @ProviderFor(GetCoinMetadataUseCase)

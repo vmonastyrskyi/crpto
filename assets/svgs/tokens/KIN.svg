@@ -1,3 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path fill="#7E43FF" d="m12 3 7.941 4.5v9l-7.94 4.5-7.942-4.5v-9z"/>
+    <g clip-path="url(#KIN__a)">
+        <path fill="#7E43FF" d="M24 0H0v24h24z"/>
+        <path fill="#fff" d="m12 4 7.059 4v8L12 20l-7.059-4V8z"/>
+    </g>
+    <defs>
+        <clipPath id="KIN__a">
+            <path fill="#fff" d="M0 0h24v24H0z"/>
+        </clipPath>
+    </defs>
 </svg>

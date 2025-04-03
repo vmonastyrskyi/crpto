@@ -1,5 +1,5 @@
-import 'package:crpto/features/coins_management/data/dto/get_exchange_info_response.dart';
+import 'package:crpto/features/coins_management/data/dto/listed_coin_dto.dart';
 
 abstract interface class ICoinDataSource {
-  Future<GetExchangeInfoResponse> getExchangeInfo();
+  Future<List<ListedCoinDTO>> getListedCoins();
 }

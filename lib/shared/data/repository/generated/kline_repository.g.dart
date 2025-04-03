@@ -6,7 +6,7 @@ part of '../kline_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$klineRepositoryHash() => r'd75161918a7f20eba08436fb5920cf42d6696039';
+String _$klineRepositoryHash() => r'942f709a5f1a4f8625895a98730cdd6ee6f8d8b7';
 
 /// See also [KlineRepository].
 @ProviderFor(KlineRepository)

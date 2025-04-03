@@ -9,7 +9,7 @@ part 'generated/trade_repository.g.dart';
 
 @riverpod
 class TradeRepository extends _$TradeRepository implements ITradeRepository {
-  late final ITradeDataSource _tradeDataSource;
+  late ITradeDataSource _tradeDataSource;
 
   @override
   Raw<Future<ITradeRepository>> build() async {
@@ -25,16 +25,19 @@ class TradeRepository extends _$TradeRepository implements ITradeRepository {
       symbol,
     );
 
-    final recentTrades =
-        recentTradeDTOs.map(RecentTradeDTOMapper.toModel).toList();
+    final recentTrades = [...recentTradeDTOs.map(RecentTradeDTOMapper.toModel)];
 
     return recentTrades;
   }
 
   @override
   Stream<RecentTrade> listenRecentTrades(List<String> symbols) {
-    final recentTradeStream = _tradeDataSource.watchRecentTrades(symbols);
+    final recentTradeDTOsStream = _tradeDataSource.watchRecentTrades(symbols);
 
-    return recentTradeStream.map(RecentTradeDTOMapper.toModel);
+    final recentTradesStream = recentTradeDTOsStream.map(
+      RecentTradeDTOMapper.toModel,
+    );
+
+    return recentTradesStream;
   }
 }

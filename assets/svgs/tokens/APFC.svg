@@ -1,22 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path fill="url(#APFC__a)" fill-rule="evenodd" d="m7.622 3.243 4.621 2.55v5.117l-4.621 2.55L3 10.91V5.792zm-4.135 7.38 3.891 2.15v-4.52l-3.891-1.93zm4.378-2.364v4.514l3.892-2.15V6.327zm3.614-2.336L7.623 7.84 3.764 5.923l3.858-2.125z" clip-rule="evenodd"/>
-    <path fill="url(#APFC__b)" fill-rule="evenodd" d="M16.378 3.243 21 5.793v5.117l-4.622 2.55-4.621-2.55V5.792zm-4.135 7.38 3.892 2.15v-4.52l-3.892-1.93zm4.379-2.364v4.514l3.891-2.15V6.327zm3.614-2.336L16.378 7.84 12.52 5.923l3.858-2.125z" clip-rule="evenodd"/>
-    <path fill="url(#APFC__c)" fill-rule="evenodd" d="m12 10.541 4.622 2.55v5.117L12 20.758l-4.621-2.55V13.09zm-4.135 7.38 3.892 2.15v-4.52l-3.892-1.93zm4.378-2.364v4.514l3.892-2.15v-4.296zm3.615-2.335L12 15.138l-3.858-1.916L12 11.096z" clip-rule="evenodd"/>
+    <g clip-path="url(#APFC__a)">
+        <path fill="url(#APFC__b)" d="M24 0H0v24h24z"/>
+        <path fill="#fff" fill-rule="evenodd" d="m8.108 4.217 4.108 2.265v4.55l-4.108 2.265L4 11.031V6.482zM4.432 6.958v3.818l3.46 1.911V8.67l-3.46-1.716zm3.892 1.717v4.012l3.46-1.91v-3.82zm3.213-2.076-3.43 1.704L4.68 6.599l3.429-1.89z" clip-rule="evenodd"/>
+        <path fill="#fff" fill-rule="evenodd" d="M15.892 4.217 20 6.482v4.55l-4.108 2.265-4.108-2.266V6.482zm-3.675 2.741v3.818l3.459 1.911V8.67l-3.46-1.716zm3.891 1.717v4.012l3.46-1.91v-3.82zm3.213-2.076-3.429 1.704-3.429-1.704 3.43-1.89z" clip-rule="evenodd"/>
+        <path fill="#fff" fill-rule="evenodd" d="m12 10.703 4.108 2.266v4.549L12 19.783l-4.108-2.265v-4.55zm-3.675 2.741v3.818l3.459 1.912v-4.017l-3.46-1.717zm3.891 1.717v4.013l3.46-1.912v-3.818zm3.213-2.075L12 14.789l-3.429-1.703L12 11.196z" clip-rule="evenodd"/>
+    </g>
     <defs>
-        <linearGradient id="APFC__a" x1="4.895" x2="20.037" y1="7.413" y2="16.519" gradientUnits="userSpaceOnUse">
+        <linearGradient id="APFC__b" x1="5.684" x2="19.144" y1="7.922" y2="16.017" gradientUnits="userSpaceOnUse">
             <stop stop-color="#C66329"/>
             <stop offset=".42" stop-color="#E08D39"/>
             <stop offset="1" stop-color="#D6B087"/>
         </linearGradient>
-        <linearGradient id="APFC__b" x1="3.474" x2="21" y1="14.085" y2="14.085" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#E1B88A"/>
-            <stop offset=".47" stop-color="#274527"/>
-            <stop offset="1" stop-color="#3A5959"/>
-        </linearGradient>
-        <linearGradient id="APFC__c" x1="12.001" x2="12.001" y1="10.541" y2="20.757" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#D3B088"/>
-            <stop offset=".41" stop-color="#B4B4B4"/>
-            <stop offset="1" stop-color="#A3A2A4"/>
-        </linearGradient>
+        <clipPath id="APFC__a">
+            <path fill="#fff" d="M0 0h24v24H0z"/>
+        </clipPath>
     </defs>
 </svg>

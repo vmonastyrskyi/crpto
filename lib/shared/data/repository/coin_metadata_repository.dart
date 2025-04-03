@@ -10,7 +10,7 @@ part 'generated/coin_metadata_repository.g.dart';
 @riverpod
 class CoinMetadataRepository extends _$CoinMetadataRepository
     implements ICoinMetadataRepository {
-  late final ICoinMetadataDataSource _coinMetadataDataSource;
+  late ICoinMetadataDataSource _coinMetadataDataSource;
 
   @override
   ICoinMetadataRepository build() {

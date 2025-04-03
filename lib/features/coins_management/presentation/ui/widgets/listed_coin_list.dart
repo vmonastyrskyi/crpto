@@ -9,14 +9,14 @@ import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_c
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ListedCoinList extends ConsumerStatefulWidget {
-  const ListedCoinList({super.key});
+class ListedCoinListView extends ConsumerStatefulWidget {
+  const ListedCoinListView({super.key});
 
   @override
-  ConsumerState<ListedCoinList> createState() => _ListedCoinListState();
+  ConsumerState<ListedCoinListView> createState() => _ListedCoinListViewState();
 }
 
-class _ListedCoinListState extends ConsumerState<ListedCoinList> {
+class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
   @override
   Widget build(BuildContext context) {
     final asyncState = ref.watch(listedCoinListControllerProvider);
@@ -47,7 +47,7 @@ class _ListedCoinListState extends ConsumerState<ListedCoinList> {
         final listedCoin = listedCoins[index];
 
         return KeepAliveChild(
-          child: ListedCoinListItem(
+          child: ListedCoinItem(
             key: ValueKey(listedCoin.symbol),
             listedCoin: listedCoin,
           ),
@@ -60,7 +60,7 @@ class _ListedCoinListState extends ConsumerState<ListedCoinList> {
   Widget _buildLoadingIndicator() {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         child: CircularProgressIndicator(color: AppColors.loaderColor),
       ),
     );
@@ -70,7 +70,7 @@ class _ListedCoinListState extends ConsumerState<ListedCoinList> {
     return Center(
       child: Text(
         'No listed coins found',
-        style: AppFonts.regular.copyWith(
+        style: AppFonts.medium.copyWith(
           color: AppColors.secondaryTextColor,
           fontSize: 14.0,
         ),
@@ -79,7 +79,7 @@ class _ListedCoinListState extends ConsumerState<ListedCoinList> {
   }
 }
 
-extension _ListedCoinListStateX on _ListedCoinListState {
+extension _ListedCoinListStateX on _ListedCoinListViewState {
   List<ListedCoin> _sortListedCoins(List<ListedCoin> listedCoins) {
     final unselectedListedCoins = <ListedCoin>[];
 

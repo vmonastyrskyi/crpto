@@ -221,20 +221,15 @@ class $CoinsMetadataTable extends CoinsMetadata
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _hasIconMeta = const VerificationMeta(
-    'hasIcon',
-  );
   @override
-  late final GeneratedColumn<bool> hasIcon = GeneratedColumn<bool>(
-    'has_icon',
+  late final GeneratedColumnWithTypeConverter<List<String>, String>
+  relatedSymbols = GeneratedColumn<String>(
+    'related_symbols',
     aliasedName,
     false,
-    type: DriftSqlType.bool,
+    type: DriftSqlType.string,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("has_icon" IN (0, 1))',
-    ),
-  );
+  ).withConverter<List<String>>($CoinsMetadataTable.$converterrelatedSymbols);
   @override
   List<GeneratedColumn> get $columns => [
     symbol,
@@ -242,7 +237,7 @@ class $CoinsMetadataTable extends CoinsMetadata
     quoteAsset,
     displayName,
     status,
-    hasIcon,
+    relatedSymbols,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -299,14 +294,6 @@ class $CoinsMetadataTable extends CoinsMetadata
     } else if (isInserting) {
       context.missing(_statusMeta);
     }
-    if (data.containsKey('has_icon')) {
-      context.handle(
-        _hasIconMeta,
-        hasIcon.isAcceptableOrUnknown(data['has_icon']!, _hasIconMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_hasIconMeta);
-    }
     return context;
   }
 
@@ -341,11 +328,12 @@ class $CoinsMetadataTable extends CoinsMetadata
             DriftSqlType.string,
             data['${effectivePrefix}status'],
           )!,
-      hasIcon:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.bool,
-            data['${effectivePrefix}has_icon'],
-          )!,
+      relatedSymbols: $CoinsMetadataTable.$converterrelatedSymbols.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}related_symbols'],
+        )!,
+      ),
     );
   }
 
@@ -353,6 +341,9 @@ class $CoinsMetadataTable extends CoinsMetadata
   $CoinsMetadataTable createAlias(String alias) {
     return $CoinsMetadataTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<List<String>, String> $converterrelatedSymbols =
+      StringListConverter();
 }
 
 class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
@@ -361,14 +352,14 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
   final String quoteAsset;
   final String displayName;
   final String status;
-  final bool hasIcon;
+  final List<String> relatedSymbols;
   const CoinMetadataDTO({
     required this.symbol,
     required this.baseAsset,
     required this.quoteAsset,
     required this.displayName,
     required this.status,
-    required this.hasIcon,
+    required this.relatedSymbols,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -378,7 +369,11 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     map['quote_asset'] = Variable<String>(quoteAsset);
     map['display_name'] = Variable<String>(displayName);
     map['status'] = Variable<String>(status);
-    map['has_icon'] = Variable<bool>(hasIcon);
+    {
+      map['related_symbols'] = Variable<String>(
+        $CoinsMetadataTable.$converterrelatedSymbols.toSql(relatedSymbols),
+      );
+    }
     return map;
   }
 
@@ -389,7 +384,7 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       quoteAsset: Value(quoteAsset),
       displayName: Value(displayName),
       status: Value(status),
-      hasIcon: Value(hasIcon),
+      relatedSymbols: Value(relatedSymbols),
     );
   }
 
@@ -404,7 +399,7 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       quoteAsset: serializer.fromJson<String>(json['quoteAsset']),
       displayName: serializer.fromJson<String>(json['displayName']),
       status: serializer.fromJson<String>(json['status']),
-      hasIcon: serializer.fromJson<bool>(json['hasIcon']),
+      relatedSymbols: serializer.fromJson<List<String>>(json['relatedSymbols']),
     );
   }
   @override
@@ -416,7 +411,7 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       'quoteAsset': serializer.toJson<String>(quoteAsset),
       'displayName': serializer.toJson<String>(displayName),
       'status': serializer.toJson<String>(status),
-      'hasIcon': serializer.toJson<bool>(hasIcon),
+      'relatedSymbols': serializer.toJson<List<String>>(relatedSymbols),
     };
   }
 
@@ -426,14 +421,14 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     String? quoteAsset,
     String? displayName,
     String? status,
-    bool? hasIcon,
+    List<String>? relatedSymbols,
   }) => CoinMetadataDTO(
     symbol: symbol ?? this.symbol,
     baseAsset: baseAsset ?? this.baseAsset,
     quoteAsset: quoteAsset ?? this.quoteAsset,
     displayName: displayName ?? this.displayName,
     status: status ?? this.status,
-    hasIcon: hasIcon ?? this.hasIcon,
+    relatedSymbols: relatedSymbols ?? this.relatedSymbols,
   );
   CoinMetadataDTO copyWithCompanion(CoinsMetadataCompanion data) {
     return CoinMetadataDTO(
@@ -444,7 +439,10 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       displayName:
           data.displayName.present ? data.displayName.value : this.displayName,
       status: data.status.present ? data.status.value : this.status,
-      hasIcon: data.hasIcon.present ? data.hasIcon.value : this.hasIcon,
+      relatedSymbols:
+          data.relatedSymbols.present
+              ? data.relatedSymbols.value
+              : this.relatedSymbols,
     );
   }
 
@@ -456,14 +454,20 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
           ..write('quoteAsset: $quoteAsset, ')
           ..write('displayName: $displayName, ')
           ..write('status: $status, ')
-          ..write('hasIcon: $hasIcon')
+          ..write('relatedSymbols: $relatedSymbols')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(symbol, baseAsset, quoteAsset, displayName, status, hasIcon);
+  int get hashCode => Object.hash(
+    symbol,
+    baseAsset,
+    quoteAsset,
+    displayName,
+    status,
+    relatedSymbols,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -473,7 +477,7 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
           other.quoteAsset == this.quoteAsset &&
           other.displayName == this.displayName &&
           other.status == this.status &&
-          other.hasIcon == this.hasIcon);
+          other.relatedSymbols == this.relatedSymbols);
 }
 
 class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
@@ -482,7 +486,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
   final Value<String> quoteAsset;
   final Value<String> displayName;
   final Value<String> status;
-  final Value<bool> hasIcon;
+  final Value<List<String>> relatedSymbols;
   final Value<int> rowid;
   const CoinsMetadataCompanion({
     this.symbol = const Value.absent(),
@@ -490,7 +494,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     this.quoteAsset = const Value.absent(),
     this.displayName = const Value.absent(),
     this.status = const Value.absent(),
-    this.hasIcon = const Value.absent(),
+    this.relatedSymbols = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CoinsMetadataCompanion.insert({
@@ -499,21 +503,21 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     required String quoteAsset,
     required String displayName,
     required String status,
-    required bool hasIcon,
+    required List<String> relatedSymbols,
     this.rowid = const Value.absent(),
   }) : symbol = Value(symbol),
        baseAsset = Value(baseAsset),
        quoteAsset = Value(quoteAsset),
        displayName = Value(displayName),
        status = Value(status),
-       hasIcon = Value(hasIcon);
+       relatedSymbols = Value(relatedSymbols);
   static Insertable<CoinMetadataDTO> custom({
     Expression<String>? symbol,
     Expression<String>? baseAsset,
     Expression<String>? quoteAsset,
     Expression<String>? displayName,
     Expression<String>? status,
-    Expression<bool>? hasIcon,
+    Expression<String>? relatedSymbols,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -522,7 +526,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
       if (quoteAsset != null) 'quote_asset': quoteAsset,
       if (displayName != null) 'display_name': displayName,
       if (status != null) 'status': status,
-      if (hasIcon != null) 'has_icon': hasIcon,
+      if (relatedSymbols != null) 'related_symbols': relatedSymbols,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -533,7 +537,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     Value<String>? quoteAsset,
     Value<String>? displayName,
     Value<String>? status,
-    Value<bool>? hasIcon,
+    Value<List<String>>? relatedSymbols,
     Value<int>? rowid,
   }) {
     return CoinsMetadataCompanion(
@@ -542,7 +546,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
       quoteAsset: quoteAsset ?? this.quoteAsset,
       displayName: displayName ?? this.displayName,
       status: status ?? this.status,
-      hasIcon: hasIcon ?? this.hasIcon,
+      relatedSymbols: relatedSymbols ?? this.relatedSymbols,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -565,8 +569,12 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     if (status.present) {
       map['status'] = Variable<String>(status.value);
     }
-    if (hasIcon.present) {
-      map['has_icon'] = Variable<bool>(hasIcon.value);
+    if (relatedSymbols.present) {
+      map['related_symbols'] = Variable<String>(
+        $CoinsMetadataTable.$converterrelatedSymbols.toSql(
+          relatedSymbols.value,
+        ),
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -582,7 +590,7 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
           ..write('quoteAsset: $quoteAsset, ')
           ..write('displayName: $displayName, ')
           ..write('status: $status, ')
-          ..write('hasIcon: $hasIcon, ')
+          ..write('relatedSymbols: $relatedSymbols, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -734,7 +742,7 @@ typedef $$CoinsMetadataTableCreateCompanionBuilder =
       required String quoteAsset,
       required String displayName,
       required String status,
-      required bool hasIcon,
+      required List<String> relatedSymbols,
       Value<int> rowid,
     });
 typedef $$CoinsMetadataTableUpdateCompanionBuilder =
@@ -744,7 +752,7 @@ typedef $$CoinsMetadataTableUpdateCompanionBuilder =
       Value<String> quoteAsset,
       Value<String> displayName,
       Value<String> status,
-      Value<bool> hasIcon,
+      Value<List<String>> relatedSymbols,
       Value<int> rowid,
     });
 
@@ -782,9 +790,10 @@ class $$CoinsMetadataTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<bool> get hasIcon => $composableBuilder(
-    column: $table.hasIcon,
-    builder: (column) => ColumnFilters(column),
+  ColumnWithTypeConverterFilters<List<String>, List<String>, String>
+  get relatedSymbols => $composableBuilder(
+    column: $table.relatedSymbols,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 }
 
@@ -822,8 +831,8 @@ class $$CoinsMetadataTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<bool> get hasIcon => $composableBuilder(
-    column: $table.hasIcon,
+  ColumnOrderings<String> get relatedSymbols => $composableBuilder(
+    column: $table.relatedSymbols,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -856,8 +865,11 @@ class $$CoinsMetadataTableAnnotationComposer
   GeneratedColumn<String> get status =>
       $composableBuilder(column: $table.status, builder: (column) => column);
 
-  GeneratedColumn<bool> get hasIcon =>
-      $composableBuilder(column: $table.hasIcon, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<List<String>, String> get relatedSymbols =>
+      $composableBuilder(
+        column: $table.relatedSymbols,
+        builder: (column) => column,
+      );
 }
 
 class $$CoinsMetadataTableTableManager
@@ -900,7 +912,7 @@ class $$CoinsMetadataTableTableManager
                 Value<String> quoteAsset = const Value.absent(),
                 Value<String> displayName = const Value.absent(),
                 Value<String> status = const Value.absent(),
-                Value<bool> hasIcon = const Value.absent(),
+                Value<List<String>> relatedSymbols = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => CoinsMetadataCompanion(
                 symbol: symbol,
@@ -908,7 +920,7 @@ class $$CoinsMetadataTableTableManager
                 quoteAsset: quoteAsset,
                 displayName: displayName,
                 status: status,
-                hasIcon: hasIcon,
+                relatedSymbols: relatedSymbols,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -918,7 +930,7 @@ class $$CoinsMetadataTableTableManager
                 required String quoteAsset,
                 required String displayName,
                 required String status,
-                required bool hasIcon,
+                required List<String> relatedSymbols,
                 Value<int> rowid = const Value.absent(),
               }) => CoinsMetadataCompanion.insert(
                 symbol: symbol,
@@ -926,7 +938,7 @@ class $$CoinsMetadataTableTableManager
                 quoteAsset: quoteAsset,
                 displayName: displayName,
                 status: status,
-                hasIcon: hasIcon,
+                relatedSymbols: relatedSymbols,
                 rowid: rowid,
               ),
           withReferenceMapper:

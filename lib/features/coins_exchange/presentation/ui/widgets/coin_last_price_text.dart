@@ -4,9 +4,14 @@ import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:flutter/material.dart';
 
 class CoinLastPriceText extends StatefulWidget {
-  const CoinLastPriceText({super.key, required this.lastPrice});
+  const CoinLastPriceText({
+    super.key,
+    required this.lastPrice,
+    this.fontSize = 16.0,
+  });
 
   final double lastPrice;
+  final double fontSize;
 
   @override
   State<CoinLastPriceText> createState() => _CoinLastPriceTextState();
@@ -102,7 +107,7 @@ class _CoinLastPriceTextState extends State<CoinLastPriceText>
             '\$$lastPrice',
             style: AppFonts.medium.copyWith(
               color: _textColorAnimation.value,
-              fontSize: 16.0,
+              fontSize: widget.fontSize,
               height: 1.0,
             ),
           ),

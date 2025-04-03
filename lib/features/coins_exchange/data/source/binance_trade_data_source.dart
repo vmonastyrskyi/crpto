@@ -13,8 +13,8 @@ part 'generated/binance_trade_data_source.g.dart';
 @riverpod
 class BinanceTradeDataSource extends _$BinanceTradeDataSource
     implements ITradeDataSource {
-  late final Dio _dio;
-  late final WebSocketClient _webSocket;
+  late Dio _dio;
+  late WebSocketClient _webSocket;
 
   List<String> _previousTrades = const [];
 

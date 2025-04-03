@@ -7,7 +7,7 @@ part 'generated/get_coin_metadata.g.dart';
 
 @riverpod
 class GetCoinMetadataUseCase extends _$GetCoinMetadataUseCase {
-  late final ICoinMetadataRepository _coinMetadataRepository;
+  late ICoinMetadataRepository _coinMetadataRepository;
 
   @override
   GetCoinMetadataUseCase build() {

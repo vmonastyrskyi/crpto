@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/features/coins_management/data/repository/coin_repository.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
@@ -11,8 +12,8 @@ part 'generated/get_listed_coins.g.dart';
 
 @riverpod
 class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
-  late final ICoinRepository _coinRepository;
-  late final ICoinMetadataRepository _coinMetadataRepository;
+  late ICoinRepository _coinRepository;
+  late ICoinMetadataRepository _coinMetadataRepository;
 
   @override
   GetListedCoinsUseCase build() {
@@ -23,40 +24,53 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
   }
 
   Future<List<ListedCoin>> call() async {
-    List<ListedCoin> listedCoinList =
-        (await _coinRepository.getListedCoins())
-            .where((listedCoin) => listedCoin.quoteAsset == 'USDT')
-            .where(
-              (listedCoin) => CryptoUtils.isIconExists(listedCoin.baseAsset),
-            )
-            .toList();
+    final listedCoins = await _coinRepository.getListedCoins();
 
-    final coinMetadataList =
-        listedCoinList.map((listedCoin) {
-          final symbol = listedCoin.symbol;
-          final baseAsset = listedCoin.baseAsset;
-          final quoteAsset = listedCoin.quoteAsset;
-          final displayName = CryptoUtils.getDisplayName(baseAsset);
-          final hasIcon = CryptoUtils.isIconExists(baseAsset);
-          final status = listedCoin.status;
+    List<ListedCoin> filteredListedCoins = [
+      ...listedCoins
+          .where((listedCoin) => listedCoin.quoteAsset == 'USDT')
+          .where(
+            (listedCoin) => CryptoUtils.isIconExists(listedCoin.baseAsset),
+          ),
+    ];
+    final groupedListedCoins = listedCoins.groupFoldBy<String, Set<String>>(
+      (listedCoin) => listedCoin.baseAsset,
+      (previous, listedCoin) {
+        return (previous ?? <String>{})..add(listedCoin.symbol);
+      },
+    );
 
-          return CoinMetadata(
-            symbol: symbol,
-            baseAsset: baseAsset,
-            quoteAsset: quoteAsset,
-            displayName: displayName,
-            hasIcon: true,
-            status: status,
-          );
-        }).toList();
+    final coinsMetadata = [
+      ...filteredListedCoins.map((filteredListedCoin) {
+        final symbol = filteredListedCoin.symbol;
+        final baseAsset = filteredListedCoin.baseAsset;
+        final quoteAsset = filteredListedCoin.quoteAsset;
+        final displayName = CryptoUtils.getDisplayName(baseAsset);
+        final status = filteredListedCoin.status;
 
-    await _coinMetadataRepository.addAll(coinMetadataList);
+        final relatedSymbols = [
+          ...?groupedListedCoins[baseAsset]?..remove(symbol),
+        ];
 
-    listedCoinList =
-        listedCoinList
-            .where((listedCoin) => listedCoin.status == 'TRADING')
-            .toList();
+        return CoinMetadata(
+          symbol: symbol,
+          baseAsset: baseAsset,
+          quoteAsset: quoteAsset,
+          displayName: displayName,
+          status: status,
+          relatedSymbols: relatedSymbols,
+        );
+      }),
+    ];
 
-    return listedCoinList;
+    await _coinMetadataRepository.addAll(coinsMetadata);
+
+    filteredListedCoins = [
+      ...filteredListedCoins.where(
+        (filteredListedCoin) => filteredListedCoin.status == 'TRADING',
+      ),
+    ];
+
+    return filteredListedCoins;
   }
 }

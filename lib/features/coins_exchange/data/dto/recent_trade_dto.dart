@@ -1,5 +1,5 @@
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
-import 'package:crpto/shared/domain/model/trade_type.dart';
+import 'package:crpto/shared/domain/model/enum/trade_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/recent_trade_dto.freezed.dart';

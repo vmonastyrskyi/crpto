@@ -1,15 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-    <path fill="#fff" d="m13.875 14.625-6-3.75v-1.5l6 3.75z" opacity=".8"/>
-    <path fill="url(#UBSN__a)" d="M7.875 9.375H21v1.5H7.875z"/>
-    <path fill="url(#UBSN__b)" d="M13.875 14.625H3v-1.5h10.875z"/>
+    <g clip-path="url(#UBSN__a)">
+        <path fill="#000" d="M24 0H0v24h24z"/>
+        <path fill="#fff" d="M13.667 14.334 8.333 11V9.667L13.666 13z"/>
+        <path fill="#fff" d="M8.333 9.667H20V11H8.333zm5.334 4.666H4V13h9.667z"/>
+    </g>
     <defs>
-        <linearGradient id="UBSN__a" x1="8.865" x2="20.52" y1="10.485" y2="10.485" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#fff"/>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-        </linearGradient>
-        <linearGradient id="UBSN__b" x1="13.054" x2="3.397" y1="13.515" y2="13.515" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#fff"/>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-        </linearGradient>
+        <clipPath id="UBSN__a">
+            <path fill="#fff" d="M0 0h24v24H0z"/>
+        </clipPath>
     </defs>
 </svg>

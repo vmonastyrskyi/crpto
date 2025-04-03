@@ -1,15 +1,17 @@
+import 'dart:convert';
+
 import 'package:crpto/core/data/local/database/database.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
 import 'package:drift/drift.dart';
 
 @DataClassName('CoinMetadataDTO')
 class CoinsMetadata extends Table {
-  late final Column<String> symbol = text()();
-  late final Column<String> baseAsset = text()();
-  late final Column<String> quoteAsset = text()();
-  late final Column<String> displayName = text()();
-  late final Column<String> status = text()();
-  late final Column<bool> hasIcon = boolean()();
+  late final TextColumn symbol = text()();
+  late final TextColumn baseAsset = text()();
+  late final TextColumn quoteAsset = text()();
+  late final TextColumn displayName = text()();
+  late final TextColumn status = text()();
+  late final TextColumn relatedSymbols = text().map(StringListConverter())();
 
   final Set<CoinMetadataDTO> _cache = {};
 
@@ -26,14 +28,11 @@ class CoinsMetadata extends Table {
     return _cache.firstWhere((e) => e.symbol == symbol);
   }
 
-  Future<void> insertAll(List<CoinMetadataDTO> coinMetadataDTOList) {
-    _cache.addAll(coinMetadataDTOList);
+  Future<void> insertAll(List<CoinMetadataDTO> coinMetadataDTOs) {
+    _cache.addAll(coinMetadataDTOs);
 
     return crptoDB.batch((batch) {
-      batch.insertAllOnConflictUpdate(
-        crptoDB.coinsMetadata,
-        coinMetadataDTOList,
-      );
+      batch.insertAllOnConflictUpdate(crptoDB.coinsMetadata, coinMetadataDTOs);
     });
   }
 }
@@ -46,18 +45,30 @@ extension CoinMetadataDTOMapper on CoinMetadataDTO {
       quoteAsset: coinMetadata.quoteAsset,
       displayName: coinMetadata.displayName,
       status: coinMetadata.status,
-      hasIcon: coinMetadata.hasIcon,
+      relatedSymbols: coinMetadata.relatedSymbols,
     );
   }
 
-  static CoinMetadata toModel(CoinMetadataDTO coinMetadataDTO) {
+  static CoinMetadata toModel(CoinMetadataDTO dto) {
     return CoinMetadata(
-      symbol: coinMetadataDTO.symbol,
-      baseAsset: coinMetadataDTO.baseAsset,
-      quoteAsset: coinMetadataDTO.quoteAsset,
-      displayName: coinMetadataDTO.displayName,
-      status: coinMetadataDTO.status,
-      hasIcon: coinMetadataDTO.hasIcon,
+      symbol: dto.symbol,
+      baseAsset: dto.baseAsset,
+      quoteAsset: dto.quoteAsset,
+      displayName: dto.displayName,
+      status: dto.status,
+      relatedSymbols: dto.relatedSymbols,
     );
+  }
+}
+
+class StringListConverter extends TypeConverter<List<String>, String> {
+  @override
+  List<String> fromSql(String fromDb) {
+    return [...(jsonDecode(fromDb) as List).map((item) => item as String)];
+  }
+
+  @override
+  String toSql(List<String> value) {
+    return jsonEncode(value);
   }
 }

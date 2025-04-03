@@ -6,7 +6,7 @@ part of '../ticker_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tickerRepositoryHash() => r'03416144ec0dda3553fa2467c273d2a20159721d';
+String _$tickerRepositoryHash() => r'2ddb603b536c9d32586c86fa0c4e5f76fb2d9d34';
 
 /// See also [TickerRepository].
 @ProviderFor(TickerRepository)

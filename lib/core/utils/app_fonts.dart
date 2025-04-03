@@ -3,27 +3,37 @@ import 'package:flutter/material.dart';
 
 abstract final class AppFonts {
   static const TextStyle regular = TextStyle(
-    fontWeight: FontWeight.w400,
     color: AppColors.primaryTextColor,
+    fontWeight: FontWeight.w400,
+    fontSize: 16.0,
+    height: 1.5,
   );
 
   static const TextStyle medium = TextStyle(
-    fontWeight: FontWeight.w500,
     color: AppColors.primaryTextColor,
+    fontWeight: FontWeight.w500,
+    fontSize: 16.0,
+    height: 1.5,
   );
 
   static const TextStyle semiBold = TextStyle(
-    fontWeight: FontWeight.w600,
     color: AppColors.primaryTextColor,
+    fontWeight: FontWeight.w600,
+    fontSize: 16.0,
+    height: 1.5,
   );
 
   static const TextStyle bold = TextStyle(
-    fontWeight: FontWeight.w700,
     color: AppColors.primaryTextColor,
+    fontWeight: FontWeight.w700,
+    fontSize: 16.0,
+    height: 1.5,
   );
 
   static const TextStyle extraBold = TextStyle(
-    fontWeight: FontWeight.w800,
     color: AppColors.primaryTextColor,
+    fontWeight: FontWeight.w800,
+    fontSize: 16.0,
+    height: 1.5,
   );
 }

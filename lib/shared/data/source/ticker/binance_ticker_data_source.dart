@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:crpto/core/data/network/dio_client.dart';
 import 'package:crpto/core/data/network/web_socket_client.dart';
-import 'package:crpto/shared/data/dto/ticker/coin_ticker_dto.dart';
+import 'package:crpto/shared/data/dto/coin_ticker_dto.dart';
 import 'package:crpto/shared/data/source/ticker/i_ticker_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -13,8 +13,8 @@ part 'generated/binance_ticker_data_source.g.dart';
 @riverpod
 final class BinanceTickerDataSource extends _$BinanceTickerDataSource
     implements ITickerDataSource {
-  late final Dio _dio;
-  late final WebSocketClient _webSocket;
+  late Dio _dio;
+  late WebSocketClient _webSocket;
 
   List<String> _previousTickers = const [];
 
@@ -30,19 +30,35 @@ final class BinanceTickerDataSource extends _$BinanceTickerDataSource
   }
 
   @override
-  Future<List<CoinTickerDTO>> getCoinTickers(List<String> symbols) async {
+  Future<CoinTickerDTO> getCoinTicker(String symbol) async {
     const url = '/ticker/24hr';
 
-    final queryParameters = <String, dynamic>{'symbols': jsonEncode(symbols)};
+    final queryParameters = <String, dynamic>{'symbol': symbol};
 
     final response = await _dio.get(url, queryParameters: queryParameters);
 
-    final coinTickerDTOs =
-        List.from(
-          response.data ?? const [],
-        ).map((json) => CoinTickerDTO.fromJson(json)).toList();
+    final coinTickerDTO = CoinTickerDTO.fromJson(response.data);
 
-    return coinTickerDTOs;
+    return coinTickerDTO;
+  }
+
+  @override
+  Future<List<CoinTickerDTO>> getCoinTickers([List<String>? symbols]) async {
+    const url = '/ticker/24hr';
+
+    final queryParameters = <String, dynamic>{
+      if (symbols != null && symbols.isNotEmpty) 'symbols': jsonEncode(symbols),
+    };
+
+    final response = await _dio.get(url, queryParameters: queryParameters);
+
+    final recentTradeDTOs = [
+      ...List.from(response.data ?? const []).map((json) {
+        return CoinTickerDTO.fromJson(json);
+      }),
+    ];
+
+    return recentTradeDTOs;
   }
 
   @override
