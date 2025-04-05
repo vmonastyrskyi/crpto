@@ -2,9 +2,13 @@ import 'package:crpto/core/navigation/route_names.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/core/widgets/unfocus_tap_area.dart';
+import 'package:crpto/features/coins_exchange/presentation/provider/recent_trades_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list_view.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list_view.dart';
+import 'package:crpto/shared/presentation/provider/coin_tickers_notifier.dart';
+import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
+import 'package:crpto/shared/presentation/ui/widgets/shimmer_wrapper.dart';
+import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +26,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.bodyBackgroundColor,
+      color: AppColors.backgroundColor,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: UnfocusTapArea(
@@ -30,11 +34,31 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
             bottom: false,
             child: Scaffold(
               appBar: _buildAppBar(),
-              body: Column(
-                children: <Widget>[
-                  const RecentTradeListView(),
-                  const CoinTickerListView().expanded(),
-                ],
+              body: Consumer(
+                builder: (_, ref, child) {
+                  final recentTrades =
+                      ref.watch(recentTradesNotifierProvider).value;
+                  final coinTickers =
+                      ref.watch(coinTickersNotifierProvider).value;
+
+                  return FadeSwitcher(
+                    child:
+                        recentTrades == null ||
+                                recentTrades.isEmpty ||
+                                coinTickers == null ||
+                                coinTickers.isEmpty
+                            ? ShimmerWrapper(child: child!)
+                            : child!,
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const RecentTradeListView(),
+                    const CoinTickerListView().expanded(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -49,7 +73,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
       child: SizedBox.fromSize(
         size: const Size.fromHeight(56.0),
         child: Container(
-          color: AppColors.bodyBackgroundColor,
+          color: AppColors.backgroundColor,
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[

@@ -61,7 +61,7 @@ class CoinTickerDetailsView extends StatelessWidget {
           ],
         ).withPadding(12.0, 12.0, 6.0, 12.0),
         const Divider(
-          color: AppColors.dividerColorDark,
+          color: AppColors.dividerColor,
           thickness: 1.0,
           height: 1.0,
         ),

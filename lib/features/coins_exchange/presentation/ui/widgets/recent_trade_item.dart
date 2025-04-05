@@ -33,14 +33,14 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
-        boxShadow: const <BoxShadow>[
+        boxShadow: <BoxShadow>[
           BoxShadow(
-            color: AppColors.shadowColor,
-            offset: Offset(0.0, 3.0),
+            color: AppColors.shadowColor.withValues(alpha: 0.2),
+            offset: const Offset(0.0, 3.0),
             blurRadius: 6.0,
           ),
         ],
-        color: AppColors.widgetBackgroundColorDark,
+        color: AppColors.primaryWidgetColor,
       ),
       child: Column(
         spacing: 12.0,
@@ -87,9 +87,9 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: (tradeType == TradeType.buy
-                ? AppColors.positivePriceColor
-                : AppColors.negativePriceColor)
-            .withValues(alpha: 0.25),
+                ? AppColors.secondaryWidgetColor
+                : AppColors.secondaryWidgetColor)
+            ,
       ),
       child: Text(
         tradeType.name.toUpperCase(),
@@ -117,7 +117,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             padding: const EdgeInsets.all(6.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              color: AppColors.secondaryTextColor.withValues(alpha: 0.25),
+              color: AppColors.secondaryWidgetColor,
             ),
             child: Text(
               label.toUpperCase(),

@@ -3,7 +3,6 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/core/widgets/unfocus_tap_area.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
@@ -14,6 +13,7 @@ import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
+import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
@@ -63,7 +63,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
     return Provider.value(
       value: Symbol(widget.symbol),
       child: Container(
-        color: AppColors.bodyBackgroundColor,
+        color: AppColors.backgroundColor,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: UnfocusTapArea(
@@ -102,7 +102,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
       child: SizedBox.fromSize(
         size: const Size.fromHeight(56.0),
         child: Container(
-          color: AppColors.bodyBackgroundColor,
+          color: AppColors.backgroundColor,
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -144,7 +144,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
               maxLines: 1,
             ),
             Text(
-              ' | USD',
+              ' | USDT',
               style: AppFonts.semiBold.copyWith(
                 color: AppColors.secondaryTextColor,
                 fontSize: 16.0,
@@ -193,7 +193,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
         overlayColor: WidgetStateProperty.resolveWith<Color?>(
           (_) => AppColors.splashColorDark,
         ),
-        dividerColor: AppColors.dividerColorDark,
+        dividerColor: AppColors.dividerColor,
         dividerHeight: 1.0,
         labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
         unselectedLabelColor: AppColors.secondaryTextColor,
@@ -230,6 +230,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
         final coinTicker = ref.watch(coinTickerNotifierProvider(symbol));
 
         final coinBaseAsset = coinMetadata.baseAsset;
+        final coinPriceChangePercent = coinTicker?.priceChangePercent ?? 0.0;
         final coinLastPrice = coinTicker?.lastPrice ?? 0.0;
         final coinQuoteVolume = coinTicker?.quoteVolume ?? 0.0;
         final coinVolume = coinTicker?.volume ?? 0.0;
@@ -245,7 +246,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
               'The live price of $coinBaseAsset is \$$formattedCoinLastPrice per ($coinBaseAsset/USD). ',
               '24-hour trading volume is \$$formattedCoinQuoteVolume USD. ',
               '$coinBaseAsset to USD price is updated in real-time. ',
-              '$coinBaseAsset is +0.56% in the last 24 hours ',
+              '$coinBaseAsset is $coinPriceChangePercent% in the last 24 hours ',
               'with a circulating supply of $formattedCoinVolume.',
             ]);
 

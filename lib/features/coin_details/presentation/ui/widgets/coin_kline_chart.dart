@@ -11,6 +11,7 @@ import 'package:crpto/features/coin_details/presentation/provider/selected_kline
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/domain/model/symbol.dart';
+import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -56,16 +57,7 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
         }
     }
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      reverseDuration: const Duration(milliseconds: 500),
-      switchInCurve: Curves.fastOutSlowIn,
-      switchOutCurve: Curves.fastOutSlowIn,
-      transitionBuilder:
-          (child, animation) =>
-              FadeTransition(opacity: animation, child: child),
-      child: child,
-    ).withPaddingAll(12.0);
+    return FadeSwitcher(child: child).withPaddingAll(12.0);
   }
 
   @override
@@ -256,7 +248,7 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                       horizontalInterval: horizontalInterval,
                       getDrawingHorizontalLine:
                           (_) => const FlLine(
-                            color: AppColors.dividerColorDark,
+                            color: AppColors.dividerColor,
                             dashArray: [6, 3],
                             strokeWidth: 0.5,
                           ),
@@ -303,7 +295,7 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 
     return Container(
       padding: const EdgeInsets.only(left: 4.0),
-      color: AppColors.bodyBackgroundColor,
+      color: AppColors.backgroundColor,
       child: Text(
         '$closeDate${showCloseTime ? ' $closeTime' : ''}',
         style: AppFonts.medium.copyWith(

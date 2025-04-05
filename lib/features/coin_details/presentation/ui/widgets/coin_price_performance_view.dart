@@ -4,6 +4,7 @@ import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/shared/domain/model/symbol.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,13 +19,7 @@ class CoinPricePerformanceView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Price performance (24h)',
-          style: AppFonts.semiBold.copyWith(
-            color: AppColors.primaryTextColor,
-            fontSize: 14.0,
-          ),
-        ),
+        _buildTitle(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,6 +31,27 @@ class CoinPricePerformanceView extends StatelessWidget {
         _buildPricePerformancePainter(),
       ],
     ).withPaddingAll(12.0);
+  }
+
+  Widget _buildTitle() {
+    return Consumer(
+      builder: (context, ref, _) {
+        final symbol = context.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
+        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+
+        final coinBaseAsset = coinMetadata.baseAsset;
+
+        return Text(
+          '$coinBaseAsset Price performance${selectedCoinKline == null ? ' (24h)' : ''}',
+          style: AppFonts.semiBold.copyWith(
+            color: AppColors.primaryTextColor,
+            fontSize: 14.0,
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildCoinLowPriceLabel() {
@@ -55,10 +71,9 @@ class CoinPricePerformanceView extends StatelessWidget {
 
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
-        final lowPrice =
-            selectedCoinKline?.lowPrice ?? coinTicker?.lowPrice ?? 0.0;
-
-        final formattedLowPrice = StringX.formatCurrency(lowPrice);
+        final formattedLowPrice = StringX.formatCurrency(
+          selectedCoinKline?.lowPrice ?? coinTicker?.lowPrice ?? 0.0,
+        );
 
         return Column(
           spacing: 3.0,
@@ -102,10 +117,9 @@ class CoinPricePerformanceView extends StatelessWidget {
 
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
-        final highPrice =
-            selectedCoinKline?.highPrice ?? coinTicker?.highPrice ?? 0.0;
-
-        final formattedHighPrice = StringX.formatCurrency(highPrice);
+        final formattedHighPrice = StringX.formatCurrency(
+          selectedCoinKline?.highPrice ?? coinTicker?.highPrice ?? 0.0,
+        );
 
         return Column(
           spacing: 3.0,
@@ -294,29 +308,26 @@ class _PricePerformancePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     const indicatorWidth = 2.0;
     const indicatorHeight = 12.0;
-    final horizontalLineWidth = size.width;
-    final horizontalLineHeight = size.height;
+    final sliderWidth = size.width;
+    final sliderHeight = size.height;
 
-    final valueLinePaint =
+    final indicatorPaint =
         Paint()
           ..color = AppColors.secondaryTextColor
           ..strokeWidth = indicatorWidth
           ..style = PaintingStyle.fill
           ..strokeCap = StrokeCap.round;
-    final horizontalLinePaint =
+    final sliderPaint =
         Paint()
-          ..color = AppColors.dividerColorLight
-          ..strokeWidth = horizontalLineHeight
+          ..color = AppColors.dividerColor
+          ..strokeWidth = sliderHeight
           ..style = PaintingStyle.fill
           ..strokeCap = StrokeCap.round;
 
     canvas.drawLine(
-      Offset(0.0 + (horizontalLineHeight / 2.0), horizontalLineHeight / 2.0),
-      Offset(
-        horizontalLineWidth - (horizontalLineHeight / 2.0),
-        horizontalLineHeight / 2.0,
-      ),
-      horizontalLinePaint,
+      Offset(0.0 + (sliderHeight / 2.0), sliderHeight / 2.0),
+      Offset(sliderWidth - (sliderHeight / 2.0), sliderHeight / 2.0),
+      sliderPaint,
     );
 
     final normalizedValue = ((value - minValue) / (maxValue - minValue)).clamp(
@@ -326,22 +337,18 @@ class _PricePerformancePainter extends CustomPainter {
 
     final indicatorX =
         (indicatorWidth / 2.0) +
-        normalizedValue * (horizontalLineWidth - indicatorWidth);
+        normalizedValue * (sliderWidth - indicatorWidth);
 
     canvas.drawLine(
       Offset(
         indicatorX,
-        (horizontalLineHeight / 2.0) -
-            (indicatorHeight / 2.0) +
-            (indicatorWidth / 2.0),
+        (sliderHeight / 2.0) - (indicatorHeight / 2.0) + (indicatorWidth / 2.0),
       ),
       Offset(
         indicatorX,
-        (horizontalLineHeight / 2.0) +
-            (indicatorHeight / 2.0) -
-            (indicatorWidth / 2.0),
+        (sliderHeight / 2.0) + (indicatorHeight / 2.0) - (indicatorWidth / 2.0),
       ),
-      valueLinePaint,
+      indicatorPaint,
     );
   }
 

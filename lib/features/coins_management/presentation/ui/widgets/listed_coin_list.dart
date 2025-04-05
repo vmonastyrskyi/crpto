@@ -1,6 +1,6 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/widgets/keep_alive.dart';
+import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';

@@ -39,7 +39,7 @@ class _CrptoSearchBarState extends State<CrptoSearchBar> {
       constraints: const BoxConstraints(),
       padding: const WidgetStatePropertyAll(EdgeInsets.all(4.0)),
       backgroundColor: const WidgetStatePropertyAll(
-        AppColors.widgetBackgroundColorDark,
+        AppColors.primaryWidgetColor,
       ),
       shadowColor: const WidgetStatePropertyAll(AppColors.shadowColor),
       elevation: const WidgetStatePropertyAll(1.0),

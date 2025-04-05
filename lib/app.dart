@@ -8,7 +8,7 @@ import 'flavors.dart';
 
 ThemeData darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
   primaryColor: AppColors.primaryColor,
-  scaffoldBackgroundColor: AppColors.bodyBackgroundColor,
+  scaffoldBackgroundColor: AppColors.backgroundColor,
   highlightColor: AppColors.splashColorDark,
   splashColor: AppColors.splashColorDark,
   dividerTheme: const DividerThemeData(color: Colors.transparent),

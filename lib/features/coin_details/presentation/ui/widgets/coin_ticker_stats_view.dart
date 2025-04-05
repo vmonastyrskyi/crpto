@@ -7,6 +7,7 @@ import 'package:crpto/features/coin_details/presentation/provider/selected_coin_
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
 import 'package:crpto/shared/domain/model/symbol.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,13 +27,7 @@ class CoinTickerStatsView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              'Price information (24h)',
-              style: AppFonts.semiBold.copyWith(
-                color: AppColors.primaryTextColor,
-                fontSize: 14.0,
-              ),
-            ),
+            _buildTitle(),
             Consumer(
               builder: (_, ref, _) {
                 final selectedCoinKline = ref.watch(
@@ -45,11 +40,32 @@ class CoinTickerStatsView extends StatelessWidget {
           ],
         ).withPaddingAll(12.0),
         const Divider(
-          color: AppColors.dividerColorDark,
+          color: AppColors.dividerColor,
           thickness: 1.0,
           height: 1.0,
         ),
       ],
+    );
+  }
+
+  Widget _buildTitle() {
+    return Consumer(
+      builder: (context, ref, _) {
+        final symbol = context.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
+        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+
+        final coinBaseAsset = coinMetadata.baseAsset;
+
+        return Text(
+          '$coinBaseAsset Price information${selectedCoinKline == null ? ' (24h)' : ''}',
+          style: AppFonts.semiBold.copyWith(
+            color: AppColors.primaryTextColor,
+            fontSize: 14.0,
+          ),
+        );
+      },
     );
   }
 
@@ -64,15 +80,31 @@ class CoinTickerStatsView extends StatelessWidget {
 
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
-        return Row(
-          spacing: 24.0,
+        return Column(
+          spacing: 12.0,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildCoinOpenPrice(coinTicker, selectedCoinKline),
-            _buildCoinLowPrice(coinTicker, selectedCoinKline),
-            _buildCoinHighPrice(coinTicker, selectedCoinKline),
-            _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
+            Row(
+              spacing: 12.0,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildCoinOpenPrice(coinTicker, selectedCoinKline),
+                _buildCoinLowPrice(coinTicker, selectedCoinKline),
+                _buildCoinHighPrice(coinTicker, selectedCoinKline),
+              ],
+            ),
+            Row(
+              spacing: 12.0,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildCoinVolume(coinTicker, selectedCoinKline),
+                _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
+                _buildCoinTradesCount(coinTicker, selectedCoinKline),
+              ],
+            ),
           ],
         );
       },
@@ -112,6 +144,30 @@ class CoinTickerStatsView extends StatelessWidget {
     return _buildRowItem(label: 'High', value: '\$$coinHighPrice');
   }
 
+  Widget _buildCoinVolume(
+    CoinTicker? coinTicker,
+    CoinKline? selectedCoinKline,
+  ) {
+    final coinVolume = NumberFormat.compact().format(
+      selectedCoinKline?.volume ?? coinTicker?.volume ?? 0.0,
+    );
+
+    return Consumer(
+      builder: (context, ref, _) {
+        final symbol = context.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
+
+        final coinBaseAsset = coinMetadata.baseAsset;
+
+        return _buildRowItem(
+          label: 'Volume ($coinBaseAsset)',
+          value: coinVolume,
+        );
+      },
+    );
+  }
+
   Widget _buildCoinQuoteVolume(
     CoinTicker? coinTicker,
     CoinKline? selectedCoinKline,
@@ -120,25 +176,45 @@ class CoinTickerStatsView extends StatelessWidget {
       selectedCoinKline?.quoteVolume ?? coinTicker?.quoteVolume ?? 0.0,
     );
 
-    return _buildRowItem(label: 'Volume', value: '\$$coinQuoteVolume');
+    return _buildRowItem(label: 'Volume (USDT)', value: '\$$coinQuoteVolume');
+  }
+
+  Widget _buildCoinTradesCount(
+    CoinTicker? coinTicker,
+    CoinKline? selectedCoinKline,
+  ) {
+    final coinTradesCount = NumberFormat.compact().format(
+      selectedCoinKline?.count ?? coinTicker?.count ?? 0,
+    );
+
+    return _buildRowItem(label: 'Trades', value: coinTradesCount);
   }
 
   Widget _buildRowItem({required String label, required String value}) {
     return Column(
       spacing: 6.0,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Text(
-          label,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.secondaryTextColor,
-            fontSize: 14.0,
+        SizedBox(
+          height: 21.0,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: AutoSizeText(
+              label,
+              style: AppFonts.medium.copyWith(
+                color: AppColors.secondaryTextColor,
+                fontSize: 14.0,
+              ),
+              minFontSize: 8.0,
+              maxLines: 1,
+            ),
           ),
         ),
         SizedBox(
           height: 24.0,
-          child: Center(
+          child: Align(
+            alignment: Alignment.centerLeft,
             child: AutoSizeText(
               value,
               style: AppFonts.medium.copyWith(

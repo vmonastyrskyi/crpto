@@ -36,30 +36,30 @@ class CoinTickerItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
         child: Row(
-          spacing: 12.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _buildTokenIcon(),
+            const SizedBox(width: 12.0),
             Column(
-              spacing: 3.0,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 _buildTokenBaseAsset(),
                 _buildTokenDisplayName(),
               ],
-            ).expanded(flex: 2),
-            CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 1),
+            ).expanded(flex: 45),
+            const SizedBox(width: 24.0),
+            CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 20),
+            const SizedBox(width: 24.0),
             Column(
-              spacing: 3.0,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                _buildCoinLastPrice(),
+                FittedBox(child: _buildCoinLastPrice()),
                 _buildCoinPriceChangePercent(),
               ],
-            ).expanded(flex: 2),
+            ).expanded(flex: 35),
           ],
         ),
       ),

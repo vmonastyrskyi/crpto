@@ -1,10 +1,11 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/core/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_item.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
 import 'package:crpto/shared/presentation/provider/coin_tickers_notifier.dart';
+import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
+import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,7 +26,7 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
     switch (coinTickersState) {
       case AsyncLoading(value: final coinTickersMap):
         if (coinTickersMap == null || coinTickersMap.isEmpty) {
-          child = const _CoinTickerListLoader();
+          child = const _CoinTickerListPlaceholder();
         } else if (coinTickersMap.isNotEmpty) {
           final coinTickers = [...coinTickersMap.values];
 
@@ -39,16 +40,7 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
         }
     }
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      reverseDuration: const Duration(milliseconds: 500),
-      switchInCurve: Curves.fastOutSlowIn,
-      switchOutCurve: Curves.fastOutSlowIn,
-      transitionBuilder:
-          (child, animation) =>
-              FadeTransition(opacity: animation, child: child),
-      child: child,
-    );
+    return FadeSwitcher(child: child);
   }
 
   Widget _buildCoinTickerList(List<CoinTicker> coinTickers) {
@@ -82,90 +74,43 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
   }
 }
 
-class _CoinTickerListLoader extends StatefulWidget {
-  const _CoinTickerListLoader();
-
-  @override
-  State<_CoinTickerListLoader> createState() => _CoinTickerListLoaderState();
-}
-
-class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
-  late final Animation<double> _opacityAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    );
-
-    _opacityAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(
-        curve: Curves.fastOutSlowIn,
-        parent: _animationController,
-      ),
-    );
-
-    _animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _animationController.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        _animationController.forward();
-      }
-    });
-
-    _animationController.forward();
-  }
+class _CoinTickerListPlaceholder extends StatelessWidget {
+  const _CoinTickerListPlaceholder();
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _opacityAnimation,
-      builder:
-          (_, child) => Opacity(opacity: _opacityAnimation.value, child: child),
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (_, index) {
-          return Container(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              spacing: 12.0,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _buildCoinIconPlaceholder(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildCoinBaseAssetPlaceholder(),
-                    _buildCoinDisplayNamePlaceholder(),
-                  ],
-                ).expanded(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildCoinChangePricePlaceholder(),
-                    _buildCoinChangePricePercentPlaceholder(),
-                  ],
-                ).expanded(),
-              ],
-            ),
-          );
-        },
-      ),
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (_, index) {
+        return Container(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            spacing: 12.0,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _buildCoinIconPlaceholder(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildCoinBaseAssetPlaceholder(),
+                  _buildCoinDisplayNamePlaceholder(),
+                ],
+              ).expanded(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _buildCoinChangePricePlaceholder(),
+                  _buildCoinChangePricePercentPlaceholder(),
+                ],
+              ).expanded(),
+            ],
+          ),
+        );
+      },
     );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 
   Widget _buildCoinIconPlaceholder() {
@@ -173,7 +118,7 @@ class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
       width: 40.0,
       height: 40.0,
       decoration: const BoxDecoration(
-        color: AppColors.widgetBackgroundColorDark,
+        color: AppColors.primaryWidgetColor,
         shape: BoxShape.circle,
       ),
     );
@@ -191,7 +136,7 @@ class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
               height: 16.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: AppColors.widgetBackgroundColorDark,
+                color: AppColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 1),
@@ -213,7 +158,7 @@ class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
               height: 14.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
-                color: AppColors.widgetBackgroundColorDark,
+                color: AppColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 3),
@@ -236,7 +181,7 @@ class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
               height: 16.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: AppColors.widgetBackgroundColorDark,
+                color: AppColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 3),
@@ -258,7 +203,7 @@ class _CoinTickerListLoaderState extends State<_CoinTickerListLoader>
               height: 14.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
-                color: AppColors.widgetBackgroundColorDark,
+                color: AppColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 1),

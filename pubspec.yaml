@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^2.0.17
   vector_graphics: ^1.1.18
   fl_chart: ^0.70.2
+  shimmer: ^3.0.0
 
   # local storage
   shared_preferences: ^2.5.2

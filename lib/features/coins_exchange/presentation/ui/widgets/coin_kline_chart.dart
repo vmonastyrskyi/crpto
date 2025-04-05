@@ -2,6 +2,7 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/features/coins_exchange/presentation/provider/coin_klines_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
+import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,16 +31,7 @@ class CoinKlineChart extends ConsumerWidget {
         }
     }
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      reverseDuration: const Duration(milliseconds: 500),
-      switchInCurve: Curves.fastOutSlowIn,
-      switchOutCurve: Curves.fastOutSlowIn,
-      transitionBuilder:
-          (child, animation) =>
-              FadeTransition(opacity: animation, child: child),
-      child: child,
-    );
+    return FadeSwitcher(child: child);
   }
 
   Widget _buildKlineChart(List<CoinKline> klines) {

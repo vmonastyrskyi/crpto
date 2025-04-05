@@ -1,10 +1,10 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/core/widgets/search_bar.dart';
-import 'package:crpto/core/widgets/unfocus_tap_area.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_list.dart';
+import 'package:crpto/shared/presentation/ui/widgets/search_bar.dart';
+import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +21,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.bodyBackgroundColor,
+      color: AppColors.backgroundColor,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: UnfocusTapArea(
