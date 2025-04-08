@@ -1,5 +1,5 @@
 import 'package:crpto/core/data/local/database/database.dart';
-import 'package:crpto/shared/data/source/coin_metadata/i_coin_metadata_data_source.dart';
+import 'package:crpto/shared/data/source/i_coin_metadata_data_source.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/drift_coin_metadata_data_source.g.dart';
@@ -11,7 +11,7 @@ class DriftCoinMetadataDataSource extends _$DriftCoinMetadataDataSource
   ICoinMetadataDataSource build() => this;
 
   @override
-  CoinMetadataDTO getBySymbol(String symbol) =>
+  CoinMetadataDTO get(String symbol) =>
       crptoDB.coinsMetadata.getBySymbol(symbol);
 
   @override

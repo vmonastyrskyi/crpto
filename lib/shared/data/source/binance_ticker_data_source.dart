@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:crpto/core/data/network/dio_client.dart';
 import 'package:crpto/core/data/network/web_socket_client.dart';
 import 'package:crpto/shared/data/dto/coin_ticker_dto.dart';
-import 'package:crpto/shared/data/source/ticker/i_ticker_data_source.dart';
+import 'package:crpto/shared/data/source/i_ticker_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';

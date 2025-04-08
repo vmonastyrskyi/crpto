@@ -57,7 +57,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  TokenIcon(token: coinMetadata.baseAsset),
+                  TokenIcon(symbol: _recentTrade.symbol),
                   Text(
                     coinMetadata.baseAsset,
                     style: AppFonts.medium.copyWith(
@@ -86,10 +86,10 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: (tradeType == TradeType.buy
+        color:
+            (tradeType == TradeType.buy
                 ? AppColors.secondaryWidgetColor
-                : AppColors.secondaryWidgetColor)
-            ,
+                : AppColors.secondaryWidgetColor),
       ),
       child: Text(
         tradeType.name.toUpperCase(),

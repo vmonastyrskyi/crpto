@@ -7,7 +7,7 @@ part of '../drift_coin_metadata_data_source.dart';
 // **************************************************************************
 
 String _$driftCoinMetadataDataSourceHash() =>
-    r'96406807c27999ad59def563817783c2375fb9ce';
+    r'6ba78596a1219feb7dfda25804418eb0bad95da1';
 
 /// See also [DriftCoinMetadataDataSource].
 @ProviderFor(DriftCoinMetadataDataSource)

@@ -1,4 +1,4 @@
-import 'package:crpto/shared/data/repository/coin_metadata_repository.dart';
+import 'package:crpto/shared/data/repository/local_coin_metadata_repository.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
 import 'package:crpto/shared/domain/repository/i_coin_metadata_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,11 +11,10 @@ class GetCoinMetadataUseCase extends _$GetCoinMetadataUseCase {
 
   @override
   GetCoinMetadataUseCase build() {
-    _coinMetadataRepository = ref.watch(coinMetadataRepositoryProvider);
+    _coinMetadataRepository = ref.watch(localCoinMetadataRepositoryProvider);
 
     return this;
   }
 
-  CoinMetadata call(String symbol) =>
-      _coinMetadataRepository.getBySymbol(symbol);
+  CoinMetadata call(String symbol) => _coinMetadataRepository.get(symbol);
 }

@@ -170,6 +170,15 @@ class $CoinsMetadataTable extends CoinsMetadata
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $CoinsMetadataTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _symbolMeta = const VerificationMeta('symbol');
   @override
   late final GeneratedColumn<String> symbol = GeneratedColumn<String>(
@@ -201,43 +210,86 @@ class $CoinsMetadataTable extends CoinsMetadata
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _displayNameMeta = const VerificationMeta(
-    'displayName',
-  );
+  static const VerificationMeta _slugMeta = const VerificationMeta('slug');
   @override
-  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
-    'display_name',
+  late final GeneratedColumn<String> slug = GeneratedColumn<String>(
+    'slug',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
-  late final GeneratedColumn<String> status = GeneratedColumn<String>(
-    'status',
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<List<String>, String>
-  relatedSymbols = GeneratedColumn<String>(
-    'related_symbols',
+  late final GeneratedColumnWithTypeConverter<CoinCategory, String> category =
+      GeneratedColumn<String>(
+        'category',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<CoinCategory>($CoinsMetadataTable.$convertercategory);
+  static const VerificationMeta _logoMeta = const VerificationMeta('logo');
+  @override
+  late final GeneratedColumn<String> logo = GeneratedColumn<String>(
+    'logo',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-  ).withConverter<List<String>>($CoinsMetadataTable.$converterrelatedSymbols);
+  );
+  static const VerificationMeta _dateAddedMeta = const VerificationMeta(
+    'dateAdded',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dateAdded = GeneratedColumn<DateTime>(
+    'date_added',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
+  @override
+  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
+    'rank',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [
+    id,
     symbol,
     baseAsset,
     quoteAsset,
-    displayName,
-    status,
-    relatedSymbols,
+    slug,
+    name,
+    description,
+    category,
+    logo,
+    dateAdded,
+    rank,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -251,6 +303,9 @@ class $CoinsMetadataTable extends CoinsMetadata
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
     if (data.containsKey('symbol')) {
       context.handle(
         _symbolMeta,
@@ -275,34 +330,71 @@ class $CoinsMetadataTable extends CoinsMetadata
     } else if (isInserting) {
       context.missing(_quoteAssetMeta);
     }
-    if (data.containsKey('display_name')) {
+    if (data.containsKey('slug')) {
       context.handle(
-        _displayNameMeta,
-        displayName.isAcceptableOrUnknown(
-          data['display_name']!,
-          _displayNameMeta,
+        _slugMeta,
+        slug.isAcceptableOrUnknown(data['slug']!, _slugMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_slugMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_displayNameMeta);
+      context.missing(_descriptionMeta);
     }
-    if (data.containsKey('status')) {
+    if (data.containsKey('logo')) {
       context.handle(
-        _statusMeta,
-        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+        _logoMeta,
+        logo.isAcceptableOrUnknown(data['logo']!, _logoMeta),
       );
     } else if (isInserting) {
-      context.missing(_statusMeta);
+      context.missing(_logoMeta);
+    }
+    if (data.containsKey('date_added')) {
+      context.handle(
+        _dateAddedMeta,
+        dateAdded.isAcceptableOrUnknown(data['date_added']!, _dateAddedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateAddedMeta);
+    }
+    if (data.containsKey('rank')) {
+      context.handle(
+        _rankMeta,
+        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_rankMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {symbol};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   CoinMetadataDTO map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CoinMetadataDTO(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
       symbol:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
@@ -318,22 +410,42 @@ class $CoinsMetadataTable extends CoinsMetadata
             DriftSqlType.string,
             data['${effectivePrefix}quote_asset'],
           )!,
-      displayName:
+      slug:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
-            data['${effectivePrefix}display_name'],
+            data['${effectivePrefix}slug'],
           )!,
-      status:
+      name:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
-            data['${effectivePrefix}status'],
+            data['${effectivePrefix}name'],
           )!,
-      relatedSymbols: $CoinsMetadataTable.$converterrelatedSymbols.fromSql(
+      description:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}description'],
+          )!,
+      category: $CoinsMetadataTable.$convertercategory.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}related_symbols'],
+          data['${effectivePrefix}category'],
         )!,
       ),
+      logo:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}logo'],
+          )!,
+      dateAdded:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}date_added'],
+          )!,
+      rank:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}rank'],
+          )!,
     );
   }
 
@@ -342,49 +454,69 @@ class $CoinsMetadataTable extends CoinsMetadata
     return $CoinsMetadataTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<List<String>, String> $converterrelatedSymbols =
-      StringListConverter();
+  static JsonTypeConverter2<CoinCategory, String, String> $convertercategory =
+      const EnumNameConverter<CoinCategory>(CoinCategory.values);
 }
 
 class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
+  final int id;
   final String symbol;
   final String baseAsset;
   final String quoteAsset;
-  final String displayName;
-  final String status;
-  final List<String> relatedSymbols;
+  final String slug;
+  final String name;
+  final String description;
+  final CoinCategory category;
+  final String logo;
+  final DateTime dateAdded;
+  final int rank;
   const CoinMetadataDTO({
+    required this.id,
     required this.symbol,
     required this.baseAsset,
     required this.quoteAsset,
-    required this.displayName,
-    required this.status,
-    required this.relatedSymbols,
+    required this.slug,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.logo,
+    required this.dateAdded,
+    required this.rank,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
     map['symbol'] = Variable<String>(symbol);
     map['base_asset'] = Variable<String>(baseAsset);
     map['quote_asset'] = Variable<String>(quoteAsset);
-    map['display_name'] = Variable<String>(displayName);
-    map['status'] = Variable<String>(status);
+    map['slug'] = Variable<String>(slug);
+    map['name'] = Variable<String>(name);
+    map['description'] = Variable<String>(description);
     {
-      map['related_symbols'] = Variable<String>(
-        $CoinsMetadataTable.$converterrelatedSymbols.toSql(relatedSymbols),
+      map['category'] = Variable<String>(
+        $CoinsMetadataTable.$convertercategory.toSql(category),
       );
     }
+    map['logo'] = Variable<String>(logo);
+    map['date_added'] = Variable<DateTime>(dateAdded);
+    map['rank'] = Variable<int>(rank);
     return map;
   }
 
   CoinsMetadataCompanion toCompanion(bool nullToAbsent) {
     return CoinsMetadataCompanion(
+      id: Value(id),
       symbol: Value(symbol),
       baseAsset: Value(baseAsset),
       quoteAsset: Value(quoteAsset),
-      displayName: Value(displayName),
-      status: Value(status),
-      relatedSymbols: Value(relatedSymbols),
+      slug: Value(slug),
+      name: Value(name),
+      description: Value(description),
+      category: Value(category),
+      logo: Value(logo),
+      dateAdded: Value(dateAdded),
+      rank: Value(rank),
     );
   }
 
@@ -394,166 +526,242 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CoinMetadataDTO(
+      id: serializer.fromJson<int>(json['id']),
       symbol: serializer.fromJson<String>(json['symbol']),
       baseAsset: serializer.fromJson<String>(json['baseAsset']),
       quoteAsset: serializer.fromJson<String>(json['quoteAsset']),
-      displayName: serializer.fromJson<String>(json['displayName']),
-      status: serializer.fromJson<String>(json['status']),
-      relatedSymbols: serializer.fromJson<List<String>>(json['relatedSymbols']),
+      slug: serializer.fromJson<String>(json['slug']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String>(json['description']),
+      category: $CoinsMetadataTable.$convertercategory.fromJson(
+        serializer.fromJson<String>(json['category']),
+      ),
+      logo: serializer.fromJson<String>(json['logo']),
+      dateAdded: serializer.fromJson<DateTime>(json['dateAdded']),
+      rank: serializer.fromJson<int>(json['rank']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
       'symbol': serializer.toJson<String>(symbol),
       'baseAsset': serializer.toJson<String>(baseAsset),
       'quoteAsset': serializer.toJson<String>(quoteAsset),
-      'displayName': serializer.toJson<String>(displayName),
-      'status': serializer.toJson<String>(status),
-      'relatedSymbols': serializer.toJson<List<String>>(relatedSymbols),
+      'slug': serializer.toJson<String>(slug),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String>(description),
+      'category': serializer.toJson<String>(
+        $CoinsMetadataTable.$convertercategory.toJson(category),
+      ),
+      'logo': serializer.toJson<String>(logo),
+      'dateAdded': serializer.toJson<DateTime>(dateAdded),
+      'rank': serializer.toJson<int>(rank),
     };
   }
 
   CoinMetadataDTO copyWith({
+    int? id,
     String? symbol,
     String? baseAsset,
     String? quoteAsset,
-    String? displayName,
-    String? status,
-    List<String>? relatedSymbols,
+    String? slug,
+    String? name,
+    String? description,
+    CoinCategory? category,
+    String? logo,
+    DateTime? dateAdded,
+    int? rank,
   }) => CoinMetadataDTO(
+    id: id ?? this.id,
     symbol: symbol ?? this.symbol,
     baseAsset: baseAsset ?? this.baseAsset,
     quoteAsset: quoteAsset ?? this.quoteAsset,
-    displayName: displayName ?? this.displayName,
-    status: status ?? this.status,
-    relatedSymbols: relatedSymbols ?? this.relatedSymbols,
+    slug: slug ?? this.slug,
+    name: name ?? this.name,
+    description: description ?? this.description,
+    category: category ?? this.category,
+    logo: logo ?? this.logo,
+    dateAdded: dateAdded ?? this.dateAdded,
+    rank: rank ?? this.rank,
   );
   CoinMetadataDTO copyWithCompanion(CoinsMetadataCompanion data) {
     return CoinMetadataDTO(
+      id: data.id.present ? data.id.value : this.id,
       symbol: data.symbol.present ? data.symbol.value : this.symbol,
       baseAsset: data.baseAsset.present ? data.baseAsset.value : this.baseAsset,
       quoteAsset:
           data.quoteAsset.present ? data.quoteAsset.value : this.quoteAsset,
-      displayName:
-          data.displayName.present ? data.displayName.value : this.displayName,
-      status: data.status.present ? data.status.value : this.status,
-      relatedSymbols:
-          data.relatedSymbols.present
-              ? data.relatedSymbols.value
-              : this.relatedSymbols,
+      slug: data.slug.present ? data.slug.value : this.slug,
+      name: data.name.present ? data.name.value : this.name,
+      description:
+          data.description.present ? data.description.value : this.description,
+      category: data.category.present ? data.category.value : this.category,
+      logo: data.logo.present ? data.logo.value : this.logo,
+      dateAdded: data.dateAdded.present ? data.dateAdded.value : this.dateAdded,
+      rank: data.rank.present ? data.rank.value : this.rank,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('CoinMetadataDTO(')
+          ..write('id: $id, ')
           ..write('symbol: $symbol, ')
           ..write('baseAsset: $baseAsset, ')
           ..write('quoteAsset: $quoteAsset, ')
-          ..write('displayName: $displayName, ')
-          ..write('status: $status, ')
-          ..write('relatedSymbols: $relatedSymbols')
+          ..write('slug: $slug, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('logo: $logo, ')
+          ..write('dateAdded: $dateAdded, ')
+          ..write('rank: $rank')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    id,
     symbol,
     baseAsset,
     quoteAsset,
-    displayName,
-    status,
-    relatedSymbols,
+    slug,
+    name,
+    description,
+    category,
+    logo,
+    dateAdded,
+    rank,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CoinMetadataDTO &&
+          other.id == this.id &&
           other.symbol == this.symbol &&
           other.baseAsset == this.baseAsset &&
           other.quoteAsset == this.quoteAsset &&
-          other.displayName == this.displayName &&
-          other.status == this.status &&
-          other.relatedSymbols == this.relatedSymbols);
+          other.slug == this.slug &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.category == this.category &&
+          other.logo == this.logo &&
+          other.dateAdded == this.dateAdded &&
+          other.rank == this.rank);
 }
 
 class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
+  final Value<int> id;
   final Value<String> symbol;
   final Value<String> baseAsset;
   final Value<String> quoteAsset;
-  final Value<String> displayName;
-  final Value<String> status;
-  final Value<List<String>> relatedSymbols;
-  final Value<int> rowid;
+  final Value<String> slug;
+  final Value<String> name;
+  final Value<String> description;
+  final Value<CoinCategory> category;
+  final Value<String> logo;
+  final Value<DateTime> dateAdded;
+  final Value<int> rank;
   const CoinsMetadataCompanion({
+    this.id = const Value.absent(),
     this.symbol = const Value.absent(),
     this.baseAsset = const Value.absent(),
     this.quoteAsset = const Value.absent(),
-    this.displayName = const Value.absent(),
-    this.status = const Value.absent(),
-    this.relatedSymbols = const Value.absent(),
-    this.rowid = const Value.absent(),
+    this.slug = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.category = const Value.absent(),
+    this.logo = const Value.absent(),
+    this.dateAdded = const Value.absent(),
+    this.rank = const Value.absent(),
   });
   CoinsMetadataCompanion.insert({
+    this.id = const Value.absent(),
     required String symbol,
     required String baseAsset,
     required String quoteAsset,
-    required String displayName,
-    required String status,
-    required List<String> relatedSymbols,
-    this.rowid = const Value.absent(),
+    required String slug,
+    required String name,
+    required String description,
+    required CoinCategory category,
+    required String logo,
+    required DateTime dateAdded,
+    required int rank,
   }) : symbol = Value(symbol),
        baseAsset = Value(baseAsset),
        quoteAsset = Value(quoteAsset),
-       displayName = Value(displayName),
-       status = Value(status),
-       relatedSymbols = Value(relatedSymbols);
+       slug = Value(slug),
+       name = Value(name),
+       description = Value(description),
+       category = Value(category),
+       logo = Value(logo),
+       dateAdded = Value(dateAdded),
+       rank = Value(rank);
   static Insertable<CoinMetadataDTO> custom({
+    Expression<int>? id,
     Expression<String>? symbol,
     Expression<String>? baseAsset,
     Expression<String>? quoteAsset,
-    Expression<String>? displayName,
-    Expression<String>? status,
-    Expression<String>? relatedSymbols,
-    Expression<int>? rowid,
+    Expression<String>? slug,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? category,
+    Expression<String>? logo,
+    Expression<DateTime>? dateAdded,
+    Expression<int>? rank,
   }) {
     return RawValuesInsertable({
+      if (id != null) 'id': id,
       if (symbol != null) 'symbol': symbol,
       if (baseAsset != null) 'base_asset': baseAsset,
       if (quoteAsset != null) 'quote_asset': quoteAsset,
-      if (displayName != null) 'display_name': displayName,
-      if (status != null) 'status': status,
-      if (relatedSymbols != null) 'related_symbols': relatedSymbols,
-      if (rowid != null) 'rowid': rowid,
+      if (slug != null) 'slug': slug,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (category != null) 'category': category,
+      if (logo != null) 'logo': logo,
+      if (dateAdded != null) 'date_added': dateAdded,
+      if (rank != null) 'rank': rank,
     });
   }
 
   CoinsMetadataCompanion copyWith({
+    Value<int>? id,
     Value<String>? symbol,
     Value<String>? baseAsset,
     Value<String>? quoteAsset,
-    Value<String>? displayName,
-    Value<String>? status,
-    Value<List<String>>? relatedSymbols,
-    Value<int>? rowid,
+    Value<String>? slug,
+    Value<String>? name,
+    Value<String>? description,
+    Value<CoinCategory>? category,
+    Value<String>? logo,
+    Value<DateTime>? dateAdded,
+    Value<int>? rank,
   }) {
     return CoinsMetadataCompanion(
+      id: id ?? this.id,
       symbol: symbol ?? this.symbol,
       baseAsset: baseAsset ?? this.baseAsset,
       quoteAsset: quoteAsset ?? this.quoteAsset,
-      displayName: displayName ?? this.displayName,
-      status: status ?? this.status,
-      relatedSymbols: relatedSymbols ?? this.relatedSymbols,
-      rowid: rowid ?? this.rowid,
+      slug: slug ?? this.slug,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      logo: logo ?? this.logo,
+      dateAdded: dateAdded ?? this.dateAdded,
+      rank: rank ?? this.rank,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
     if (symbol.present) {
       map['symbol'] = Variable<String>(symbol.value);
     }
@@ -563,21 +771,28 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     if (quoteAsset.present) {
       map['quote_asset'] = Variable<String>(quoteAsset.value);
     }
-    if (displayName.present) {
-      map['display_name'] = Variable<String>(displayName.value);
+    if (slug.present) {
+      map['slug'] = Variable<String>(slug.value);
     }
-    if (status.present) {
-      map['status'] = Variable<String>(status.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
-    if (relatedSymbols.present) {
-      map['related_symbols'] = Variable<String>(
-        $CoinsMetadataTable.$converterrelatedSymbols.toSql(
-          relatedSymbols.value,
-        ),
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(
+        $CoinsMetadataTable.$convertercategory.toSql(category.value),
       );
     }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
+    if (logo.present) {
+      map['logo'] = Variable<String>(logo.value);
+    }
+    if (dateAdded.present) {
+      map['date_added'] = Variable<DateTime>(dateAdded.value);
+    }
+    if (rank.present) {
+      map['rank'] = Variable<int>(rank.value);
     }
     return map;
   }
@@ -585,13 +800,17 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
   @override
   String toString() {
     return (StringBuffer('CoinsMetadataCompanion(')
+          ..write('id: $id, ')
           ..write('symbol: $symbol, ')
           ..write('baseAsset: $baseAsset, ')
           ..write('quoteAsset: $quoteAsset, ')
-          ..write('displayName: $displayName, ')
-          ..write('status: $status, ')
-          ..write('relatedSymbols: $relatedSymbols, ')
-          ..write('rowid: $rowid')
+          ..write('slug: $slug, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('logo: $logo, ')
+          ..write('dateAdded: $dateAdded, ')
+          ..write('rank: $rank')
           ..write(')'))
         .toString();
   }
@@ -737,23 +956,31 @@ typedef $$SelectedCoinsTableProcessedTableManager =
     >;
 typedef $$CoinsMetadataTableCreateCompanionBuilder =
     CoinsMetadataCompanion Function({
+      Value<int> id,
       required String symbol,
       required String baseAsset,
       required String quoteAsset,
-      required String displayName,
-      required String status,
-      required List<String> relatedSymbols,
-      Value<int> rowid,
+      required String slug,
+      required String name,
+      required String description,
+      required CoinCategory category,
+      required String logo,
+      required DateTime dateAdded,
+      required int rank,
     });
 typedef $$CoinsMetadataTableUpdateCompanionBuilder =
     CoinsMetadataCompanion Function({
+      Value<int> id,
       Value<String> symbol,
       Value<String> baseAsset,
       Value<String> quoteAsset,
-      Value<String> displayName,
-      Value<String> status,
-      Value<List<String>> relatedSymbols,
-      Value<int> rowid,
+      Value<String> slug,
+      Value<String> name,
+      Value<String> description,
+      Value<CoinCategory> category,
+      Value<String> logo,
+      Value<DateTime> dateAdded,
+      Value<int> rank,
     });
 
 class $$CoinsMetadataTableFilterComposer
@@ -765,6 +992,11 @@ class $$CoinsMetadataTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get symbol => $composableBuilder(
     column: $table.symbol,
     builder: (column) => ColumnFilters(column),
@@ -780,20 +1012,40 @@ class $$CoinsMetadataTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get displayName => $composableBuilder(
-    column: $table.displayName,
+  ColumnFilters<String> get slug => $composableBuilder(
+    column: $table.slug,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get status => $composableBuilder(
-    column: $table.status,
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<String>, List<String>, String>
-  get relatedSymbols => $composableBuilder(
-    column: $table.relatedSymbols,
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<CoinCategory, CoinCategory, String>
+  get category => $composableBuilder(
+    column: $table.category,
     builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get logo => $composableBuilder(
+    column: $table.logo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dateAdded => $composableBuilder(
+    column: $table.dateAdded,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnFilters(column),
   );
 }
 
@@ -806,6 +1058,11 @@ class $$CoinsMetadataTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get symbol => $composableBuilder(
     column: $table.symbol,
     builder: (column) => ColumnOrderings(column),
@@ -821,18 +1078,38 @@ class $$CoinsMetadataTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get displayName => $composableBuilder(
-    column: $table.displayName,
+  ColumnOrderings<String> get slug => $composableBuilder(
+    column: $table.slug,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get status => $composableBuilder(
-    column: $table.status,
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get relatedSymbols => $composableBuilder(
-    column: $table.relatedSymbols,
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get logo => $composableBuilder(
+    column: $table.logo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dateAdded => $composableBuilder(
+    column: $table.dateAdded,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rank => $composableBuilder(
+    column: $table.rank,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -846,6 +1123,9 @@ class $$CoinsMetadataTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
   GeneratedColumn<String> get symbol =>
       $composableBuilder(column: $table.symbol, builder: (column) => column);
 
@@ -857,19 +1137,28 @@ class $$CoinsMetadataTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get displayName => $composableBuilder(
-    column: $table.displayName,
+  GeneratedColumn<String> get slug =>
+      $composableBuilder(column: $table.slug, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get status =>
-      $composableBuilder(column: $table.status, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<CoinCategory, String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<String>, String> get relatedSymbols =>
-      $composableBuilder(
-        column: $table.relatedSymbols,
-        builder: (column) => column,
-      );
+  GeneratedColumn<String> get logo =>
+      $composableBuilder(column: $table.logo, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dateAdded =>
+      $composableBuilder(column: $table.dateAdded, builder: (column) => column);
+
+  GeneratedColumn<int> get rank =>
+      $composableBuilder(column: $table.rank, builder: (column) => column);
 }
 
 class $$CoinsMetadataTableTableManager
@@ -907,39 +1196,55 @@ class $$CoinsMetadataTableTableManager
               ),
           updateCompanionCallback:
               ({
+                Value<int> id = const Value.absent(),
                 Value<String> symbol = const Value.absent(),
                 Value<String> baseAsset = const Value.absent(),
                 Value<String> quoteAsset = const Value.absent(),
-                Value<String> displayName = const Value.absent(),
-                Value<String> status = const Value.absent(),
-                Value<List<String>> relatedSymbols = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
+                Value<String> slug = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<CoinCategory> category = const Value.absent(),
+                Value<String> logo = const Value.absent(),
+                Value<DateTime> dateAdded = const Value.absent(),
+                Value<int> rank = const Value.absent(),
               }) => CoinsMetadataCompanion(
+                id: id,
                 symbol: symbol,
                 baseAsset: baseAsset,
                 quoteAsset: quoteAsset,
-                displayName: displayName,
-                status: status,
-                relatedSymbols: relatedSymbols,
-                rowid: rowid,
+                slug: slug,
+                name: name,
+                description: description,
+                category: category,
+                logo: logo,
+                dateAdded: dateAdded,
+                rank: rank,
               ),
           createCompanionCallback:
               ({
+                Value<int> id = const Value.absent(),
                 required String symbol,
                 required String baseAsset,
                 required String quoteAsset,
-                required String displayName,
-                required String status,
-                required List<String> relatedSymbols,
-                Value<int> rowid = const Value.absent(),
+                required String slug,
+                required String name,
+                required String description,
+                required CoinCategory category,
+                required String logo,
+                required DateTime dateAdded,
+                required int rank,
               }) => CoinsMetadataCompanion.insert(
+                id: id,
                 symbol: symbol,
                 baseAsset: baseAsset,
                 quoteAsset: quoteAsset,
-                displayName: displayName,
-                status: status,
-                relatedSymbols: relatedSymbols,
-                rowid: rowid,
+                slug: slug,
+                name: name,
+                description: description,
+                category: category,
+                logo: logo,
+                dateAdded: dateAdded,
+                rank: rank,
               ),
           withReferenceMapper:
               (p0) =>

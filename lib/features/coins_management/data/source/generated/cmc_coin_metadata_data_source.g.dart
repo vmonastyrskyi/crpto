@@ -1,30 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../get_listed_coins.dart';
+part of '../cmc_coin_metadata_data_source.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getListedCoinsUseCaseHash() =>
-    r'02652d446ebb3b2892a36ef6aef126a80581ad44';
+String _$cmcCoinMetadataDataSourceHash() =>
+    r'a81556bdb921e09476ff82f8080e7145f0d4947b';
 
-/// See also [GetListedCoinsUseCase].
-@ProviderFor(GetListedCoinsUseCase)
-final getListedCoinsUseCaseProvider = AutoDisposeNotifierProvider<
-  GetListedCoinsUseCase,
-  GetListedCoinsUseCase
+/// See also [CmcCoinMetadataDataSource].
+@ProviderFor(CmcCoinMetadataDataSource)
+final cmcCoinMetadataDataSourceProvider = AutoDisposeNotifierProvider<
+  CmcCoinMetadataDataSource,
+  ICoinMetadataDataSource
 >.internal(
-  GetListedCoinsUseCase.new,
-  name: r'getListedCoinsUseCaseProvider',
+  CmcCoinMetadataDataSource.new,
+  name: r'cmcCoinMetadataDataSourceProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$getListedCoinsUseCaseHash,
+          : _$cmcCoinMetadataDataSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$GetListedCoinsUseCase = AutoDisposeNotifier<GetListedCoinsUseCase>;
+typedef _$CmcCoinMetadataDataSource =
+    AutoDisposeNotifier<ICoinMetadataDataSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

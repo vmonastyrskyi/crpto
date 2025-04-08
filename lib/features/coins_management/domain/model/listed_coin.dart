@@ -1,3 +1,4 @@
+import 'package:crpto/shared/domain/model/enum/coin_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/listed_coin.freezed.dart';
@@ -18,5 +19,5 @@ class ListedCoin with _$ListedCoin {
   @override
   final String quoteAsset;
   @override
-  final String status;
+  final CoinStatus status;
 }

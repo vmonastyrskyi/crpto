@@ -1,6 +1,6 @@
 import 'package:crpto/shared/data/dto/coin_kline_dto.dart';
-import 'package:crpto/shared/data/source/kline/binance_kline_data_source.dart';
-import 'package:crpto/shared/data/source/kline/i_kline_data_source.dart';
+import 'package:crpto/shared/data/source/binance_kline_data_source.dart';
+import 'package:crpto/shared/data/source/i_kline_data_source.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/enum/kline_interval.dart';
 import 'package:crpto/shared/domain/repository/i_kline_repository.dart';

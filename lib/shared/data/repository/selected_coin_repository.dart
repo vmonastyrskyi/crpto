@@ -1,6 +1,6 @@
 import 'package:crpto/core/data/local/database/tables/selected_coins.dart';
-import 'package:crpto/shared/data/source/selected_coin/drift_selected_coin_data_source.dart';
-import 'package:crpto/shared/data/source/selected_coin/i_selected_coin_data_source.dart';
+import 'package:crpto/shared/data/source/drift_selected_coin_data_source.dart';
+import 'package:crpto/shared/data/source/i_selected_coin_data_source.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:crpto/shared/domain/repository/i_selected_coin_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -23,8 +23,9 @@ class SelectedCoinRepository extends _$SelectedCoinRepository
   List<SelectedCoin> getAll() {
     final selectedCoinDTOs = _selectedCoinDataSource.getAll();
 
-    final selectedCoins =
-        selectedCoinDTOs.map(SelectedCoinDTOMapper.toModel).toList();
+    final selectedCoins = [
+      ...selectedCoinDTOs.map(SelectedCoinDTOMapper.toModel),
+    ];
 
     return selectedCoins;
   }

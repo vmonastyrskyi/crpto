@@ -1,3 +1,4 @@
+import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,16 +41,16 @@ class CrptoApp extends ConsumerWidget {
   Widget _buildFlavorBanner({bool show = true, Widget? child}) {
     return show
         ? Banner(
-          message: F.name.toUpperCase(),
-          location: BannerLocation.topStart,
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 11.0,
-            height: 1.0,
-          ),
-          color: Colors.green,
-          child: child,
-        )
+      message: F.name.toUpperCase(),
+      location: BannerLocation.topStart,
+      textStyle: const TextStyle(
+        fontWeight: FontWeight.w800,
+        fontSize: 11.0,
+        height: 1.0,
+      ),
+      color: Colors.green,
+      child: child,
+    )
         : child ?? const SizedBox.shrink();
   }
 }
@@ -66,5 +67,9 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 
 class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    ref.watch(listedCoinListControllerProvider);
+
+    return widget.child;
+  }
 }

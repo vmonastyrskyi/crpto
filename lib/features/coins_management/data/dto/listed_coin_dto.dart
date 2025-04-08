@@ -1,4 +1,5 @@
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
+import 'package:crpto/shared/domain/model/enum/coin_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/listed_coin_dto.freezed.dart';
@@ -15,7 +16,6 @@ class ListedCoinDTO with _$ListedCoinDTO {
   });
 
   @override
-  @JsonKey(name: 'symbol')
   final String symbol;
   @override
   @JsonKey(name: 'baseAsset')
@@ -24,20 +24,19 @@ class ListedCoinDTO with _$ListedCoinDTO {
   @JsonKey(name: 'quoteAsset')
   final String quoteAsset;
   @override
-  @JsonKey(name: 'status')
-  final String status;
+  final CoinStatus status;
 
   factory ListedCoinDTO.fromJson(Map<String, dynamic> json) =>
       _$ListedCoinDTOFromJson(json);
 }
 
 extension ListedCoinDTOMapper on ListedCoinDTO {
-  static ListedCoin toModel(ListedCoinDTO listedCoinDTO) {
+  static ListedCoin toModel(ListedCoinDTO dto) {
     return ListedCoin(
-      symbol: listedCoinDTO.symbol,
-      baseAsset: listedCoinDTO.baseAsset,
-      quoteAsset: listedCoinDTO.quoteAsset,
-      status: listedCoinDTO.status,
+      symbol: dto.symbol,
+      baseAsset: dto.baseAsset,
+      quoteAsset: dto.quoteAsset,
+      status: dto.status,
     );
   }
 }

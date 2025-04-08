@@ -67,19 +67,15 @@ class CoinTickerItem extends StatelessWidget {
   }
 
   Widget _buildTokenIcon() {
-    return Consumer(
-      builder: (_, ref, _) {
-        final coinMetadata = ref.watch(coinMetadataProvider(coinTicker.symbol));
-
-        return TokenIcon(token: coinMetadata.baseAsset);
-      },
-    );
+    return TokenIcon(symbol: coinTicker.symbol);
   }
 
   Widget _buildTokenBaseAsset() {
     return Consumer(
       builder: (_, ref, _) {
-        final coinMetadata = ref.watch(coinMetadataProvider(coinTicker.symbol));
+        final symbol = coinTicker.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
         return AutoSizeText(
           coinMetadata.baseAsset,
@@ -96,10 +92,12 @@ class CoinTickerItem extends StatelessWidget {
   Widget _buildTokenDisplayName() {
     return Consumer(
       builder: (_, ref, _) {
-        final coinMetadata = ref.watch(coinMetadataProvider(coinTicker.symbol));
+        final symbol = coinTicker.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
         return AutoSizeText(
-          coinMetadata.displayName,
+          coinMetadata.name,
           style: AppFonts.medium.copyWith(
             color: AppColors.secondaryTextColor,
             fontSize: 14.0,
@@ -114,9 +112,10 @@ class CoinTickerItem extends StatelessWidget {
   Widget _buildCoinLastPrice() {
     return Consumer(
       builder: (_, ref, _) {
+        final symbol = this.coinTicker.symbol;
+
         final coinTicker =
-            ref.watch(coinTickerNotifierProvider(this.coinTicker.symbol)) ??
-            this.coinTicker;
+            ref.watch(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
 
         return CoinLastPriceText(lastPrice: coinTicker.lastPrice);
       },
@@ -126,9 +125,10 @@ class CoinTickerItem extends StatelessWidget {
   Widget _buildCoinPriceChangePercent() {
     return Consumer(
       builder: (_, ref, _) {
+        final symbol = this.coinTicker.symbol;
+
         final coinTicker =
-            ref.watch(coinTickerNotifierProvider(this.coinTicker.symbol)) ??
-            this.coinTicker;
+            ref.watch(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
 
         final priceChangePercent = coinTicker.priceChangePercent
             .toStringAsFixed(2);

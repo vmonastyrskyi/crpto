@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CoinMetadata {
 
- String get symbol; String get baseAsset; String get quoteAsset; String get displayName; String get status; List<String> get relatedSymbols;
+ int get id; String get symbol; String get baseAsset; String get quoteAsset; String get slug; String get name; String get description; CoinCategory get category; String get logo; DateTime get dateAdded; int get rank;
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CoinMetadataCopyWith<CoinMetadata> get copyWith => _$CoinMetadataCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.status, status) || other.status == status)&&const DeepCollectionEquality().equals(other.relatedSymbols, relatedSymbols));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.id, id) || other.id == id)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.logo, logo) || other.logo == logo)&&(identical(other.dateAdded, dateAdded) || other.dateAdded == dateAdded)&&(identical(other.rank, rank) || other.rank == rank));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,symbol,baseAsset,quoteAsset,displayName,status,const DeepCollectionEquality().hash(relatedSymbols));
+int get hashCode => Object.hash(runtimeType,id,symbol,baseAsset,quoteAsset,slug,name,description,category,logo,dateAdded,rank);
 
 @override
 String toString() {
-  return 'CoinMetadata(symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, displayName: $displayName, status: $status, relatedSymbols: $relatedSymbols)';
+  return 'CoinMetadata(id: $id, symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, slug: $slug, name: $name, description: $description, category: $category, logo: $logo, dateAdded: $dateAdded, rank: $rank)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CoinMetadataCopyWith<$Res>  {
   factory $CoinMetadataCopyWith(CoinMetadata value, $Res Function(CoinMetadata) _then) = _$CoinMetadataCopyWithImpl;
 @useResult
 $Res call({
- String symbol, String baseAsset, String quoteAsset, String displayName, String status, List<String> relatedSymbols
+ int id, String symbol, String baseAsset, String quoteAsset, String slug, String name, String description, CoinCategory category, String logo, DateTime dateAdded, int rank
 });
 
 
@@ -63,15 +63,20 @@ class _$CoinMetadataCopyWithImpl<$Res>
 
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? displayName = null,Object? status = null,Object? relatedSymbols = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? slug = null,Object? name = null,Object? description = null,Object? category = null,Object? logo = null,Object? dateAdded = null,Object? rank = null,}) {
   return _then(CoinMetadata(
-symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
 as String,baseAsset: null == baseAsset ? _self.baseAsset : baseAsset // ignore: cast_nullable_to_non_nullable
 as String,quoteAsset: null == quoteAsset ? _self.quoteAsset : quoteAsset // ignore: cast_nullable_to_non_nullable
-as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
-as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,relatedSymbols: null == relatedSymbols ? _self.relatedSymbols : relatedSymbols // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as CoinCategory,logo: null == logo ? _self.logo : logo // ignore: cast_nullable_to_non_nullable
+as String,dateAdded: null == dateAdded ? _self.dateAdded : dateAdded // ignore: cast_nullable_to_non_nullable
+as DateTime,rank: null == rank ? _self.rank : rank // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

@@ -33,7 +33,7 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          TokenIcon(token: coinMetadata.baseAsset),
+          TokenIcon(symbol: symbol),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,7 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
                 ),
               ),
               Text(
-                coinMetadata.displayName,
+                coinMetadata.name,
                 style: AppFonts.medium.copyWith(
                   color: AppColors.secondaryTextColor,
                   fontSize: 14.0,

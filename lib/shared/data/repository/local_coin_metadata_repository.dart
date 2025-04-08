@@ -1,14 +1,14 @@
 import 'package:crpto/core/data/local/database/tables/coin_metadata.dart';
-import 'package:crpto/shared/data/source/coin_metadata/drift_coin_metadata_data_source.dart';
-import 'package:crpto/shared/data/source/coin_metadata/i_coin_metadata_data_source.dart';
+import 'package:crpto/shared/data/source/drift_coin_metadata_data_source.dart';
+import 'package:crpto/shared/data/source/i_coin_metadata_data_source.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
 import 'package:crpto/shared/domain/repository/i_coin_metadata_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/coin_metadata_repository.g.dart';
+part 'generated/local_coin_metadata_repository.g.dart';
 
 @riverpod
-class CoinMetadataRepository extends _$CoinMetadataRepository
+class LocalCoinMetadataRepository extends _$LocalCoinMetadataRepository
     implements ICoinMetadataRepository {
   late ICoinMetadataDataSource _coinMetadataDataSource;
 
@@ -20,8 +20,8 @@ class CoinMetadataRepository extends _$CoinMetadataRepository
   }
 
   @override
-  CoinMetadata getBySymbol(String symbol) {
-    final coinMetadataDTO = _coinMetadataDataSource.getBySymbol(symbol);
+  CoinMetadata get(String symbol) {
+    final coinMetadataDTO = _coinMetadataDataSource.get(symbol);
 
     final coinMetadata = CoinMetadataDTOMapper.toModel(coinMetadataDTO);
 
@@ -29,10 +29,11 @@ class CoinMetadataRepository extends _$CoinMetadataRepository
   }
 
   @override
-  Future<void> addAll(List<CoinMetadata> coinMetadataList) {
-    final coinMetadataDTOList =
-        coinMetadataList.map(CoinMetadataDTOMapper.fromModel).toList();
+  Future<void> addAll(List<CoinMetadata> coinsMetadata) {
+    final coinMetadataDTOs = [
+      ...coinsMetadata.map(CoinMetadataDTOMapper.fromModel),
+    ];
 
-    return _coinMetadataDataSource.insertAll(coinMetadataDTOList);
+    return _coinMetadataDataSource.insertAll(coinMetadataDTOs);
   }
 }

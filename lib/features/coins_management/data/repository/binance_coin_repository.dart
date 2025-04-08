@@ -5,22 +5,23 @@ import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/domain/repository/i_coin_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/coin_repository.g.dart';
+part 'generated/binance_coin_repository.g.dart';
 
 @riverpod
-class CoinRepository extends _$CoinRepository implements ICoinRepository {
-  late ICoinDataSource _coinDataSource;
+class BinanceCoinRepository extends _$BinanceCoinRepository
+    implements ICoinRepository {
+  late ICoinDataSource _binanceCoinDataSource;
 
   @override
   ICoinRepository build() {
-    _coinDataSource = ref.watch(binanceCoinDataSourceProvider);
+    _binanceCoinDataSource = ref.watch(binanceCoinDataSourceProvider);
 
     return this;
   }
 
   @override
   Future<List<ListedCoin>> getListedCoins() async {
-    final listedCoinDTOs = await _coinDataSource.getListedCoins();
+    final listedCoinDTOs = await _binanceCoinDataSource.getListedCoins();
 
     final listedCoins = [...listedCoinDTOs.map(ListedCoinDTOMapper.toModel)];
 

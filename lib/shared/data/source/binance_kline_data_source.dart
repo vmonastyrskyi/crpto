@@ -1,6 +1,6 @@
 import 'package:crpto/core/data/network/dio_client.dart';
 import 'package:crpto/shared/data/dto/coin_kline_dto.dart';
-import 'package:crpto/shared/data/source/kline/i_kline_data_source.dart';
+import 'package:crpto/shared/data/source/i_kline_data_source.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,11 +40,12 @@ final class BinanceKlineDataSource extends _$BinanceKlineDataSource
 
     final response = await _dio.get(url, queryParameters: queryParameters);
 
-    final klineDTOs =
-        List<dynamic>.from(
-          response.data,
-        ).map((list) => CoinKlineDTO.fromList(list)).toList();
+    final coinKlineDTOs = [
+      ...List<dynamic>.from(
+        response.data,
+      ).map((list) => CoinKlineDTO.fromList(list)),
+    ];
 
-    return klineDTOs;
+    return coinKlineDTOs;
   }
 }

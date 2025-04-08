@@ -1,11 +1,11 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
+import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,18 +28,18 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
         }
 
         if (state.listedCoins.isNotEmpty) {
-          return _buildListedCoinList(state);
+          return _buildListedCoins(state);
         }
       case AsyncData(value: final state):
         if (state.listedCoins.isNotEmpty) {
-          return _buildListedCoinList(state);
+          return _buildListedCoins(state);
         }
     }
 
     return _buildNoListedCoinsFoundWarning();
   }
 
-  Widget _buildListedCoinList(ListedCoinListState state) {
+  Widget _buildListedCoins(ListedCoinListState state) {
     final listedCoins = _sortListedCoins(state.listedCoins);
 
     return ListView.builder(

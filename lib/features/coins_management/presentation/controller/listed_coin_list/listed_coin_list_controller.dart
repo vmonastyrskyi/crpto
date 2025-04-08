@@ -1,9 +1,9 @@
-import 'package:crpto/core/utils/crypto_utils.dart';
 import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/listed_coin_list_controller.g.dart';
@@ -37,8 +37,12 @@ class ListedCoinListController extends _$ListedCoinListController {
 
         final searchedListedCoins =
             _lastListedCoins.where((listedCoin) {
-              final coinBaseAsset = listedCoin.baseAsset.toLowerCase();
-              final coinDisplayName = CryptoUtils.getDisplayName(coinBaseAsset);
+              final coinMetadata = ref.read(
+                coinMetadataProvider(listedCoin.symbol),
+              );
+
+              final coinBaseAsset = coinMetadata.baseAsset;
+              final coinDisplayName = coinMetadata.name;
               final searchRegExp = RegExp(
                 caseSensitive: false,
                 modifiedSearchValue,
