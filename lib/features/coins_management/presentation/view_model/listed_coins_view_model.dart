@@ -2,14 +2,14 @@ import 'package:crpto/core/utils/debounce.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/features/coins_management/application/use_case/get_listed_coins.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_state.dart';
+import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_state.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/listed_coin_list_controller.g.dart';
+part 'generated/listed_coins_view_model.g.dart';
 
 @Riverpod(keepAlive: true)
-class ListedCoinListController extends _$ListedCoinListController {
+class ListedCoinsViewModel extends _$ListedCoinsViewModel {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
   late GetListedCoinsUseCase _getListedCoins;
@@ -18,7 +18,7 @@ class ListedCoinListController extends _$ListedCoinListController {
   String _lastSearchValue = emptyString;
 
   @override
-  Future<ListedCoinListState> build() {
+  Future<ListedCoinsState> build() {
     _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
 
     ref.onDispose(() => _searchListedCoinsDebounce.cancel());
@@ -33,7 +33,7 @@ class ListedCoinListController extends _$ListedCoinListController {
       if (modifiedSearchValue.isNotEmpty) {
         if (modifiedSearchValue == _lastSearchValue) return;
 
-        state = const AsyncData(ListedCoinListState.searching());
+        state = const AsyncData(ListedCoinsState.searching());
 
         final searchedListedCoins =
             _lastListedCoins.where((listedCoin) {
@@ -53,24 +53,22 @@ class ListedCoinListController extends _$ListedCoinListController {
             }).toList();
 
         state = AsyncData(
-          ListedCoinListState.searchedData(listedCoins: searchedListedCoins),
+          ListedCoinsState.searchedData(listedCoins: searchedListedCoins),
         );
       } else {
-        state = AsyncData(
-          ListedCoinListState.data(listedCoins: _lastListedCoins),
-        );
+        state = AsyncData(ListedCoinsState.data(listedCoins: _lastListedCoins));
       }
 
       _lastSearchValue = modifiedSearchValue;
     }, const Duration(milliseconds: 250));
   }
 
-  Future<ListedCoinListState> _loadListedCoins() async {
+  Future<ListedCoinsState> _loadListedCoins() async {
     state = const AsyncLoading();
 
     final listedCoins = _lastListedCoins = await _getListedCoins();
 
-    state = AsyncData(ListedCoinListState.data(listedCoins: listedCoins));
+    state = AsyncData(ListedCoinsState.data(listedCoins: listedCoins));
 
     return await future;
   }

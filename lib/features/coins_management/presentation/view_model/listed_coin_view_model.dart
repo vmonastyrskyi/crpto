@@ -1,26 +1,26 @@
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_state.dart';
+import 'package:crpto/features/coins_management/presentation/view_model/listed_coin_state.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/add_selected_coin.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/get_selected_coins.dart';
 import 'package:crpto/shared/application/use_case/selected_coin/remove_selected_coin.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'generated/listed_coin_item_controller.g.dart';
+part 'generated/listed_coin_view_model.g.dart';
 
 @riverpod
-class ListedCoinItemController extends _$ListedCoinItemController {
+class ListedCoinViewModel extends _$ListedCoinViewModel {
   late GetSelectedCoinsUseCase _getSelectedCoins;
   late AddSelectedCoinUseCase _addSelectedCoin;
   late RemoveSelectedCoinUseCase _removeSelectedCoin;
 
   @override
-  ListedCoinItemState build(ListedCoin listedCoin) {
+  ListedCoinState build(ListedCoin listedCoin) {
     _getSelectedCoins = ref.watch(getSelectedCoinsUseCaseProvider);
     _addSelectedCoin = ref.watch(addSelectedCoinUseCaseProvider);
     _removeSelectedCoin = ref.watch(removeSelectedCoinUseCaseProvider);
 
-    final initialState = ListedCoinItemState.initial(listedCoin: listedCoin);
+    final initialState = ListedCoinState.initial(listedCoin: listedCoin);
 
     final selectedCoins = _getSelectedCoins();
 

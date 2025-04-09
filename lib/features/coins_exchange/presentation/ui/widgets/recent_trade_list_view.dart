@@ -4,7 +4,7 @@ import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
 import 'package:crpto/features/coins_exchange/presentation/provider/recent_trades_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_item.dart';
-import 'package:crpto/shared/presentation/provider/coin_tickers_notifier.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:flutter/material.dart';
@@ -46,30 +46,12 @@ class _RecentTradeListViewState extends ConsumerState<RecentTradeListView> {
   }
 
   Widget _buildRecentTradeList(List<RecentTrade> recentTrades) {
-    final coinTickersMap = ref.read(coinTickersNotifierProvider).value;
+    recentTrades.sort((a, b) {
+      final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
+      final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
 
-    if (coinTickersMap != null && coinTickersMap.isNotEmpty) {
-      final coinTickers = [...coinTickersMap.values];
-
-      coinTickers.sort((a, b) => b.quoteVolume.compareTo(a.quoteVolume));
-
-      final symbolIndexes = <String, int>{};
-
-      for (final indexedCoinTicker in coinTickers.indexed) {
-        final (index, coinTicker) = indexedCoinTicker;
-
-        if (!symbolIndexes.containsKey(coinTicker.symbol)) {
-          symbolIndexes[coinTicker.symbol] = index;
-        }
-      }
-
-      recentTrades.sort((a, b) {
-        final indexA = symbolIndexes[a.symbol] ?? -1;
-        final indexB = symbolIndexes[b.symbol] ?? -1;
-
-        return indexA.compareTo(indexB);
-      });
-    }
+      return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
+    });
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxHeight: 160.0),

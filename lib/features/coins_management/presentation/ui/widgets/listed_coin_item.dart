@@ -2,7 +2,7 @@ import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coin_item/listed_coin_item_controller.dart';
+import 'package:crpto/features/coins_management/presentation/view_model/listed_coin_view_model.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
 
   Widget _buildSwitcher() {
     final selected = ref.watch(
-      listedCoinItemControllerProvider(
+      listedCoinViewModelProvider(
         _listedCoin,
       ).select((state) => state.selected),
     );
@@ -72,9 +72,7 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
     return Switch(
       value: selected,
       onChanged:
-          ref
-              .read(listedCoinItemControllerProvider(_listedCoin).notifier)
-              .select,
+          ref.read(listedCoinViewModelProvider(_listedCoin).notifier).select,
       activeColor: AppColors.switchActiveColor,
       activeTrackColor: AppColors.switchActiveTrackColor,
       inactiveThumbColor: AppColors.switchInactiveThumbColor,

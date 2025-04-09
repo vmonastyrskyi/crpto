@@ -7,7 +7,7 @@ part of '../cmc_coin_metadata_data_source.dart';
 // **************************************************************************
 
 String _$cmcCoinMetadataDataSourceHash() =>
-    r'a81556bdb921e09476ff82f8080e7145f0d4947b';
+    r'54be778a5e05b821f4245bc0db4da780ff50aaee';
 
 /// See also [CmcCoinMetadataDataSource].
 @ProviderFor(CmcCoinMetadataDataSource)
