@@ -31,7 +31,7 @@ class CoinTickerDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _buildTokenIcon(),
-            _buildTokenName().expanded(),
+            _buildCoinName().expanded(),
             Consumer(
               builder: (context, ref, _) {
                 final symbol = context.symbol;
@@ -70,18 +70,14 @@ class CoinTickerDetailsView extends StatelessWidget {
   }
 
   Widget _buildTokenIcon() {
-    return Consumer(
-      builder: (context, ref, _) {
-        final symbol = context.symbol;
-
-        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-
-        return TokenIcon(token: coinMetadata.baseAsset, size: 48.0);
+    return Builder(
+      builder: (context) {
+        return TokenIcon(symbol: context.symbol, size: 48.0);
       },
     );
   }
 
-  Widget _buildTokenName() {
+  Widget _buildCoinName() {
     return Consumer(
       builder: (context, ref, _) {
         final symbol = context.symbol;
@@ -89,7 +85,7 @@ class CoinTickerDetailsView extends StatelessWidget {
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
         return AutoSizeText(
-          coinMetadata.displayName,
+          coinMetadata.name,
           style: AppFonts.medium.copyWith(
             color: AppColors.primaryTextColor,
             fontSize: 16.0,

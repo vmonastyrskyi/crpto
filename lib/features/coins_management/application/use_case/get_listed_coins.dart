@@ -1,76 +1,106 @@
-import 'package:collection/collection.dart';
-import 'package:crpto/core/utils/crypto_utils.dart';
-import 'package:crpto/features/coins_management/data/repository/coin_repository.dart';
+import 'package:crpto/features/coins_management/data/repository/binance_coin_repository.dart';
+import 'package:crpto/features/coins_management/data/repository/cmc_coin_metadata_repository.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
+import 'package:crpto/features/coins_management/domain/repository/i_coin_metadata_repository.dart'
+    as cmc;
 import 'package:crpto/features/coins_management/domain/repository/i_coin_repository.dart';
-import 'package:crpto/shared/data/repository/coin_metadata_repository.dart';
+import 'package:crpto/shared/data/repository/local_coin_metadata_repository.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
-import 'package:crpto/shared/domain/repository/i_coin_metadata_repository.dart';
+import 'package:crpto/shared/domain/model/enum/coin_status.dart';
+import 'package:crpto/shared/domain/repository/i_coin_metadata_repository.dart'
+    as local;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/get_listed_coins.g.dart';
 
 @riverpod
 class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
-  late ICoinRepository _coinRepository;
-  late ICoinMetadataRepository _coinMetadataRepository;
+  late ICoinRepository _binanceCoinRepository;
+  late local.ICoinMetadataRepository _localCoinMetadataRepository;
+  late cmc.ICoinMetadataRepository _cmcCoinMetadataRepository;
 
   @override
   GetListedCoinsUseCase build() {
-    _coinRepository = ref.watch(coinRepositoryProvider);
-    _coinMetadataRepository = ref.watch(coinMetadataRepositoryProvider);
+    _binanceCoinRepository = ref.watch(binanceCoinRepositoryProvider);
+    _localCoinMetadataRepository = ref.watch(
+      localCoinMetadataRepositoryProvider,
+    );
+    _cmcCoinMetadataRepository = ref.watch(cmcCoinMetadataRepositoryProvider);
 
     return this;
   }
 
   Future<List<ListedCoin>> call() async {
-    final listedCoins = await _coinRepository.getListedCoins();
+    List<ListedCoin> listedCoins =
+        await _binanceCoinRepository.getListedCoins();
 
-    List<ListedCoin> filteredListedCoins = [
-      ...listedCoins
-          .where((listedCoin) => listedCoin.quoteAsset == 'USDT')
-          .where(
-            (listedCoin) => CryptoUtils.isIconExists(listedCoin.baseAsset),
-          ),
-    ];
-    final groupedListedCoins = listedCoins.groupFoldBy<String, Set<String>>(
-      (listedCoin) => listedCoin.baseAsset,
-      (previous, listedCoin) {
-        return (previous ?? <String>{})..add(listedCoin.symbol);
-      },
-    );
-
-    final coinsMetadata = [
-      ...filteredListedCoins.map((filteredListedCoin) {
-        final symbol = filteredListedCoin.symbol;
-        final baseAsset = filteredListedCoin.baseAsset;
-        final quoteAsset = filteredListedCoin.quoteAsset;
-        final displayName = CryptoUtils.getDisplayName(baseAsset);
-        final status = filteredListedCoin.status;
-
-        final relatedSymbols = [
-          ...?groupedListedCoins[baseAsset]?..remove(symbol),
-        ];
-
-        return CoinMetadata(
-          symbol: symbol,
-          baseAsset: baseAsset,
-          quoteAsset: quoteAsset,
-          displayName: displayName,
-          status: status,
-          relatedSymbols: relatedSymbols,
-        );
-      }),
-    ];
-
-    await _coinMetadataRepository.addAll(coinsMetadata);
-
-    filteredListedCoins = [
-      ...filteredListedCoins.where(
-        (filteredListedCoin) => filteredListedCoin.status == 'TRADING',
+    listedCoins = [
+      ...listedCoins.where(
+        (listedCoin) =>
+            listedCoin.status == CoinStatus.trading &&
+            listedCoin.quoteAsset == 'USDT',
       ),
     ];
 
-    return filteredListedCoins;
+    Set<String> baseAssets = {
+      ...listedCoins.map((listedCoin) => listedCoin.baseAsset),
+    };
+
+    final cmcCoinsMetadata = await _cmcCoinMetadataRepository.getCoinsMetadata(
+      baseAssets,
+    );
+
+    baseAssets = {...cmcCoinsMetadata.keys};
+
+    final cmcCoinsId = await _cmcCoinMetadataRepository.getCoinsId(baseAssets);
+
+    final listedCoinsMetadata = <ListedCoin, CoinMetadata>{};
+
+    for (final listedCoin in listedCoins) {
+      final baseAsset = listedCoin.baseAsset;
+
+      if (!baseAssets.contains(baseAsset)) continue;
+
+      final cmcCoinMetadata = cmcCoinsMetadata[baseAsset];
+
+      if (cmcCoinMetadata == null) continue;
+
+      final cmcCoinId = cmcCoinsId[baseAsset];
+
+      if (cmcCoinId == null) continue;
+
+      final id = cmcCoinMetadata.id;
+      final symbol = listedCoin.symbol;
+      final quoteAsset = listedCoin.quoteAsset;
+      final slug = cmcCoinMetadata.slug;
+      final name = cmcCoinMetadata.name;
+      final description = cmcCoinMetadata.description;
+      final category = cmcCoinMetadata.category;
+      final logo = cmcCoinMetadata.logo;
+      final dateAdded = cmcCoinMetadata.dateAdded;
+      final rank = cmcCoinId.rank ?? -1;
+
+      listedCoinsMetadata[listedCoin] = CoinMetadata(
+        id: id,
+        symbol: symbol,
+        baseAsset: baseAsset,
+        quoteAsset: quoteAsset,
+        slug: slug,
+        name: name,
+        description: description,
+        category: category,
+        logo: logo,
+        dateAdded: dateAdded,
+        rank: rank,
+      );
+    }
+
+    final coinsMetadata = [...listedCoinsMetadata.values];
+
+    await _localCoinMetadataRepository.addAll(coinsMetadata);
+
+    listedCoins = [...listedCoinsMetadata.keys];
+
+    return listedCoins;
   }
 }

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ListedCoinDTO {
 
- String get symbol; String get baseAsset; String get quoteAsset; String get status;
+ String get symbol; String get baseAsset; String get quoteAsset; CoinStatus get status;
 /// Create a copy of ListedCoinDTO
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -47,7 +47,7 @@ abstract mixin class $ListedCoinDTOCopyWith<$Res>  {
   factory $ListedCoinDTOCopyWith(ListedCoinDTO value, $Res Function(ListedCoinDTO) _then) = _$ListedCoinDTOCopyWithImpl;
 @useResult
 $Res call({
- String symbol, String baseAsset, String quoteAsset, String status
+ String symbol, String baseAsset, String quoteAsset, CoinStatus status
 });
 
 
@@ -70,7 +70,7 @@ symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_n
 as String,baseAsset: null == baseAsset ? _self.baseAsset : baseAsset // ignore: cast_nullable_to_non_nullable
 as String,quoteAsset: null == quoteAsset ? _self.quoteAsset : quoteAsset // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,
+as CoinStatus,
   ));
 }
 

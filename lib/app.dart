@@ -1,3 +1,4 @@
+import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,5 +67,9 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 
 class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) {
+    ref.watch(listedCoinsViewModelProvider);
+
+    return widget.child;
+  }
 }

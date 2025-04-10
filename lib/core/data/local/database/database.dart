@@ -1,3 +1,4 @@
+import 'package:crpto/shared/domain/model/enum/coin_category.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 

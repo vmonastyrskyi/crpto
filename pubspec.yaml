@@ -19,6 +19,7 @@ dependencies:
   custom_refresh_indicator: ^4.0.1
   carousel_slider: ^5.0.0
   auto_size_text: ^3.0.0
+  flutter_dotenv: ^5.2.1
   equatable: ^2.0.7
   decimal: ^3.2.1
   rxdart: ^0.28.0
@@ -40,11 +41,12 @@ dependencies:
   # graphics
   flutter_svg: ^2.0.17
   vector_graphics: ^1.1.18
+  cached_network_image: ^3.4.1
   fl_chart: ^0.70.2
   shimmer: ^3.0.0
 
   # local storage
-  shared_preferences: ^2.5.2
+  shared_preferences: ^2.5.3
   drift_flutter: ^0.2.4
   drift: ^2.26.0
 
@@ -54,7 +56,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  freezed: ^3.0.4
+  freezed: ^3.0.6
   json_serializable: ^6.9.4
   drift_dev: ^2.26.0
 
@@ -82,3 +84,6 @@ flutter:
     - assets/svgs/tokens/
     - assets/svgs_vec/tokens/
     - assets/svgs_vec/tokens/
+
+    - .env
+    - .env-dev

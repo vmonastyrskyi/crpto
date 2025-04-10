@@ -1,8 +1,8 @@
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/features/coins_management/presentation/controller/listed_coin_list/listed_coin_list_controller.dart';
-import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_list.dart';
+import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_list_view.dart';
+import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_view_model.dart';
 import 'package:crpto/shared/presentation/ui/widgets/search_bar.dart';
 import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +80,7 @@ class _CoinsManagementScreenState extends ConsumerState<CoinsManagementScreen> {
     return CrptoSearchBar(
       hintText: 'Search',
       onChanged:
-          ref.read(listedCoinListControllerProvider.notifier).searchListedCoins,
+          ref.read(listedCoinsViewModelProvider.notifier).searchListedCoins,
     ).withPaddingAll(12.0);
   }
 }

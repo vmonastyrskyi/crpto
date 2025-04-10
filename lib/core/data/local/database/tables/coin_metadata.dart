@@ -1,22 +1,26 @@
-import 'dart:convert';
-
 import 'package:crpto/core/data/local/database/database.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
+import 'package:crpto/shared/domain/model/enum/coin_category.dart';
 import 'package:drift/drift.dart';
 
 @DataClassName('CoinMetadataDTO')
 class CoinsMetadata extends Table {
+  late final IntColumn id = integer()();
   late final TextColumn symbol = text()();
   late final TextColumn baseAsset = text()();
   late final TextColumn quoteAsset = text()();
-  late final TextColumn displayName = text()();
-  late final TextColumn status = text()();
-  late final TextColumn relatedSymbols = text().map(StringListConverter())();
+  late final TextColumn slug = text()();
+  late final TextColumn name = text()();
+  late final TextColumn description = text()();
+  late final TextColumn category = textEnum<CoinCategory>()();
+  late final TextColumn logo = text()();
+  late final DateTimeColumn dateAdded = dateTime()();
+  late final IntColumn rank = integer()();
 
   final Set<CoinMetadataDTO> _cache = {};
 
   @override
-  Set<Column<Object>> get primaryKey => {symbol};
+  Set<Column<Object>> get primaryKey => {id};
 
   Future<void> loadCache() async {
     _cache
@@ -40,35 +44,33 @@ class CoinsMetadata extends Table {
 extension CoinMetadataDTOMapper on CoinMetadataDTO {
   static CoinMetadataDTO fromModel(CoinMetadata coinMetadata) {
     return CoinMetadataDTO(
+      id: coinMetadata.id,
       symbol: coinMetadata.symbol,
       baseAsset: coinMetadata.baseAsset,
       quoteAsset: coinMetadata.quoteAsset,
-      displayName: coinMetadata.displayName,
-      status: coinMetadata.status,
-      relatedSymbols: coinMetadata.relatedSymbols,
+      slug: coinMetadata.slug,
+      name: coinMetadata.name,
+      description: coinMetadata.description,
+      category: coinMetadata.category,
+      logo: coinMetadata.logo,
+      dateAdded: coinMetadata.dateAdded,
+      rank: coinMetadata.rank,
     );
   }
 
   static CoinMetadata toModel(CoinMetadataDTO dto) {
     return CoinMetadata(
+      id: dto.id,
       symbol: dto.symbol,
       baseAsset: dto.baseAsset,
       quoteAsset: dto.quoteAsset,
-      displayName: dto.displayName,
-      status: dto.status,
-      relatedSymbols: dto.relatedSymbols,
+      slug: dto.slug,
+      name: dto.name,
+      description: dto.description,
+      category: dto.category,
+      logo: dto.logo,
+      dateAdded: dto.dateAdded,
+      rank: dto.rank,
     );
-  }
-}
-
-class StringListConverter extends TypeConverter<List<String>, String> {
-  @override
-  List<String> fromSql(String fromDb) {
-    return [...(jsonDecode(fromDb) as List).map((item) => item as String)];
-  }
-
-  @override
-  String toSql(List<String> value) {
-    return jsonEncode(value);
   }
 }

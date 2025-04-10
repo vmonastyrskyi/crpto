@@ -41,6 +41,7 @@ class _CrptoSearchBarState extends State<CrptoSearchBar> {
       backgroundColor: const WidgetStatePropertyAll(
         AppColors.primaryWidgetColor,
       ),
+      overlayColor: const WidgetStatePropertyAll(AppColors.splashColorLight),
       shadowColor: const WidgetStatePropertyAll(AppColors.shadowColor),
       elevation: const WidgetStatePropertyAll(1.0),
       textStyle: const WidgetStatePropertyAll(

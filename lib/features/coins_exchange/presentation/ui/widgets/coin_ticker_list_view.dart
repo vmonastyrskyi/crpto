@@ -3,6 +3,7 @@ import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_item.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
+import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_tickers_notifier.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
@@ -44,7 +45,12 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
   }
 
   Widget _buildCoinTickerList(List<CoinTicker> coinTickers) {
-    coinTickers.sort((a, b) => b.quoteVolume.compareTo(a.quoteVolume));
+    coinTickers.sort((a, b) {
+      final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
+      final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
+
+      return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
+    });
 
     return ListView.builder(
       itemBuilder: (_, index) {

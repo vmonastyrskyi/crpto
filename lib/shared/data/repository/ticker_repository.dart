@@ -1,6 +1,6 @@
 import 'package:crpto/shared/data/dto/coin_ticker_dto.dart';
-import 'package:crpto/shared/data/source/ticker/binance_ticker_data_source.dart';
-import 'package:crpto/shared/data/source/ticker/i_ticker_data_source.dart';
+import 'package:crpto/shared/data/source/binance_ticker_data_source.dart';
+import 'package:crpto/shared/data/source/i_ticker_data_source.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
 import 'package:crpto/shared/domain/repository/i_ticker_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

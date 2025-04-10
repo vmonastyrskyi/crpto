@@ -57,7 +57,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  TokenIcon(token: coinMetadata.baseAsset),
+                  TokenIcon(symbol: _recentTrade.symbol),
                   Text(
                     coinMetadata.baseAsset,
                     style: AppFonts.medium.copyWith(
@@ -81,28 +81,41 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   Widget _buildRecentTradeType(RecentTrade recentTrade) {
     final tradeType = recentTrade.type;
 
+    final tradeTypeColor =
+        tradeType == TradeType.buy
+            ? AppColors.positivePriceColor
+            : AppColors.negativePriceColor;
+
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.fromLTRB(8.0, 6.0, 8.0, 6.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 6.5, 8.0, 5.5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: (tradeType == TradeType.buy
-                ? AppColors.secondaryWidgetColor
-                : AppColors.secondaryWidgetColor)
-            ,
+        color: tradeTypeColor.withValues(alpha: 0.25),
       ),
       child: Text(
         tradeType.name.toUpperCase(),
         style: AppFonts.semiBold.copyWith(
-          color:
-              tradeType == TradeType.buy
-                  ? AppColors.positivePriceColor
-                  : AppColors.negativePriceColor,
+          color: tradeTypeColor,
           fontSize: 16.0,
           height: 1.0,
         ),
       ),
     );
+  }
+
+  Widget _buildRecentTradePrice(RecentTrade recentTrade) {
+    final tradePrice = StringX.formatCurrency(
+      recentTrade.price * recentTrade.quantity,
+    );
+
+    return _buildRowItem(label: 'Price', value: tradePrice);
+  }
+
+  Widget _buildRecentTradeAmount(RecentTrade recentTrade) {
+    final amount = recentTrade.quantity;
+
+    return _buildRowItem(label: 'Amount', value: '$amount');
   }
 
   Widget _buildRowItem({required String label, required String value}) {
@@ -114,7 +127,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.fromLTRB(6.0, 6.5, 6.0, 5.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               color: AppColors.secondaryWidgetColor,
@@ -139,19 +152,5 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         ],
       ),
     );
-  }
-
-  Widget _buildRecentTradePrice(RecentTrade recentTrade) {
-    final tradePrice = StringX.formatCurrency(
-      recentTrade.price * recentTrade.quantity,
-    );
-
-    return _buildRowItem(label: 'Price', value: tradePrice);
-  }
-
-  Widget _buildRecentTradeAmount(RecentTrade recentTrade) {
-    final amount = recentTrade.quantity;
-
-    return _buildRowItem(label: 'Amount', value: '$amount');
   }
 }

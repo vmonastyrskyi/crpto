@@ -1,3 +1,4 @@
+import 'package:crpto/shared/domain/model/enum/coin_category.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/coin_metadata.freezed.dart';
@@ -5,14 +6,21 @@ part 'generated/coin_metadata.freezed.dart';
 @freezed
 class CoinMetadata with _$CoinMetadata {
   const CoinMetadata({
+    required this.id,
     required this.symbol,
     required this.baseAsset,
     required this.quoteAsset,
-    required this.displayName,
-    required this.status,
-    required this.relatedSymbols,
+    required this.slug,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.logo,
+    required this.dateAdded,
+    required this.rank,
   });
 
+  @override
+  final int id;
   @override
   final String symbol;
   @override
@@ -20,9 +28,17 @@ class CoinMetadata with _$CoinMetadata {
   @override
   final String quoteAsset;
   @override
-  final String displayName;
+  final String slug;
   @override
-  final String status;
+  final String name;
   @override
-  final List<String> relatedSymbols;
+  final String description;
+  @override
+  final CoinCategory category;
+  @override
+  final String logo;
+  @override
+  final DateTime dateAdded;
+  @override
+  final int rank;
 }

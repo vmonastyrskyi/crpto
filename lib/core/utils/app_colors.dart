@@ -10,7 +10,7 @@ abstract final class AppColors {
 
   static const Color backgroundColor = Color(0xFF191B21);
   static const Color primaryWidgetColor = Color(0xFF21232B);
-  static const Color secondaryWidgetColor = Color(0xFF242730);
+  static const Color secondaryWidgetColor = Color(0xFF272A33);
 
   static const Color primaryTextColor = Color(0xFFEAF0F6);
   static const Color secondaryTextColor = Color(0xFF8B96A3);
