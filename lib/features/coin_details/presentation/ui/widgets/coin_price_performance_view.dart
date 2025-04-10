@@ -319,7 +319,7 @@ class _PricePerformancePainter extends CustomPainter {
           ..strokeCap = StrokeCap.round;
     final sliderPaint =
         Paint()
-          ..color = AppColors.dividerColor
+          ..color = AppColors.secondaryWidgetColor
           ..strokeWidth = sliderHeight
           ..style = PaintingStyle.fill
           ..strokeCap = StrokeCap.round;

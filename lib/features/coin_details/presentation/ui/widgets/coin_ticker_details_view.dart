@@ -31,7 +31,7 @@ class CoinTickerDetailsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _buildTokenIcon(),
-            _buildTokenName().expanded(),
+            _buildCoinName().expanded(),
             Consumer(
               builder: (context, ref, _) {
                 final symbol = context.symbol;
@@ -77,7 +77,7 @@ class CoinTickerDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _buildTokenName() {
+  Widget _buildCoinName() {
     return Consumer(
       builder: (context, ref, _) {
         final symbol = context.symbol;

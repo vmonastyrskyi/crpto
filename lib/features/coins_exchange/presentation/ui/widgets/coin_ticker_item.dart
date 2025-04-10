@@ -33,36 +33,38 @@ class CoinTickerItem extends StatelessWidget {
       },
       highlightColor: AppColors.splashColorDark,
       splashColor: AppColors.splashColorDark,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _buildTokenIcon(),
-            const SizedBox(width: 12.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildTokenBaseAsset(),
-                _buildTokenDisplayName(),
-              ],
-            ).expanded(flex: 45),
-            const SizedBox(width: 24.0),
-            CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 20),
-            const SizedBox(width: 24.0),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                FittedBox(child: _buildCoinLastPrice()),
-                _buildCoinPriceChangePercent(),
-              ],
-            ).expanded(flex: 35),
-          ],
-        ),
-      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _buildTokenIcon(),
+          const SizedBox(width: 12.0),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                spacing: 6.0,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[_buildCoinBaseAsset(), _buildCoinCategory()],
+              ),
+              _buildCoinName(),
+            ],
+          ).expanded(flex: 45),
+          const SizedBox(width: 24.0),
+          CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 20),
+          const SizedBox(width: 24.0),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              FittedBox(child: _buildCoinLastPrice()),
+              _buildCoinPriceChangePercent(),
+            ],
+          ).expanded(flex: 35),
+        ],
+      ).withPadding(12.0, 12.0, 6.0, 12.0),
     );
   }
 
@@ -70,7 +72,7 @@ class CoinTickerItem extends StatelessWidget {
     return TokenIcon(symbol: coinTicker.symbol);
   }
 
-  Widget _buildTokenBaseAsset() {
+  Widget _buildCoinBaseAsset() {
     return Consumer(
       builder: (_, ref, _) {
         final symbol = coinTicker.symbol;
@@ -83,13 +85,44 @@ class CoinTickerItem extends StatelessWidget {
             color: AppColors.primaryTextColor,
             fontSize: 16.0,
           ),
+          overflow: TextOverflow.ellipsis,
+          minFontSize: 10.0,
           maxLines: 1,
         );
       },
     );
   }
 
-  Widget _buildTokenDisplayName() {
+  Widget _buildCoinCategory() {
+    return Consumer(
+      builder: (_, ref, _) {
+        final symbol = coinTicker.symbol;
+
+        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
+
+        final coinCategory = coinMetadata.category.name;
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 2.0),
+          padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            color: AppColors.primaryWidgetColor,
+          ),
+          child: Text(
+            coinCategory.toUpperCase(),
+            style: AppFonts.medium.copyWith(
+              color: AppColors.secondaryTextColor,
+              fontSize: 8.0,
+              height: 1.0,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCoinName() {
     return Consumer(
       builder: (_, ref, _) {
         final symbol = coinTicker.symbol;
@@ -102,6 +135,7 @@ class CoinTickerItem extends StatelessWidget {
             color: AppColors.secondaryTextColor,
             fontSize: 14.0,
           ),
+          overflow: TextOverflow.ellipsis,
           minFontSize: 8.0,
           maxLines: 1,
         );
