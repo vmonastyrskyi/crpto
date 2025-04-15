@@ -26,9 +26,7 @@ class RecentTradeNotifier extends _$RecentTradeNotifier {
 
     _recentTradeStreamController
         .throttleTime(const Duration(seconds: 1))
-        .listen((recentTrade) {
-          state = recentTrade;
-        });
+        .listen((recentTrade) => state = recentTrade);
 
     return null;
   }

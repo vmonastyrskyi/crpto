@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerWrapper extends StatelessWidget {
-  const ShimmerWrapper({super.key, required this.child});
+  const ShimmerWrapper({
+    super.key,
+    this.begin = Alignment.topLeft,
+    this.end = Alignment.centerRight,
+    required this.child,
+  });
 
+  final Alignment begin;
+  final Alignment end;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Shimmer(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.centerRight,
+      gradient: LinearGradient(
         colors: <Color>[
           AppColors.shimmerBackgroundColor,
           AppColors.shimmerBackgroundColor,
@@ -37,6 +42,8 @@ class ShimmerWrapper extends StatelessWidget {
           0.518,
           1.0,
         ],
+        begin: begin,
+        end: end,
       ),
       child: child,
     );

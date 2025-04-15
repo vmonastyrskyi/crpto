@@ -8,12 +8,15 @@ import 'package:crpto/shared/application/use_case/selected_coin/listen_selected_
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
 import 'package:crpto/shared/domain/model/selected_coin.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:rxdart/rxdart.dart';
 
 part 'generated/coin_tickers_notifier.g.dart';
 
 @Riverpod(keepAlive: true)
 class CoinTickersNotifier extends _$CoinTickersNotifier {
   final Debounce _loadCoinTickersDebounce = Debounce();
+  final BehaviorSubject<Map<String, CoinTicker>> _coinTickersStreamController =
+      BehaviorSubject();
 
   StreamSubscription<CoinTicker>? _coinTickersStreamSubscription;
   Map<String, CoinTicker> _currentCoinTickers = {};
@@ -33,6 +36,7 @@ class CoinTickersNotifier extends _$CoinTickersNotifier {
 
     ref.onDispose(() => _loadCoinTickersDebounce.cancel());
     ref.onDispose(() => _coinTickersStreamSubscription?.cancel());
+    ref.onDispose(() => _coinTickersStreamController.close());
 
     await _loadCoinTickers();
 
@@ -75,14 +79,18 @@ class CoinTickersNotifier extends _$CoinTickersNotifier {
         ).listen((coinTicker) {
           if (selectedSymbols.contains(coinTicker.symbol)) {
             _currentCoinTickers[coinTicker.symbol] = coinTicker;
-
-            state = AsyncData(_currentCoinTickers);
           }
+
+          _coinTickersStreamController.add(_currentCoinTickers);
         });
 
         _previousSelectedCoins = selectedCoins;
       }, const Duration(milliseconds: 250));
     });
+
+    _coinTickersStreamController
+        .throttleTime(const Duration(seconds: 5))
+        .listen((coinTickers) => state = AsyncData(coinTickers));
 
     return await future;
   }

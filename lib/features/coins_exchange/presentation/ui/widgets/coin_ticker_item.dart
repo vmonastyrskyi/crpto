@@ -34,27 +34,35 @@ class CoinTickerItem extends StatelessWidget {
       highlightColor: AppColors.splashColorDark,
       splashColor: AppColors.splashColorDark,
       child: Row(
+        spacing: 24.0,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          _buildTokenIcon(),
-          const SizedBox(width: 12.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            spacing: 12.0,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Row(
-                spacing: 6.0,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[_buildCoinBaseAsset(), _buildCoinCategory()],
-              ),
-              _buildCoinName(),
+              _buildTokenIcon(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    spacing: 6.0,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      _buildCoinBaseAsset(),
+                      _buildCoinCategory(),
+                    ],
+                  ),
+                  _buildCoinName(),
+                ],
+              ).expanded(),
             ],
-          ).expanded(flex: 45),
-          const SizedBox(width: 24.0),
-          CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 20),
-          const SizedBox(width: 24.0),
+          ).expanded(flex: 54),
+          CoinKlineChart(symbol: coinTicker.symbol).expanded(flex: 16),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -62,7 +70,7 @@ class CoinTickerItem extends StatelessWidget {
               FittedBox(child: _buildCoinLastPrice()),
               _buildCoinPriceChangePercent(),
             ],
-          ).expanded(flex: 35),
+          ).expanded(flex: 30),
         ],
       ).withPadding(12.0, 12.0, 6.0, 12.0),
     );
@@ -86,7 +94,7 @@ class CoinTickerItem extends StatelessWidget {
             fontSize: 16.0,
           ),
           overflow: TextOverflow.ellipsis,
-          minFontSize: 10.0,
+          minFontSize: 12.0,
           maxLines: 1,
         );
       },
@@ -107,7 +115,7 @@ class CoinTickerItem extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: AppColors.primaryWidgetColor,
+            color: AppColors.secondaryWidgetColor,
           ),
           child: Text(
             coinCategory.toUpperCase(),
@@ -136,7 +144,7 @@ class CoinTickerItem extends StatelessWidget {
             fontSize: 14.0,
           ),
           overflow: TextOverflow.ellipsis,
-          minFontSize: 8.0,
+          minFontSize: 10.0,
           maxLines: 1,
         );
       },
@@ -148,8 +156,14 @@ class CoinTickerItem extends StatelessWidget {
       builder: (_, ref, _) {
         final symbol = this.coinTicker.symbol;
 
+        ref.watch(
+          coinTickerNotifierProvider(
+            symbol,
+          ).select((coinTicker) => coinTicker?.lastPrice),
+        );
+
         final coinTicker =
-            ref.watch(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
+            ref.read(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
 
         return CoinLastPriceText(lastPrice: coinTicker.lastPrice);
       },
@@ -161,8 +175,14 @@ class CoinTickerItem extends StatelessWidget {
       builder: (_, ref, _) {
         final symbol = this.coinTicker.symbol;
 
+        ref.watch(
+          coinTickerNotifierProvider(
+            symbol,
+          ).select((coinTicker) => coinTicker?.lastPrice),
+        );
+
         final coinTicker =
-            ref.watch(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
+            ref.read(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
 
         final priceChangePercent = coinTicker.priceChangePercent
             .toStringAsFixed(2);
@@ -194,7 +214,6 @@ class CoinTickerItem extends StatelessWidget {
                         ? AppColors.negativePriceColor
                         : AppColors.positivePriceColor,
                 fontSize: 14.0,
-                height: 1.5,
               ),
             ),
           ],

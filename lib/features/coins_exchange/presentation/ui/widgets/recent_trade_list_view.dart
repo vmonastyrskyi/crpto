@@ -7,6 +7,7 @@ import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_tra
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
+import 'package:crpto/shared/presentation/ui/widgets/shimmer_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,29 +86,33 @@ class _RecentTradeListPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 160.0,
-      child: LayoutBuilder(
-        builder: (_, constraints) {
-          final maxWidth = constraints.maxWidth;
-          final maxHeight = constraints.maxHeight;
+    return ShimmerWrapper(
+      begin: Alignment.topLeft,
+      end: const Alignment(1.0, 3.0),
+      child: SizedBox(
+        height: 160.0,
+        child: LayoutBuilder(
+          builder: (_, constraints) {
+            final maxWidth = constraints.maxWidth;
+            final maxHeight = constraints.maxHeight;
 
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) {
-              return AspectRatio(
-                aspectRatio: maxWidth / maxHeight / 1.5,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: AppColors.primaryWidgetColor,
-                  ),
-                ).withPaddingAll(12.0),
-              );
-            },
-          );
-        },
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                return AspectRatio(
+                  aspectRatio: maxWidth / maxHeight / 1.5,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.0),
+                      color: AppColors.primaryWidgetColor,
+                    ),
+                  ).withPaddingAll(12.0),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

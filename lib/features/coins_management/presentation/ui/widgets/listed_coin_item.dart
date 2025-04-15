@@ -84,7 +84,7 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
           padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: AppColors.primaryWidgetColor,
+            color: AppColors.secondaryWidgetColor,
           ),
           child: Text(
             coinCategory.toUpperCase(),

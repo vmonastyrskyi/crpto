@@ -1,18 +1,16 @@
 import 'package:crpto/core/navigation/route_names.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/extensions/widget.dart';
-import 'package:crpto/features/coins_exchange/presentation/provider/recent_trades_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list_view.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list_view.dart';
-import 'package:crpto/shared/presentation/provider/coin_tickers_notifier.dart';
-import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
-import 'package:crpto/shared/presentation/ui/widgets/shimmer_wrapper.dart';
 import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    hide ChangeNotifierProvider;
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 class CoinsExchangeScreen extends ConsumerStatefulWidget {
   const CoinsExchangeScreen({super.key});
@@ -25,41 +23,18 @@ class CoinsExchangeScreen extends ConsumerStatefulWidget {
 class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.backgroundColor,
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: UnfocusTapArea(
-          child: SafeArea(
-            bottom: false,
-            child: Scaffold(
-              appBar: _buildAppBar(),
-              body: Consumer(
-                builder: (_, ref, child) {
-                  final recentTrades =
-                      ref.watch(recentTradesNotifierProvider).value;
-                  final coinTickers =
-                      ref.watch(coinTickersNotifierProvider).value;
-
-                  return FadeSwitcher(
-                    child:
-                        recentTrades == null ||
-                                recentTrades.isEmpty ||
-                                coinTickers == null ||
-                                coinTickers.isEmpty
-                            ? ShimmerWrapper(child: child!)
-                            : child!,
-                  );
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const RecentTradeListView(),
-                    const CoinTickerListView().expanded(),
-                  ],
-                ),
-              ),
+    return MultiProvider(
+      providers: <SingleChildWidget>[
+        ChangeNotifierProvider(create: (_) => HeaderBuilderNotifier()),
+      ],
+      child: Container(
+        color: AppColors.backgroundColor,
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: UnfocusTapArea(
+            child: SafeArea(
+              bottom: false,
+              child: Scaffold(appBar: _buildAppBar(), body: _buildBody()),
             ),
           ),
         ),
@@ -119,5 +94,39 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
       icon: const Icon(Icons.settings),
       color: AppColors.iconColor,
     );
+  }
+
+  Widget _buildBody() {
+    return NestedScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          context.read<HeaderBuilderNotifier>().innerBoxIsScrolled =
+              innerBoxIsScrolled;
+        });
+
+        return <Widget>[
+          const SliverAppBar(
+            flexibleSpace: RecentTradeListView(),
+            automaticallyImplyLeading: false,
+            forceMaterialTransparency: true,
+            toolbarHeight: 160.0,
+          ),
+        ];
+      },
+      body: const CoinTickerListView(),
+    );
+  }
+}
+
+class HeaderBuilderNotifier extends ChangeNotifier {
+  bool _innerBoxIsScrolled = false;
+
+  bool get innerBoxIsScrolled => _innerBoxIsScrolled;
+
+  set innerBoxIsScrolled(bool value) {
+    _innerBoxIsScrolled = value;
+
+    notifyListeners();
   }
 }

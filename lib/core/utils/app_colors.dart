@@ -37,5 +37,5 @@ abstract final class AppColors {
   static const Color shimmerInnerColor = Color(0xFF3A3E4A);
 
   static const Color positivePriceColor = Color(0xFF16C784);
-  static const Color negativePriceColor = Color(0xFFEA3943);
+  static const Color negativePriceColor = Color(0xFFED3841);
 }
