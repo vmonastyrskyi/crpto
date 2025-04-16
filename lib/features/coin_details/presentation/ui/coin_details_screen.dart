@@ -197,33 +197,33 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
 
 extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
   bool _onScrollNotification(ScrollNotification notification) {
-    if (!_isScrollAnimating && notification is ScrollEndNotification) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+    if (_isScrollAnimating) return true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!_isScrollAnimating && notification is ScrollEndNotification) {
         final scrollOffset =
             _scrollController.hasClients ? _scrollController.offset : 0.0;
 
         if (scrollOffset > expandedHeight - toolbarHeight) return;
 
-        final scrollValue = Curves.decelerate.transform(
+        final scrollValue = Curves.easeOutSine.transform(
           (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),
         );
 
         final scrollPosition =
             scrollValue > 0.5 ? expandedHeight - toolbarHeight : 0.0;
 
-        if (scrollOffset != scrollPosition) {
-          _isScrollAnimating = true;
+        _isScrollAnimating = true;
 
-          await _scrollController.animateTo(
-            scrollPosition,
-            duration: const Duration(milliseconds: 125),
-            curve: Curves.decelerate,
-          );
+        await _scrollController.animateTo(
+          scrollPosition,
+          duration: const Duration(milliseconds: 125),
+          curve: Curves.easeOutSine,
+        );
 
-          _isScrollAnimating = false;
-        }
-      });
-    }
+        _isScrollAnimating = false;
+      }
+    });
 
     return false;
   }
@@ -242,7 +242,7 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
     await _scrollController.animateTo(
       0.0,
       duration: const Duration(milliseconds: 125),
-      curve: Curves.decelerate,
+      curve: Curves.easeOutSine,
     );
 
     _isScrollAnimating = false;

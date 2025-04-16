@@ -80,30 +80,44 @@ class CoinTickerStatsView extends StatelessWidget {
 
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
-        return Column(
-          spacing: 12.0,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return Stack(
+          alignment: Alignment.center,
           children: <Widget>[
             Row(
-              spacing: 12.0,
+              spacing: 24.0,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildCoinOpenPrice(coinTicker, selectedCoinKline),
-                _buildCoinLowPrice(coinTicker, selectedCoinKline),
-                _buildCoinHighPrice(coinTicker, selectedCoinKline),
+                Column(
+                  spacing: 12.0,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildCoinOpenPrice(coinTicker, selectedCoinKline),
+                    _buildCoinLowPrice(coinTicker, selectedCoinKline),
+                    _buildCoinHighPrice(coinTicker, selectedCoinKline),
+                  ],
+                ).expanded(),
+                Column(
+                  spacing: 12.0,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildCoinVolume(coinTicker, selectedCoinKline),
+                    _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
+                    _buildCoinTradesCount(coinTicker, selectedCoinKline),
+                  ],
+                ).expanded(),
               ],
             ),
-            Row(
-              spacing: 12.0,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildCoinVolume(coinTicker, selectedCoinKline),
-                _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
-                _buildCoinTradesCount(coinTicker, selectedCoinKline),
-              ],
+            const Positioned(
+              top: 0.0,
+              bottom: 0.0,
+              child: VerticalDivider(
+                color: AppColors.dividerColor,
+                thickness: 1.0,
+                width: 1.0,
+              ),
             ),
           ],
         );
@@ -197,7 +211,7 @@ class CoinTickerStatsView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SizedBox(
-          height: 21.0,
+          height: 18.0,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
@@ -212,7 +226,7 @@ class CoinTickerStatsView extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 24.0,
+          height: 21.0,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
@@ -227,6 +241,6 @@ class CoinTickerStatsView extends StatelessWidget {
           ),
         ),
       ],
-    ).expanded();
+    );
   }
 }

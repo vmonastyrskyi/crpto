@@ -119,15 +119,17 @@ class FlexibleAppBar extends StatelessWidget {
           ],
           child: Positioned(
             left: 52.0 * scrollValue + 12.0,
-            top: (1.0 - scrollValue) * (toolbarHeight + 12.0),
+            top:
+                (1.0 - scrollValue) * (toolbarHeight + 12.0) +
+                (6.5 * scrollValue),
             right: 6.0,
-            bottom: (1.0 - scrollValue) * 12.0,
+            bottom: 12.0 - (5.5 * scrollValue),
             child: child!,
           ),
         );
       },
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
@@ -223,7 +225,7 @@ class FlexibleAppBar extends StatelessWidget {
             fontSize: fontSize,
           ),
           overflow: TextOverflow.ellipsis,
-          maxLines: 2,
+          maxLines: 1,
         );
       },
     );
@@ -472,7 +474,7 @@ extension _FlexibleAppBarX on FlexibleAppBar {
     final scrollOffset =
         scrollController.hasClients ? scrollController.offset : 0.0;
 
-    final scrollValue = Curves.decelerate.transform(
+    final scrollValue = Curves.easeOutSine.transform(
       (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),
     );
 
