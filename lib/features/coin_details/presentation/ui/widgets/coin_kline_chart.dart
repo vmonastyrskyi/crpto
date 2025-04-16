@@ -10,7 +10,7 @@ import 'package:crpto/features/coin_details/presentation/provider/selected_coin_
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/enum/kline_period.dart';
-import 'package:crpto/shared/domain/model/symbol.dart';
+import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:decimal/decimal.dart';
 import 'package:fl_chart/fl_chart.dart';

@@ -1,24 +1,21 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
-import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_price_performance_view.dart';
-import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_details_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_stats_view.dart';
+import 'package:crpto/features/coin_details/presentation/ui/widgets/flexible_app_bar.dart';
 import 'package:crpto/shared/domain/model/enum/kline_period.dart';
-import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
-import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
+import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart' hide Consumer;
+import 'package:provider/single_child_widget.dart';
 
 class CoinDetailsScreen extends ConsumerStatefulWidget {
   const CoinDetailsScreen({super.key, required this.symbol});
@@ -30,7 +27,11 @@ class CoinDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   late final PageController _pageController;
+
+  bool _isScrollAnimating = false;
 
   @override
   void initState() {
@@ -44,12 +45,6 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
   }
 
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     ref.listen(selectedCoinKlineNotifierProvider, (
       prevSelectedCoinKline,
@@ -60,8 +55,10 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
       HapticFeedback.lightImpact();
     });
 
-    return Provider.value(
-      value: Symbol(widget.symbol),
+    return MultiProvider(
+      providers: <SingleChildWidget>[
+        Provider.value(value: Symbol(widget.symbol)),
+      ],
       child: Container(
         color: AppColors.backgroundColor,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -70,22 +67,34 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
             child: SafeArea(
               bottom: false,
               child: Scaffold(
-                appBar: _buildAppBar(),
-                body: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      const CoinTickerDetailsView(),
-                      const SizedBox(height: 12.0),
-                      _buildKlineChart(),
-                      const SizedBox(height: 12.0),
-                      _buildKlinePeriodSelector(),
-                      const CoinTickerStatsView(),
-                      const CoinPricePerformanceView(),
-                      _buildCoinPriceDescription(),
-                    ],
+                body: NotificationListener<ScrollNotification>(
+                  onNotification: _onScrollNotification,
+                  child: NestedScrollView(
+                    controller: _scrollController,
+                    headerSliverBuilder: (_, _) {
+                      return <Widget>[
+                        FlexibleAppBar(
+                          scrollController: _scrollController,
+                          onAppBarPressed: _onAppBarPressed,
+                        ),
+                      ];
+                    },
+                    body: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const SizedBox(height: 12.0),
+                          _buildKlineChart(),
+                          const SizedBox(height: 12.0),
+                          _buildKlinePeriodSelector(),
+                          const CoinTickerStatsView(),
+                          const CoinPricePerformanceView(),
+                          _buildCoinPriceDescription(),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -96,64 +105,11 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(double.maxFinite),
-      child: SizedBox.fromSize(
-        size: const Size.fromHeight(56.0),
-        child: Container(
-          color: AppColors.backgroundColor,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Positioned(
-                left: 0.0,
-                child: const BackButton(
-                  style: ButtonStyle(
-                    padding: WidgetStatePropertyAll(EdgeInsets.all(8.0)),
-                  ),
-                  color: AppColors.iconColor,
-                ).withPaddingAll(4.0),
-              ),
-              Center(child: _buildAppBarTitle()),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAppBarTitle() {
-    return Consumer(
-      builder: (context, ref, _) {
-        final symbol = context.symbol;
-
-        final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-              coinMetadata.baseAsset,
-              style: AppFonts.semiBold.copyWith(
-                color: AppColors.primaryTextColor,
-                fontSize: 20.0,
-              ),
-              maxLines: 1,
-            ),
-            Text(
-              ' | USDT',
-              style: AppFonts.semiBold.copyWith(
-                color: AppColors.secondaryTextColor,
-                fontSize: 16.0,
-              ),
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _pageController.dispose();
+    super.dispose();
   }
 
   Widget _buildKlineChart() {
@@ -181,7 +137,6 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
     return DefaultTabController(
       initialIndex: KlinePeriod.values.indexOf(selectedKlinePeriod),
       length: KlinePeriod.values.length,
-      animationDuration: Duration.zero,
       child: TabBar(
         onTap: (index) {
           ref
@@ -206,9 +161,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
           color: AppColors.primaryColor,
           fontSize: 12.0,
         ),
-        indicator: const BoxDecoration(color: AppColors.transparent),
-        indicatorAnimation: TabIndicatorAnimation.linear,
-        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorColor: AppColors.primaryColor,
         indicatorWeight: 1.0,
         tabs: <Widget>[
           for (final klinePeriod in KlinePeriod.values)
@@ -227,31 +180,11 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
         final symbol = context.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-        final coinTicker = ref.watch(coinTickerNotifierProvider(symbol));
 
-        final coinBaseAsset = coinMetadata.baseAsset;
-        final coinPriceChangePercent = coinTicker?.priceChangePercent ?? 0.0;
-        final coinLastPrice = coinTicker?.lastPrice ?? 0.0;
-        final coinQuoteVolume = coinTicker?.quoteVolume ?? 0.0;
-        final coinVolume = coinTicker?.volume ?? 0.0;
-
-        final formattedCoinLastPrice = StringX.formatCurrency(coinLastPrice);
-        final formattedCoinQuoteVolume = NumberFormat.compact().format(
-          coinQuoteVolume,
-        );
-        final formattedCoinVolume = NumberFormat.compact().format(coinVolume);
-
-        final coinPriceDescriptionBuffer =
-            StringBuffer()..writeAll([
-              'The live price of $coinBaseAsset is \$$formattedCoinLastPrice per ($coinBaseAsset/USD). ',
-              '24-hour trading volume is \$$formattedCoinQuoteVolume USD. ',
-              '$coinBaseAsset to USD price is updated in real-time. ',
-              '$coinBaseAsset is $coinPriceChangePercent% in the last 24 hours ',
-              'with a circulating supply of $formattedCoinVolume.',
-            ]);
+        final coinDescription = coinMetadata.description;
 
         return Text(
-          '$coinPriceDescriptionBuffer',
+          coinDescription,
           style: AppFonts.regular.copyWith(
             color: AppColors.secondaryTextColor,
             fontSize: 14.0,
@@ -259,5 +192,59 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
         ).withPaddingAll(12.0);
       },
     );
+  }
+}
+
+extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
+  bool _onScrollNotification(ScrollNotification notification) {
+    if (!_isScrollAnimating && notification is ScrollEndNotification) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final scrollOffset =
+            _scrollController.hasClients ? _scrollController.offset : 0.0;
+
+        if (scrollOffset > expandedHeight - toolbarHeight) return;
+
+        final scrollValue = Curves.decelerate.transform(
+          (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),
+        );
+
+        final scrollPosition =
+            scrollValue > 0.5 ? expandedHeight - toolbarHeight : 0.0;
+
+        if (scrollOffset != scrollPosition) {
+          _isScrollAnimating = true;
+
+          await _scrollController.animateTo(
+            scrollPosition,
+            duration: const Duration(milliseconds: 125),
+            curve: Curves.decelerate,
+          );
+
+          _isScrollAnimating = false;
+        }
+      });
+    }
+
+    return false;
+  }
+
+  void _onAppBarPressed() async {
+    final scrollOffset =
+        _scrollController.hasClients ? _scrollController.offset : 0.0;
+
+    if (_isScrollAnimating ||
+        (scrollOffset < (expandedHeight - toolbarHeight))) {
+      return;
+    }
+
+    _isScrollAnimating = true;
+
+    await _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 125),
+      curve: Curves.decelerate,
+    );
+
+    _isScrollAnimating = false;
   }
 }

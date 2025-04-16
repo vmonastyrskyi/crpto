@@ -6,9 +6,9 @@ import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
-import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
+import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -204,7 +204,7 @@ class CoinTickerStatsView extends StatelessWidget {
               label,
               style: AppFonts.medium.copyWith(
                 color: AppColors.secondaryTextColor,
-                fontSize: 14.0,
+                fontSize: 12.0,
               ),
               minFontSize: 8.0,
               maxLines: 1,
@@ -219,7 +219,7 @@ class CoinTickerStatsView extends StatelessWidget {
               value,
               style: AppFonts.medium.copyWith(
                 color: AppColors.primaryTextColor,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
               minFontSize: 10.0,
               maxLines: 1,
