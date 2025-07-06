@@ -7,7 +7,7 @@ part of '../recent_trade_notifier.dart';
 // **************************************************************************
 
 String _$recentTradeNotifierHash() =>
-    r'4f807501ca4d3fbdbfcdb6afe3ff15de0a89a89f';
+    r'fefecc07ac0c04599d6dd86ba37b544e9e689e44';
 
 /// Copied from Dart SDK
 class _SystemHash {

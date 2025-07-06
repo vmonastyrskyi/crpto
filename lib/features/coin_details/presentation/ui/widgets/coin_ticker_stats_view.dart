@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
@@ -6,10 +5,11 @@ import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
-import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
+import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -80,30 +80,44 @@ class CoinTickerStatsView extends StatelessWidget {
 
         final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
 
-        return Column(
-          spacing: 12.0,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return Stack(
+          alignment: Alignment.center,
           children: <Widget>[
             Row(
-              spacing: 12.0,
+              spacing: 24.0,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildCoinOpenPrice(coinTicker, selectedCoinKline),
-                _buildCoinLowPrice(coinTicker, selectedCoinKline),
-                _buildCoinHighPrice(coinTicker, selectedCoinKline),
+                Column(
+                  spacing: 12.0,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildCoinOpenPrice(coinTicker, selectedCoinKline),
+                    _buildCoinLowPrice(coinTicker, selectedCoinKline),
+                    _buildCoinHighPrice(coinTicker, selectedCoinKline),
+                  ],
+                ).expanded(),
+                Column(
+                  spacing: 12.0,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildCoinVolume(coinTicker, selectedCoinKline),
+                    _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
+                    _buildCoinTradesCount(coinTicker, selectedCoinKline),
+                  ],
+                ).expanded(),
               ],
             ),
-            Row(
-              spacing: 12.0,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildCoinVolume(coinTicker, selectedCoinKline),
-                _buildCoinQuoteVolume(coinTicker, selectedCoinKline),
-                _buildCoinTradesCount(coinTicker, selectedCoinKline),
-              ],
+            const Positioned(
+              top: 0.0,
+              bottom: 0.0,
+              child: VerticalDivider(
+                color: AppColors.dividerColor,
+                thickness: 1.0,
+                width: 1.0,
+              ),
             ),
           ],
         );
@@ -197,14 +211,14 @@ class CoinTickerStatsView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         SizedBox(
-          height: 21.0,
+          height: 18.0,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
               label,
               style: AppFonts.medium.copyWith(
                 color: AppColors.secondaryTextColor,
-                fontSize: 14.0,
+                fontSize: 12.0,
               ),
               minFontSize: 8.0,
               maxLines: 1,
@@ -212,14 +226,14 @@ class CoinTickerStatsView extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 24.0,
+          height: 21.0,
           child: Align(
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
               value,
               style: AppFonts.medium.copyWith(
                 color: AppColors.primaryTextColor,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
               minFontSize: 10.0,
               maxLines: 1,
@@ -227,6 +241,6 @@ class CoinTickerStatsView extends StatelessWidget {
           ),
         ),
       ],
-    ).expanded();
+    );
   }
 }

@@ -68,7 +68,7 @@ class _EagerInitialization extends ConsumerStatefulWidget {
 class _EagerInitializationState extends ConsumerState<_EagerInitialization> {
   @override
   Widget build(BuildContext context) {
-    ref.watch(listedCoinsViewModelProvider);
+    // ref.watch(listedCoinsViewModelProvider);
 
     return widget.child;
   }

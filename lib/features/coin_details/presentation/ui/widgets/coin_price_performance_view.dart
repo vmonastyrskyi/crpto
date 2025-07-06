@@ -3,9 +3,9 @@ import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
-import 'package:crpto/shared/domain/model/symbol.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
+import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -84,14 +84,14 @@ class CoinPricePerformanceView extends StatelessWidget {
               'Low',
               style: AppFonts.medium.copyWith(
                 color: AppColors.secondaryTextColor,
-                fontSize: 14.0,
+                fontSize: 12.0,
               ),
             ),
             Text(
               '\$$formattedLowPrice',
               style: AppFonts.medium.copyWith(
                 color: AppColors.primaryTextColor,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
             ),
           ],
@@ -130,7 +130,7 @@ class CoinPricePerformanceView extends StatelessWidget {
               'High',
               style: AppFonts.medium.copyWith(
                 color: AppColors.secondaryTextColor,
-                fontSize: 14.0,
+                fontSize: 12.0,
               ),
               textAlign: TextAlign.end,
             ),
@@ -138,7 +138,7 @@ class CoinPricePerformanceView extends StatelessWidget {
               '\$$formattedHighPrice',
               style: AppFonts.medium.copyWith(
                 color: AppColors.primaryTextColor,
-                fontSize: 16.0,
+                fontSize: 14.0,
               ),
               textAlign: TextAlign.end,
             ),

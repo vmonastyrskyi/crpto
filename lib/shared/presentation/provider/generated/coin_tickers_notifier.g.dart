@@ -7,7 +7,7 @@ part of '../coin_tickers_notifier.dart';
 // **************************************************************************
 
 String _$coinTickersNotifierHash() =>
-    r'75ee9740fd8efc93bf56ac7bad57a7291380ce2f';
+    r'a637a9e8f41a521e289e36b0400ee07e52c1ce65';
 
 /// See also [CoinTickersNotifier].
 @ProviderFor(CoinTickersNotifier)

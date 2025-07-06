@@ -12,7 +12,7 @@ abstract final class AppColors {
   static const Color primaryWidgetColor = Color(0xFF21232B);
   static const Color secondaryWidgetColor = Color(0xFF272A33);
 
-  static const Color primaryTextColor = Color(0xFFEAF0F6);
+  static const Color primaryTextColor = Color(0xFFF0F6FC);
   static const Color secondaryTextColor = Color(0xFF8B96A3);
   static const Color hintTextColor = secondaryTextColor;
   static const Color iconColor = secondaryTextColor;
@@ -25,7 +25,7 @@ abstract final class AppColors {
   static const Color switchInactiveThumbColor = white;
   static const Color switchTrackOutlineColor = transparent;
 
-  static const Color dividerColor = primaryWidgetColor;
+  static const Color dividerColor = secondaryWidgetColor;
 
   static const Color splashColorDark = primaryWidgetColor;
   static const Color splashColorLight = secondaryWidgetColor;
@@ -37,5 +37,5 @@ abstract final class AppColors {
   static const Color shimmerInnerColor = Color(0xFF3A3E4A);
 
   static const Color positivePriceColor = Color(0xFF16C784);
-  static const Color negativePriceColor = Color(0xFFEA3943);
+  static const Color negativePriceColor = Color(0xFFED3841);
 }

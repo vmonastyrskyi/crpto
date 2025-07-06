@@ -63,7 +63,6 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                     style: AppFonts.medium.copyWith(
                       color: AppColors.primaryTextColor,
                       fontSize: 16.0,
-                      height: 1.5,
                     ),
                   ),
                 ],
@@ -109,7 +108,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       recentTrade.price * recentTrade.quantity,
     );
 
-    return _buildRowItem(label: 'Price', value: tradePrice);
+    return _buildRowItem(label: 'Price', value: '\$$tradePrice');
   }
 
   Widget _buildRecentTradeAmount(RecentTrade recentTrade) {
@@ -136,7 +135,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
               label.toUpperCase(),
               style: AppFonts.semiBold.copyWith(
                 color: AppColors.secondaryTextColor,
-                fontSize: 12.0,
+                fontSize: 10.0,
                 height: 1.0,
               ),
             ),
@@ -146,7 +145,6 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             style: AppFonts.medium.copyWith(
               color: AppColors.primaryTextColor,
               fontSize: 16.0,
-              height: 1.5,
             ),
           ),
         ],
