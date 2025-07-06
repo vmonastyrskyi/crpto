@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
@@ -10,6 +9,7 @@ import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 

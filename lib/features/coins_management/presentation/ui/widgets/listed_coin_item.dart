@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
@@ -7,6 +6,7 @@ import 'package:crpto/features/coins_management/presentation/view_model/listed_c
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ListedCoinItem extends ConsumerStatefulWidget {

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
@@ -16,6 +15,7 @@ import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
 import 'package:provider/provider.dart' hide Consumer;
 import 'package:provider/single_child_widget.dart';
