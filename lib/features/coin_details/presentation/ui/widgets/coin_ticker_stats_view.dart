@@ -1,7 +1,6 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
@@ -13,9 +12,14 @@ import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class CoinTickerStatsView extends StatelessWidget {
+class CoinTickerStatsView extends StatefulWidget {
   const CoinTickerStatsView({super.key});
 
+  @override
+  State<CoinTickerStatsView> createState() => _CoinTickerStatsViewState();
+}
+
+class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -39,8 +43,8 @@ class CoinTickerStatsView extends StatelessWidget {
             ),
           ],
         ).withPaddingAll(12.0),
-        const Divider(
-          color: AppColors.dividerColor,
+        Divider(
+          color: context.appColors.dividerColor,
           thickness: 1.0,
           height: 1.0,
         ),
@@ -60,8 +64,8 @@ class CoinTickerStatsView extends StatelessWidget {
 
         return Text(
           '$coinBaseAsset Price information${selectedCoinKline == null ? ' (24h)' : ''}',
-          style: AppFonts.semiBold.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.semiBold.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: 14.0,
           ),
         );
@@ -110,11 +114,11 @@ class CoinTickerStatsView extends StatelessWidget {
                 ).expanded(),
               ],
             ),
-            const Positioned(
+            Positioned(
               top: 0.0,
               bottom: 0.0,
               child: VerticalDivider(
-                color: AppColors.dividerColor,
+                color: context.appColors.dividerColor,
                 thickness: 1.0,
                 width: 1.0,
               ),
@@ -216,8 +220,8 @@ class CoinTickerStatsView extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
               label,
-              style: AppFonts.medium.copyWith(
-                color: AppColors.secondaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.secondaryTextColor,
                 fontSize: 12.0,
               ),
               minFontSize: 8.0,
@@ -231,8 +235,8 @@ class CoinTickerStatsView extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: AutoSizeText(
               value,
-              style: AppFonts.medium.copyWith(
-                color: AppColors.primaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.primaryTextColor,
                 fontSize: 14.0,
               ),
               minFontSize: 10.0,

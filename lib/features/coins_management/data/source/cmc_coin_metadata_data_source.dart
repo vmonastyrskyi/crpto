@@ -3,6 +3,8 @@ import 'package:crpto/features/coins_management/data/dto/cmc_coin_id_dto.dart';
 import 'package:crpto/features/coins_management/data/dto/cmc_coin_metadata_dto.dart';
 import 'package:crpto/features/coins_management/data/source/i_coin_metadata_data_source.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -17,8 +19,16 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
   ICoinMetadataDataSource build() {
     final dioUrl = 'https://pro-api.coinmarketcap.com';
 
+    String? cmcApiKey;
+
+    if (kIsWeb) {
+      cmcApiKey = FirebaseRemoteConfig.instance.getString('CMC_PRO_API_KEY');
+    } else {
+      cmcApiKey = dotenv.env['CMC_PRO_API_KEY'];
+    }
+
     _dio = ref.watch(dioClientProvider(baseUrl: dioUrl))
-      ..options.headers['X-CMC_PRO_API_KEY'] = dotenv.env['CMC_PRO_API_KEY'];
+      ..options.headers['X-CMC_PRO_API_KEY'] = cmcApiKey;
 
     return this;
   }

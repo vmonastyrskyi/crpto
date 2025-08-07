@@ -1,6 +1,6 @@
-import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:flutter/material.dart';
 
 class CrptoSearchBar extends StatefulWidget {
@@ -38,21 +38,25 @@ class _CrptoSearchBarState extends State<CrptoSearchBar> {
       onChanged: widget.onChanged,
       constraints: const BoxConstraints(),
       padding: const WidgetStatePropertyAll(EdgeInsets.all(4.0)),
-      backgroundColor: const WidgetStatePropertyAll(
-        AppColors.primaryWidgetColor,
+      backgroundColor: WidgetStatePropertyAll(
+        context.appColors.primaryWidgetColor,
       ),
-      overlayColor: const WidgetStatePropertyAll(AppColors.splashColorLight),
-      shadowColor: const WidgetStatePropertyAll(AppColors.shadowColor),
+      overlayColor: WidgetStatePropertyAll(context.appColors.splashColorLight),
+      shadowColor: WidgetStatePropertyAll(context.appColors.shadowColor),
       elevation: const WidgetStatePropertyAll(1.0),
-      textStyle: const WidgetStatePropertyAll(
-        TextStyle(color: AppColors.primaryTextColor, fontSize: 14.0),
+      textStyle: WidgetStatePropertyAll(
+        TextStyle(color: context.appColors.primaryTextColor, fontSize: 14.0),
       ),
-      hintStyle: const WidgetStatePropertyAll(
-        TextStyle(color: AppColors.hintTextColor, fontSize: 14.0),
+      hintStyle: WidgetStatePropertyAll(
+        TextStyle(color: context.appColors.hintTextColor, fontSize: 14.0),
       ),
-      leading: const Padding(
-        padding: EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 0.0),
-        child: Icon(size: 20.0, color: AppColors.iconColor, Icons.search),
+      leading: Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 4.0, 0.0),
+        child: Icon(
+          size: 20.0,
+          color: context.appColors.iconColor,
+          Icons.search,
+        ),
       ),
       trailing: <Widget>[if (_showClearButton) _buildClearButton()],
       hintText: widget.hintText,
@@ -75,10 +79,10 @@ class _CrptoSearchBarState extends State<CrptoSearchBar> {
         _controller.clear();
       },
       customBorder: const CircleBorder(side: BorderSide.none),
-      child: const Icon(
-        size: 20.0,
-        color: AppColors.iconColor,
+      child: Icon(
         Icons.close,
+        color: context.appColors.iconColor,
+        size: 20.0,
       ).withPaddingAll(2.0),
     ).withPadding(4.0, 0.0, 8.0, 0.0);
   }

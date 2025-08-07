@@ -31,8 +31,8 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
   }
 
   Future<List<ListedCoin>> call() async {
-    List<ListedCoin> listedCoins =
-        await _binanceCoinRepository.getListedCoins();
+    List<ListedCoin> listedCoins = await _binanceCoinRepository
+        .getListedCoins();
 
     listedCoins = [
       ...listedCoins.where(

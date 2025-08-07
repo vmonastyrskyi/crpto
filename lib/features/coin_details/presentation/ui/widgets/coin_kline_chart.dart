@@ -1,9 +1,8 @@
 import 'dart:math';
 
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/coin_klines_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
@@ -118,21 +117,20 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                             end: Alignment.bottomCenter,
                             colors: <Color>[
                               (isLastClosePriceHigher
-                                      ? AppColors.positivePriceColor
-                                      : AppColors.negativePriceColor)
+                                      ? context.appColors.positivePriceColor
+                                      : context.appColors.negativePriceColor)
                                   .withValues(alpha: 0.25),
                               (isLastClosePriceHigher
-                                      ? AppColors.positivePriceColor
-                                      : AppColors.negativePriceColor)
+                                      ? context.appColors.positivePriceColor
+                                      : context.appColors.negativePriceColor)
                                   .withValues(alpha: 0.0),
                             ],
                           ),
                           show: true,
                         ),
-                        color:
-                            isLastClosePriceHigher
-                                ? AppColors.positivePriceColor
-                                : AppColors.negativePriceColor,
+                        color: isLastClosePriceHigher
+                            ? context.appColors.positivePriceColor
+                            : context.appColors.negativePriceColor,
                         dotData: const FlDotData(show: false),
                         isStrokeJoinRound: true,
                         isStrokeCapRound: true,
@@ -190,9 +188,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 
                             final lineColor =
                                 initialCoinKlineClosePrice <=
-                                        selectedCoinKlineClosePrice
-                                    ? AppColors.positivePriceColor
-                                    : AppColors.negativePriceColor;
+                                    selectedCoinKlineClosePrice
+                                ? context.appColors.positivePriceColor
+                                : context.appColors.negativePriceColor;
 
                             return TouchedSpotIndicatorData(
                               FlLine(
@@ -211,12 +209,12 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                             ...touchedSpots.map(
                               (_) => const LineTooltipItem(
                                 emptyString,
-                                TextStyle(color: AppColors.transparent),
+                                TextStyle(color: Colors.transparent),
                               ),
                             ),
                           ];
                         },
-                        getTooltipColor: (_) => AppColors.transparent,
+                        getTooltipColor: (_) => Colors.transparent,
                       ),
                       getTouchLineStart: (_, _) => -double.infinity,
                       getTouchLineEnd: (_, _) => double.infinity,
@@ -246,12 +244,11 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                     ),
                     gridData: FlGridData(
                       horizontalInterval: horizontalInterval,
-                      getDrawingHorizontalLine:
-                          (_) => const FlLine(
-                            color: AppColors.dividerColor,
-                            dashArray: [6, 3],
-                            strokeWidth: 0.5,
-                          ),
+                      getDrawingHorizontalLine: (_) => FlLine(
+                        color: context.appColors.dividerColor,
+                        dashArray: [6, 3],
+                        strokeWidth: 0.5,
+                      ),
                       drawVerticalLine: false,
                     ),
                     minY: minY,
@@ -295,11 +292,11 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 
     return Container(
       padding: const EdgeInsets.only(left: 4.0),
-      color: AppColors.backgroundColor,
+      color: context.appColors.backgroundColor,
       child: Text(
         '$closeDate${showCloseTime ? ' $closeTime' : ''}',
-        style: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 12.0,
         ),
       ),
@@ -309,8 +306,8 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
   Widget _buildCoinPriceLabel(double value, TitleMeta meta) {
     return AutoSizeText(
       '\$${NumberFormat.compact().format(value)}',
-      style: AppFonts.medium.copyWith(
-        color: AppColors.secondaryTextColor,
+      style: context.appFonts.medium.copyWith(
+        color: context.appColors.secondaryTextColor,
         fontSize: 12.0,
       ),
       textAlign: TextAlign.center,
@@ -323,8 +320,8 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
     return Center(
       child: Text(
         'No data',
-        style: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 14.0,
         ),
       ),
@@ -338,10 +335,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 ) {
   final rangeValue = Decimal.parse('$maxValue') - Decimal.parse('$minValue');
 
-  final logRange =
-      rangeValue.toDouble() == 0.0
-          ? 0.0
-          : _log10(rangeValue.toDouble()).floorToDouble();
+  final logRange = rangeValue.toDouble() == 0.0
+      ? 0.0
+      : _log10(rangeValue.toDouble()).floorToDouble();
 
   final step = (Decimal.parse('${pow(10, logRange)}').toDouble());
 

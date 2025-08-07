@@ -1,5 +1,4 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coin_view_model.dart';
@@ -7,6 +6,7 @@ import 'package:crpto/features/coins_management/presentation/view_model/listed_c
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_view_model.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,6 +44,9 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     final listedCoins = _sortListedCoins(state.listedCoins);
 
     return ListView.builder(
+      physics: kIsWeb
+          ? const BouncingScrollPhysics()
+          : const ClampingScrollPhysics(),
       itemBuilder: (_, index) {
         final listedCoin = listedCoins[index];
 
@@ -59,10 +62,10 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
   }
 
   Widget _buildLoadingIndicator() {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: CircularProgressIndicator(color: AppColors.loaderColor),
+        padding: const EdgeInsets.all(12.0),
+        child: CircularProgressIndicator(color: context.appColors.loaderColor),
       ),
     );
   }
@@ -71,8 +74,8 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     return Center(
       child: Text(
         'No listed coins found',
-        style: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 14.0,
         ),
       ),
@@ -84,23 +87,25 @@ extension _ListedCoinListStateX on _ListedCoinListViewState {
   List<ListedCoin> _sortListedCoins(List<ListedCoin> listedCoins) {
     final unselectedListedCoins = <ListedCoin>[];
 
-    final selectedListedCoins = [
-      ...listedCoins.where((listedCoin) {
-        final isSelected =
-            ref.read(listedCoinViewModelProvider(listedCoin)).selected;
+    final selectedListedCoins =
+        [
+          ...listedCoins.where((listedCoin) {
+            final isSelected = ref
+                .read(listedCoinViewModelProvider(listedCoin))
+                .selected;
 
-        if (!isSelected) {
-          unselectedListedCoins.add(listedCoin);
-        }
+            if (!isSelected) {
+              unselectedListedCoins.add(listedCoin);
+            }
 
-        return isSelected;
-      }),
-    ]..sort((a, b) {
-      final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
-      final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
+            return isSelected;
+          }),
+        ]..sort((a, b) {
+          final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
+          final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
 
-      return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
-    });
+          return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
+        });
 
     unselectedListedCoins.sort((a, b) {
       final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));

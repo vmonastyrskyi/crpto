@@ -1,6 +1,5 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
@@ -11,6 +10,7 @@ import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/model/symbol.dart';
 import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
@@ -60,11 +60,14 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
         Provider.value(value: Symbol(widget.symbol)),
       ],
       child: Container(
-        color: AppColors.backgroundColor,
+        color: context.appColors.backgroundColor,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: UnfocusTapArea(
             child: SafeArea(
+              minimum: kIsWeb
+                  ? const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0)
+                  : EdgeInsets.zero,
               bottom: false,
               child: Scaffold(
                 body: NotificationListener<ScrollNotification>(
@@ -80,9 +83,11 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
                       ];
                     },
                     body: SingleChildScrollView(
+                      physics: kIsWeb
+                          ? const BouncingScrollPhysics()
+                          : const ClampingScrollPhysics(),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           const SizedBox(height: 12.0),
@@ -145,23 +150,21 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
 
           _pageController.jumpToPage(index);
         },
-        overlayColor: WidgetStateProperty.resolveWith<Color?>(
-          (_) => AppColors.splashColorDark,
-        ),
-        dividerColor: AppColors.dividerColor,
+        overlayColor: WidgetStatePropertyAll(context.appColors.splashColorDark),
+        dividerColor: context.appColors.dividerColor,
         dividerHeight: 1.0,
         labelPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-        unselectedLabelColor: AppColors.secondaryTextColor,
-        unselectedLabelStyle: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        unselectedLabelColor: context.appColors.secondaryTextColor,
+        unselectedLabelStyle: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 12.0,
         ),
-        labelColor: AppColors.primaryColor,
-        labelStyle: AppFonts.medium.copyWith(
-          color: AppColors.primaryColor,
+        labelColor: context.appColors.primaryColor,
+        labelStyle: context.appFonts.medium.copyWith(
+          color: context.appColors.primaryColor,
           fontSize: 12.0,
         ),
-        indicatorColor: AppColors.primaryColor,
+        indicatorColor: context.appColors.primaryColor,
         indicatorWeight: 1.0,
         tabs: <Widget>[
           for (final klinePeriod in KlinePeriod.values)
@@ -185,8 +188,8 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
 
         return Text(
           coinDescription,
-          style: AppFonts.regular.copyWith(
-            color: AppColors.secondaryTextColor,
+          style: context.appFonts.regular.copyWith(
+            color: context.appColors.secondaryTextColor,
             fontSize: 14.0,
           ),
         ).withPaddingAll(12.0);
@@ -201,8 +204,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!_isScrollAnimating && notification is ScrollEndNotification) {
-        final scrollOffset =
-            _scrollController.hasClients ? _scrollController.offset : 0.0;
+        final scrollOffset = _scrollController.hasClients
+            ? _scrollController.offset
+            : 0.0;
 
         if (scrollOffset > expandedHeight - toolbarHeight) return;
 
@@ -210,8 +214,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
           (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),
         );
 
-        final scrollPosition =
-            scrollValue > 0.5 ? expandedHeight - toolbarHeight : 0.0;
+        final scrollPosition = scrollValue > 0.5
+            ? expandedHeight - toolbarHeight
+            : 0.0;
 
         _isScrollAnimating = true;
 
@@ -229,8 +234,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
   }
 
   void _onAppBarPressed() async {
-    final scrollOffset =
-        _scrollController.hasClients ? _scrollController.offset : 0.0;
+    final scrollOffset = _scrollController.hasClients
+        ? _scrollController.offset
+        : 0.0;
 
     if (_isScrollAnimating ||
         (scrollOffset < (expandedHeight - toolbarHeight))) {

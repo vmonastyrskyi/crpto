@@ -1,6 +1,5 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:flutter/material.dart';
 
 class CoinLastPriceText extends StatefulWidget {
@@ -41,16 +40,21 @@ class _CoinLastPriceTextState extends State<CoinLastPriceText>
       curve: Curves.fastOutSlowIn,
     );
 
+    _previousLastPrice = widget.lastPrice;
+  }
+
+  @override
+  void didChangeDependencies() {
     _bodyColorAnimation = ColorTween(
-      begin: AppColors.transparent,
-      end: AppColors.transparent,
+      begin: Colors.transparent,
+      end: Colors.transparent,
     ).animate(_fastOutSlowInAnimation);
     _textColorAnimation = ColorTween(
-      begin: AppColors.primaryTextColor,
-      end: AppColors.primaryTextColor,
+      begin: context.appColors.primaryTextColor,
+      end: context.appColors.primaryTextColor,
     ).animate(_fastOutSlowInAnimation);
 
-    _previousLastPrice = widget.lastPrice;
+    super.didChangeDependencies();
   }
 
   @override
@@ -60,21 +64,21 @@ class _CoinLastPriceTextState extends State<CoinLastPriceText>
     if (widget.lastPrice != _previousLastPrice) {
       if (widget.lastPrice > _previousLastPrice) {
         _bodyColorAnimation = ColorTween(
-          begin: AppColors.positivePriceColor.withValues(alpha: 0.25),
-          end: AppColors.transparent,
+          begin: context.appColors.positivePriceColor.withValues(alpha: 0.25),
+          end: Colors.transparent,
         ).animate(_fastOutSlowInAnimation);
         _textColorAnimation = ColorTween(
-          begin: AppColors.positivePriceColor,
-          end: AppColors.primaryTextColor,
+          begin: context.appColors.positivePriceColor,
+          end: context.appColors.primaryTextColor,
         ).animate(_fastOutSlowInAnimation);
       } else {
         _bodyColorAnimation = ColorTween(
-          begin: AppColors.negativePriceColor.withValues(alpha: 0.25),
-          end: AppColors.transparent,
+          begin: context.appColors.negativePriceColor.withValues(alpha: 0.25),
+          end: Colors.transparent,
         ).animate(_fastOutSlowInAnimation);
         _textColorAnimation = ColorTween(
-          begin: AppColors.negativePriceColor,
-          end: AppColors.primaryTextColor,
+          begin: context.appColors.negativePriceColor,
+          end: context.appColors.primaryTextColor,
         ).animate(_fastOutSlowInAnimation);
       }
 
@@ -105,7 +109,7 @@ class _CoinLastPriceTextState extends State<CoinLastPriceText>
           ),
           child: Text(
             '\$$lastPrice',
-            style: AppFonts.medium.copyWith(
+            style: context.appFonts.medium.copyWith(
               color: _textColorAnimation.value,
               fontSize: widget.fontSize,
               height: 1.0,

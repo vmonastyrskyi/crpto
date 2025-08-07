@@ -1,8 +1,7 @@
 import 'package:crpto/core/navigation/route_names.dart';
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/app_resources.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_kline_chart.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_last_price_text.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
@@ -31,17 +30,11 @@ class CoinTickerItem extends StatelessWidget {
           RouteNames.coinDetails,
         );
       },
-      highlightColor: AppColors.splashColorDark,
-      splashColor: AppColors.splashColorDark,
       child: Row(
         spacing: 24.0,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
             spacing: 12.0,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _buildTokenIcon(),
               Column(
@@ -50,8 +43,6 @@ class CoinTickerItem extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     spacing: 6.0,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       _buildCoinBaseAsset(),
                       _buildCoinCategory(),
@@ -82,15 +73,15 @@ class CoinTickerItem extends StatelessWidget {
 
   Widget _buildCoinBaseAsset() {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (context, ref, _) {
         final symbol = coinTicker.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
         return AutoSizeText(
           coinMetadata.baseAsset,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: 16.0,
           ),
           overflow: TextOverflow.ellipsis,
@@ -103,7 +94,7 @@ class CoinTickerItem extends StatelessWidget {
 
   Widget _buildCoinCategory() {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (context, ref, _) {
         final symbol = coinTicker.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
@@ -115,12 +106,12 @@ class CoinTickerItem extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: AppColors.secondaryWidgetColor,
+            color: context.appColors.secondaryWidgetColor,
           ),
           child: Text(
             coinCategory.toUpperCase(),
-            style: AppFonts.medium.copyWith(
-              color: AppColors.secondaryTextColor,
+            style: context.appFonts.medium.copyWith(
+              color: context.appColors.secondaryTextColor,
               fontSize: 8.0,
               height: 1.0,
             ),
@@ -132,15 +123,15 @@ class CoinTickerItem extends StatelessWidget {
 
   Widget _buildCoinName() {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (context, ref, _) {
         final symbol = coinTicker.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
 
         return AutoSizeText(
           coinMetadata.name,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.secondaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.secondaryTextColor,
             fontSize: 14.0,
           ),
           overflow: TextOverflow.ellipsis,
@@ -172,7 +163,7 @@ class CoinTickerItem extends StatelessWidget {
 
   Widget _buildCoinPriceChangePercent() {
     return Consumer(
-      builder: (_, ref, _) {
+      builder: (context, ref, _) {
         final symbol = this.coinTicker.symbol;
 
         ref.watch(
@@ -200,19 +191,18 @@ class CoinTickerItem extends StatelessWidget {
                   : AppResources.arrowUp,
               colorFilter: ColorFilter.mode(
                 isPriceChangeNegative
-                    ? AppColors.negativePriceColor
-                    : AppColors.positivePriceColor,
+                    ? context.appColors.negativePriceColor
+                    : context.appColors.positivePriceColor,
                 BlendMode.srcIn,
               ),
               width: 8.0,
             ),
             Text(
               '$priceChangePercent%',
-              style: AppFonts.medium.copyWith(
-                color:
-                    isPriceChangeNegative
-                        ? AppColors.negativePriceColor
-                        : AppColors.positivePriceColor,
+              style: context.appFonts.medium.copyWith(
+                color: isPriceChangeNegative
+                    ? context.appColors.negativePriceColor
+                    : context.appColors.positivePriceColor,
                 fontSize: 14.0,
               ),
             ),

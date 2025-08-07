@@ -11,7 +11,16 @@ final CrptoDB crptoDB = CrptoDB.defaults();
 
 @DriftDatabase(tables: [SelectedCoins, CoinsMetadata])
 final class CrptoDB extends _$CrptoDB {
-  CrptoDB.defaults() : super(driftDatabase(name: 'crpto_db'));
+  CrptoDB.defaults()
+    : super(
+        driftDatabase(
+          name: 'crpto_db',
+          web: DriftWebOptions(
+            sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+            driftWorker: Uri.parse('drift_worker.dart.js'),
+          ),
+        ),
+      );
 
   @override
   int get schemaVersion => 1;

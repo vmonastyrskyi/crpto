@@ -1,6 +1,5 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coin_view_model.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
@@ -58,8 +57,8 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
 
         return AutoSizeText(
           coinMetadata.baseAsset,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: 16.0,
           ),
           overflow: TextOverflow.ellipsis,
@@ -84,12 +83,12 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
           padding: const EdgeInsets.fromLTRB(6.0, 4.0, 6.0, 4.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: AppColors.secondaryWidgetColor,
+            color: context.appColors.secondaryWidgetColor,
           ),
           child: Text(
             coinCategory.toUpperCase(),
-            style: AppFonts.medium.copyWith(
-              color: AppColors.secondaryTextColor,
+            style: context.appFonts.medium.copyWith(
+              color: context.appColors.secondaryTextColor,
               fontSize: 8.0,
               height: 1.0,
             ),
@@ -108,8 +107,8 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
 
         return AutoSizeText(
           coinMetadata.name,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.secondaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.secondaryTextColor,
             fontSize: 14.0,
           ),
           overflow: TextOverflow.ellipsis,
@@ -129,16 +128,15 @@ class _ListedCoinItemState extends ConsumerState<ListedCoinItem> {
 
     return Switch(
       value: selected,
-      onChanged:
-          ref
-              .read(listedCoinViewModelProvider(widget.listedCoin).notifier)
-              .select,
-      activeColor: AppColors.switchActiveColor,
-      activeTrackColor: AppColors.switchActiveTrackColor,
-      inactiveThumbColor: AppColors.switchInactiveThumbColor,
-      inactiveTrackColor: AppColors.switchInactiveTrackColor,
-      trackOutlineColor: const WidgetStatePropertyAll(
-        AppColors.switchTrackOutlineColor,
+      onChanged: ref
+          .read(listedCoinViewModelProvider(widget.listedCoin).notifier)
+          .select,
+      activeColor: context.appColors.switchActiveColor,
+      activeTrackColor: context.appColors.switchActiveTrackColor,
+      inactiveThumbColor: context.appColors.switchInactiveThumbColor,
+      inactiveTrackColor: context.appColors.switchInactiveTrackColor,
+      trackOutlineColor: WidgetStatePropertyAll(
+        context.appColors.switchTrackOutlineColor,
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     );

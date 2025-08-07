@@ -1,5 +1,4 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_exchange/presentation/provider/coin_klines_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
@@ -7,14 +6,21 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CoinKlineChart extends ConsumerWidget {
+class CoinKlineChart extends ConsumerStatefulWidget {
   const CoinKlineChart({super.key, required this.symbol});
 
   final String symbol;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final coinKlinesState = ref.watch(coinKlinesNotifierProvider(symbol));
+  ConsumerState<CoinKlineChart> createState() => _CoinKlineChartState();
+}
+
+class _CoinKlineChartState extends ConsumerState<CoinKlineChart> {
+  @override
+  Widget build(BuildContext context) {
+    final coinKlinesState = ref.watch(
+      coinKlinesNotifierProvider(widget.symbol),
+    );
 
     Widget child = _buildNoDataWarning();
 
@@ -54,21 +60,20 @@ class CoinKlineChart extends ConsumerWidget {
                   end: Alignment.bottomCenter,
                   colors: <Color>[
                     (isLastClosePriceHigher
-                            ? AppColors.positivePriceColor
-                            : AppColors.negativePriceColor)
+                            ? context.appColors.positivePriceColor
+                            : context.appColors.negativePriceColor)
                         .withValues(alpha: 0.25),
                     (isLastClosePriceHigher
-                            ? AppColors.positivePriceColor
-                            : AppColors.negativePriceColor)
+                            ? context.appColors.positivePriceColor
+                            : context.appColors.negativePriceColor)
                         .withValues(alpha: 0.0),
                   ],
                 ),
                 show: true,
               ),
-              color:
-                  isLastClosePriceHigher
-                      ? AppColors.positivePriceColor
-                      : AppColors.negativePriceColor,
+              color: isLastClosePriceHigher
+                  ? context.appColors.positivePriceColor
+                  : context.appColors.negativePriceColor,
               dotData: const FlDotData(show: false),
               isStrokeJoinRound: true,
               isStrokeCapRound: true,
@@ -89,8 +94,8 @@ class CoinKlineChart extends ConsumerWidget {
     return Center(
       child: Text(
         'No data',
-        style: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 14.0,
         ),
       ),
