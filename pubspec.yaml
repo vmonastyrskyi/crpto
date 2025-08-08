@@ -86,8 +86,6 @@ flutter:
     - assets/svgs_vec/
     - assets/svgs/common/
     - assets/svgs/tokens/
-    - assets/svgs/tokens/
-    - assets/svgs_vec/tokens/
     - assets/svgs_vec/tokens/
 
     - .env
