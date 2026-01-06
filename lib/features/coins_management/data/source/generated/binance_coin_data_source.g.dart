@@ -6,25 +6,59 @@ part of '../binance_coin_data_source.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(BinanceCoinDataSource)
+const binanceCoinDataSourceProvider = BinanceCoinDataSourceProvider._();
+
+final class BinanceCoinDataSourceProvider
+    extends $NotifierProvider<BinanceCoinDataSource, ICoinDataSource> {
+  const BinanceCoinDataSourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'binanceCoinDataSourceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$binanceCoinDataSourceHash();
+
+  @$internal
+  @override
+  BinanceCoinDataSource create() => BinanceCoinDataSource();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ICoinDataSource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ICoinDataSource>(value),
+    );
+  }
+}
+
 String _$binanceCoinDataSourceHash() =>
     r'c5ac3caecd75d4b64b1f5121b3df17240f509d8e';
 
-/// See also [BinanceCoinDataSource].
-@ProviderFor(BinanceCoinDataSource)
-final binanceCoinDataSourceProvider = AutoDisposeNotifierProvider<
-  BinanceCoinDataSource,
-  ICoinDataSource
->.internal(
-  BinanceCoinDataSource.new,
-  name: r'binanceCoinDataSourceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$binanceCoinDataSourceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$BinanceCoinDataSource = AutoDisposeNotifier<ICoinDataSource>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$BinanceCoinDataSource extends $Notifier<ICoinDataSource> {
+  ICoinDataSource build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<ICoinDataSource, ICoinDataSource>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ICoinDataSource, ICoinDataSource>,
+              ICoinDataSource,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

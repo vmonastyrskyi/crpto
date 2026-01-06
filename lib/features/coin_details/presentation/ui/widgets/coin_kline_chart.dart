@@ -36,11 +36,13 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
   Widget build(BuildContext context) {
     final symbol = context.symbol;
 
-    final coinKlinesState = ref.watch(coinKlinesNotifierProvider(symbol));
+    final coinKlinesState = ref.watch(coinKlinesProvider(symbol));
 
     Widget child = _buildNoDataWarning();
 
     switch (coinKlinesState) {
+      case AsyncError<Map<KlinePeriod, List<CoinKline>>>():
+        throw UnimplementedError();
       case AsyncLoading(value: final klinePeriods):
         if (klinePeriods == null || klinePeriods.isEmpty) {
           child = SizedBox.shrink(key: UniqueKey());
@@ -89,12 +91,8 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
       builder: (_, showingIndicators, _) {
         return Consumer(
           builder: (_, ref, _) {
-            final selectedCoinKline = ref.watch(
-              selectedCoinKlineNotifierProvider,
-            );
-            final selectedKlinePeriod = ref.watch(
-              selectedKlinePeriodNotifierProvider,
-            );
+            final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
+            final selectedKlinePeriod = ref.watch(selectedKlinePeriodProvider);
 
             return Stack(
               clipBehavior: Clip.none,
@@ -163,17 +161,13 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                             }
 
                             ref
-                                .read(
-                                  selectedCoinKlineNotifierProvider.notifier,
-                                )
+                                .read(selectedCoinKlineProvider.notifier)
                                 .select(coinKlines[spotIndex]);
 
                             _showingIndicatorListenable.value = [spotIndex];
                           case FlPanCancelEvent() || FlPanEndEvent():
                             ref
-                                .read(
-                                  selectedCoinKlineNotifierProvider.notifier,
-                                )
+                                .read(selectedCoinKlineProvider.notifier)
                                 .select(null);
 
                             _showingIndicatorListenable.value = const [];

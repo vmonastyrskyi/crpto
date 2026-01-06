@@ -37,7 +37,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
   void initState() {
     super.initState();
 
-    final selectedKlinePeriod = ref.read(selectedKlinePeriodNotifierProvider);
+    final selectedKlinePeriod = ref.read(selectedKlinePeriodProvider);
 
     _pageController = PageController(
       initialPage: KlinePeriod.values.indexOf(selectedKlinePeriod),
@@ -46,7 +46,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(selectedCoinKlineNotifierProvider, (
+    ref.listen(selectedCoinKlineProvider, (
       prevSelectedCoinKline,
       nextSelectedCoinKline,
     ) {
@@ -132,7 +132,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
   }
 
   Widget _buildKlinePeriodSelector() {
-    final selectedKlinePeriod = ref.read(selectedKlinePeriodNotifierProvider);
+    final selectedKlinePeriod = ref.read(selectedKlinePeriodProvider);
 
     return DefaultTabController(
       initialIndex: KlinePeriod.values.indexOf(selectedKlinePeriod),
@@ -140,7 +140,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
       child: TabBar(
         onTap: (index) {
           ref
-              .read(selectedKlinePeriodNotifierProvider.notifier)
+              .read(selectedKlinePeriodProvider.notifier)
               .select(KlinePeriod.values[index]);
 
           _pageController.jumpToPage(index);

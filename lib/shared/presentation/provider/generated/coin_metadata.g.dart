@@ -6,147 +6,82 @@ part of '../coin_metadata.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinMetadataHash() => r'dbb7c6f4005930aa24a35126384cf4f6e0b19945';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [coinMetadata].
 @ProviderFor(coinMetadata)
-const coinMetadataProvider = CoinMetadataFamily();
+const coinMetadataProvider = CoinMetadataFamily._();
 
-/// See also [coinMetadata].
-class CoinMetadataFamily extends Family<CoinMetadata> {
-  /// See also [coinMetadata].
-  const CoinMetadataFamily();
+final class CoinMetadataProvider
+    extends $FunctionalProvider<CoinMetadata, CoinMetadata, CoinMetadata>
+    with $Provider<CoinMetadata> {
+  const CoinMetadataProvider._({
+    required CoinMetadataFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'coinMetadataProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [coinMetadata].
-  CoinMetadataProvider call(String symbol) {
-    return CoinMetadataProvider(symbol);
+  @override
+  String debugGetCreateSourceHash() => _$coinMetadataHash();
+
+  @override
+  String toString() {
+    return r'coinMetadataProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  CoinMetadataProvider getProviderOverride(
-    covariant CoinMetadataProvider provider,
-  ) {
-    return call(provider.symbol);
+  $ProviderElement<CoinMetadata> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  CoinMetadata create(Ref ref) {
+    final argument = this.argument as String;
+    return coinMetadata(ref, argument);
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'coinMetadataProvider';
-}
-
-/// See also [coinMetadata].
-class CoinMetadataProvider extends AutoDisposeProvider<CoinMetadata> {
-  /// See also [coinMetadata].
-  CoinMetadataProvider(String symbol)
-    : this._internal(
-        (ref) => coinMetadata(ref as CoinMetadataRef, symbol),
-        from: coinMetadataProvider,
-        name: r'coinMetadataProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$coinMetadataHash,
-        dependencies: CoinMetadataFamily._dependencies,
-        allTransitiveDependencies:
-            CoinMetadataFamily._allTransitiveDependencies,
-        symbol: symbol,
-      );
-
-  CoinMetadataProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.symbol,
-  }) : super.internal();
-
-  final String symbol;
-
-  @override
-  Override overrideWith(
-    CoinMetadata Function(CoinMetadataRef provider) create,
-  ) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CoinMetadata value) {
+    return $ProviderOverride(
       origin: this,
-      override: CoinMetadataProvider._internal(
-        (ref) => create(ref as CoinMetadataRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        symbol: symbol,
-      ),
+      providerOverride: $SyncValueProvider<CoinMetadata>(value),
     );
   }
 
   @override
-  AutoDisposeProviderElement<CoinMetadata> createElement() {
-    return _CoinMetadataProviderElement(this);
-  }
-
-  @override
   bool operator ==(Object other) {
-    return other is CoinMetadataProvider && other.symbol == symbol;
+    return other is CoinMetadataProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, symbol.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin CoinMetadataRef on AutoDisposeProviderRef<CoinMetadata> {
-  /// The parameter `symbol` of this provider.
-  String get symbol;
-}
+String _$coinMetadataHash() => r'dbb7c6f4005930aa24a35126384cf4f6e0b19945';
 
-class _CoinMetadataProviderElement
-    extends AutoDisposeProviderElement<CoinMetadata>
-    with CoinMetadataRef {
-  _CoinMetadataProviderElement(super.provider);
+final class CoinMetadataFamily extends $Family
+    with $FunctionalFamilyOverride<CoinMetadata, String> {
+  const CoinMetadataFamily._()
+    : super(
+        retry: null,
+        name: r'coinMetadataProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CoinMetadataProvider call(String symbol) =>
+      CoinMetadataProvider._(argument: symbol, from: this);
 
   @override
-  String get symbol => (origin as CoinMetadataProvider).symbol;
+  String toString() => r'coinMetadataProvider';
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

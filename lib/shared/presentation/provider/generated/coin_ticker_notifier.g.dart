@@ -6,160 +6,104 @@ part of '../coin_ticker_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinTickerNotifierHash() =>
-    r'b8d41eb12359d64de7258ae4ca01a52037192527';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$CoinTickerNotifier
-    extends BuildlessAutoDisposeNotifier<CoinTicker?> {
-  late final String symbol;
-
-  CoinTicker? build(String symbol);
-}
-
-/// See also [CoinTickerNotifier].
 @ProviderFor(CoinTickerNotifier)
-const coinTickerNotifierProvider = CoinTickerNotifierFamily();
+const coinTickerProvider = CoinTickerNotifierFamily._();
 
-/// See also [CoinTickerNotifier].
-class CoinTickerNotifierFamily extends Family<CoinTicker?> {
-  /// See also [CoinTickerNotifier].
-  const CoinTickerNotifierFamily();
+final class CoinTickerNotifierProvider
+    extends $NotifierProvider<CoinTickerNotifier, CoinTicker?> {
+  const CoinTickerNotifierProvider._({
+    required CoinTickerNotifierFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'coinTickerProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [CoinTickerNotifier].
-  CoinTickerNotifierProvider call(String symbol) {
-    return CoinTickerNotifierProvider(symbol);
+  @override
+  String debugGetCreateSourceHash() => _$coinTickerNotifierHash();
+
+  @override
+  String toString() {
+    return r'coinTickerProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  CoinTickerNotifierProvider getProviderOverride(
-    covariant CoinTickerNotifierProvider provider,
-  ) {
-    return call(provider.symbol);
-  }
+  CoinTickerNotifier create() => CoinTickerNotifier();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'coinTickerNotifierProvider';
-}
-
-/// See also [CoinTickerNotifier].
-class CoinTickerNotifierProvider
-    extends AutoDisposeNotifierProviderImpl<CoinTickerNotifier, CoinTicker?> {
-  /// See also [CoinTickerNotifier].
-  CoinTickerNotifierProvider(String symbol)
-    : this._internal(
-        () => CoinTickerNotifier()..symbol = symbol,
-        from: coinTickerNotifierProvider,
-        name: r'coinTickerNotifierProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$coinTickerNotifierHash,
-        dependencies: CoinTickerNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            CoinTickerNotifierFamily._allTransitiveDependencies,
-        symbol: symbol,
-      );
-
-  CoinTickerNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.symbol,
-  }) : super.internal();
-
-  final String symbol;
-
-  @override
-  CoinTicker? runNotifierBuild(covariant CoinTickerNotifier notifier) {
-    return notifier.build(symbol);
-  }
-
-  @override
-  Override overrideWith(CoinTickerNotifier Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CoinTicker? value) {
+    return $ProviderOverride(
       origin: this,
-      override: CoinTickerNotifierProvider._internal(
-        () => create()..symbol = symbol,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        symbol: symbol,
-      ),
+      providerOverride: $SyncValueProvider<CoinTicker?>(value),
     );
   }
 
   @override
-  AutoDisposeNotifierProviderElement<CoinTickerNotifier, CoinTicker?>
-  createElement() {
-    return _CoinTickerNotifierProviderElement(this);
-  }
-
-  @override
   bool operator ==(Object other) {
-    return other is CoinTickerNotifierProvider && other.symbol == symbol;
+    return other is CoinTickerNotifierProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, symbol.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin CoinTickerNotifierRef on AutoDisposeNotifierProviderRef<CoinTicker?> {
-  /// The parameter `symbol` of this provider.
-  String get symbol;
-}
+String _$coinTickerNotifierHash() =>
+    r'feb55aca0c62616e634290f7b5089241833a8995';
 
-class _CoinTickerNotifierProviderElement
-    extends AutoDisposeNotifierProviderElement<CoinTickerNotifier, CoinTicker?>
-    with CoinTickerNotifierRef {
-  _CoinTickerNotifierProviderElement(super.provider);
+final class CoinTickerNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
+          CoinTickerNotifier,
+          CoinTicker?,
+          CoinTicker?,
+          CoinTicker?,
+          String
+        > {
+  const CoinTickerNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'coinTickerProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CoinTickerNotifierProvider call(String symbol) =>
+      CoinTickerNotifierProvider._(argument: symbol, from: this);
 
   @override
-  String get symbol => (origin as CoinTickerNotifierProvider).symbol;
+  String toString() => r'coinTickerProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$CoinTickerNotifier extends $Notifier<CoinTicker?> {
+  late final _$args = ref.$arg as String;
+  String get symbol => _$args;
+
+  CoinTicker? build(String symbol);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref = this.ref as $Ref<CoinTicker?, CoinTicker?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<CoinTicker?, CoinTicker?>,
+              CoinTicker?,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

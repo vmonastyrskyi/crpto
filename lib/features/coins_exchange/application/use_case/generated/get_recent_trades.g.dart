@@ -6,26 +6,74 @@ part of '../get_recent_trades.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(GetRecentTradesUseCase)
+const getRecentTradesUseCaseProvider = GetRecentTradesUseCaseProvider._();
+
+final class GetRecentTradesUseCaseProvider
+    extends
+        $NotifierProvider<
+          GetRecentTradesUseCase,
+          Raw<Future<GetRecentTradesUseCase>>
+        > {
+  const GetRecentTradesUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getRecentTradesUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getRecentTradesUseCaseHash();
+
+  @$internal
+  @override
+  GetRecentTradesUseCase create() => GetRecentTradesUseCase();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Raw<Future<GetRecentTradesUseCase>> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Raw<Future<GetRecentTradesUseCase>>>(
+        value,
+      ),
+    );
+  }
+}
+
 String _$getRecentTradesUseCaseHash() =>
     r'2102d06083e7b123aa62a8c2272b5ee47d95ef6e';
 
-/// See also [GetRecentTradesUseCase].
-@ProviderFor(GetRecentTradesUseCase)
-final getRecentTradesUseCaseProvider = AutoDisposeNotifierProvider<
-  GetRecentTradesUseCase,
-  Raw<Future<GetRecentTradesUseCase>>
->.internal(
-  GetRecentTradesUseCase.new,
-  name: r'getRecentTradesUseCaseProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getRecentTradesUseCaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$GetRecentTradesUseCase =
-    AutoDisposeNotifier<Raw<Future<GetRecentTradesUseCase>>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$GetRecentTradesUseCase
+    extends $Notifier<Raw<Future<GetRecentTradesUseCase>>> {
+  Raw<Future<GetRecentTradesUseCase>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<
+              Raw<Future<GetRecentTradesUseCase>>,
+              Raw<Future<GetRecentTradesUseCase>>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                Raw<Future<GetRecentTradesUseCase>>,
+                Raw<Future<GetRecentTradesUseCase>>
+              >,
+              Raw<Future<GetRecentTradesUseCase>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

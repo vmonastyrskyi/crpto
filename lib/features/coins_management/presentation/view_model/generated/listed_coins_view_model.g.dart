@@ -6,23 +6,52 @@ part of '../listed_coins_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ListedCoinsViewModel)
+const listedCoinsViewModelProvider = ListedCoinsViewModelProvider._();
+
+final class ListedCoinsViewModelProvider
+    extends $AsyncNotifierProvider<ListedCoinsViewModel, ListedCoinsState> {
+  const ListedCoinsViewModelProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'listedCoinsViewModelProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$listedCoinsViewModelHash();
+
+  @$internal
+  @override
+  ListedCoinsViewModel create() => ListedCoinsViewModel();
+}
+
 String _$listedCoinsViewModelHash() =>
     r'09ed49159492836fa32f9da8e9615bb253c103de';
 
-/// See also [ListedCoinsViewModel].
-@ProviderFor(ListedCoinsViewModel)
-final listedCoinsViewModelProvider =
-    AsyncNotifierProvider<ListedCoinsViewModel, ListedCoinsState>.internal(
-      ListedCoinsViewModel.new,
-      name: r'listedCoinsViewModelProvider',
-      debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$listedCoinsViewModelHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$ListedCoinsViewModel = AsyncNotifier<ListedCoinsState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$ListedCoinsViewModel extends $AsyncNotifier<ListedCoinsState> {
+  FutureOr<ListedCoinsState> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<AsyncValue<ListedCoinsState>, ListedCoinsState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<ListedCoinsState>, ListedCoinsState>,
+              AsyncValue<ListedCoinsState>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

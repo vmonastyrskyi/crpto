@@ -6,25 +6,61 @@ part of '../recent_trades_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(RecentTradesNotifier)
+const recentTradesProvider = RecentTradesNotifierProvider._();
+
+final class RecentTradesNotifierProvider
+    extends
+        $AsyncNotifierProvider<RecentTradesNotifier, Map<String, RecentTrade>> {
+  const RecentTradesNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'recentTradesProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$recentTradesNotifierHash();
+
+  @$internal
+  @override
+  RecentTradesNotifier create() => RecentTradesNotifier();
+}
+
 String _$recentTradesNotifierHash() =>
     r'ae6a20cedb2fe54317bd18796d566c69213a3195';
 
-/// See also [RecentTradesNotifier].
-@ProviderFor(RecentTradesNotifier)
-final recentTradesNotifierProvider = AsyncNotifierProvider<
-  RecentTradesNotifier,
-  Map<String, RecentTrade>
->.internal(
-  RecentTradesNotifier.new,
-  name: r'recentTradesNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$recentTradesNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$RecentTradesNotifier = AsyncNotifier<Map<String, RecentTrade>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$RecentTradesNotifier
+    extends $AsyncNotifier<Map<String, RecentTrade>> {
+  FutureOr<Map<String, RecentTrade>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<Map<String, RecentTrade>>,
+              Map<String, RecentTrade>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<Map<String, RecentTrade>>,
+                Map<String, RecentTrade>
+              >,
+              AsyncValue<Map<String, RecentTrade>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
