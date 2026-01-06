@@ -6,158 +6,94 @@ part of '../dio_client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dioClientHash() => r'ca36076e5b2c83b4f4ac8e1e6bb5c7e5c023b25c';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [dioClient].
 @ProviderFor(dioClient)
-const dioClientProvider = DioClientFamily();
+const dioClientProvider = DioClientFamily._();
 
-/// See also [dioClient].
-class DioClientFamily extends Family<Dio> {
-  /// See also [dioClient].
-  const DioClientFamily();
+final class DioClientProvider extends $FunctionalProvider<Dio, Dio, Dio>
+    with $Provider<Dio> {
+  const DioClientProvider._({
+    required DioClientFamily super.from,
+    required ({List<Interceptor>? interceptors, String? baseUrl})
+    super.argument,
+  }) : super(
+         retry: null,
+         name: r'dioClientProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [dioClient].
-  DioClientProvider call({List<Interceptor>? interceptors, String? baseUrl}) {
-    return DioClientProvider(interceptors: interceptors, baseUrl: baseUrl);
+  @override
+  String debugGetCreateSourceHash() => _$dioClientHash();
+
+  @override
+  String toString() {
+    return r'dioClientProvider'
+        ''
+        '$argument';
   }
 
+  @$internal
   @override
-  DioClientProvider getProviderOverride(covariant DioClientProvider provider) {
-    return call(interceptors: provider.interceptors, baseUrl: provider.baseUrl);
+  $ProviderElement<Dio> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Dio create(Ref ref) {
+    final argument =
+        this.argument as ({List<Interceptor>? interceptors, String? baseUrl});
+    return dioClient(
+      ref,
+      interceptors: argument.interceptors,
+      baseUrl: argument.baseUrl,
+    );
   }
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'dioClientProvider';
-}
-
-/// See also [dioClient].
-class DioClientProvider extends AutoDisposeProvider<Dio> {
-  /// See also [dioClient].
-  DioClientProvider({List<Interceptor>? interceptors, String? baseUrl})
-    : this._internal(
-        (ref) => dioClient(
-          ref as DioClientRef,
-          interceptors: interceptors,
-          baseUrl: baseUrl,
-        ),
-        from: dioClientProvider,
-        name: r'dioClientProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$dioClientHash,
-        dependencies: DioClientFamily._dependencies,
-        allTransitiveDependencies: DioClientFamily._allTransitiveDependencies,
-        interceptors: interceptors,
-        baseUrl: baseUrl,
-      );
-
-  DioClientProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.interceptors,
-    required this.baseUrl,
-  }) : super.internal();
-
-  final List<Interceptor>? interceptors;
-  final String? baseUrl;
-
-  @override
-  Override overrideWith(Dio Function(DioClientRef provider) create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Dio value) {
+    return $ProviderOverride(
       origin: this,
-      override: DioClientProvider._internal(
-        (ref) => create(ref as DioClientRef),
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        interceptors: interceptors,
-        baseUrl: baseUrl,
-      ),
+      providerOverride: $SyncValueProvider<Dio>(value),
     );
   }
 
   @override
-  AutoDisposeProviderElement<Dio> createElement() {
-    return _DioClientProviderElement(this);
-  }
-
-  @override
   bool operator ==(Object other) {
-    return other is DioClientProvider &&
-        other.interceptors == interceptors &&
-        other.baseUrl == baseUrl;
+    return other is DioClientProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, interceptors.hashCode);
-    hash = _SystemHash.combine(hash, baseUrl.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin DioClientRef on AutoDisposeProviderRef<Dio> {
-  /// The parameter `interceptors` of this provider.
-  List<Interceptor>? get interceptors;
+String _$dioClientHash() => r'ca36076e5b2c83b4f4ac8e1e6bb5c7e5c023b25c';
 
-  /// The parameter `baseUrl` of this provider.
-  String? get baseUrl;
-}
+final class DioClientFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          Dio,
+          ({List<Interceptor>? interceptors, String? baseUrl})
+        > {
+  const DioClientFamily._()
+    : super(
+        retry: null,
+        name: r'dioClientProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
 
-class _DioClientProviderElement extends AutoDisposeProviderElement<Dio>
-    with DioClientRef {
-  _DioClientProviderElement(super.provider);
+  DioClientProvider call({List<Interceptor>? interceptors, String? baseUrl}) =>
+      DioClientProvider._(
+        argument: (interceptors: interceptors, baseUrl: baseUrl),
+        from: this,
+      );
 
   @override
-  List<Interceptor>? get interceptors =>
-      (origin as DioClientProvider).interceptors;
-  @override
-  String? get baseUrl => (origin as DioClientProvider).baseUrl;
+  String toString() => r'dioClientProvider';
 }
-
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

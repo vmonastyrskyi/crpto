@@ -26,8 +26,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   Widget build(BuildContext context) {
     final coinMetadata = ref.watch(coinMetadataProvider(_recentTrade.symbol));
     final recentTrade =
-        ref.watch(recentTradeNotifierProvider(_recentTrade.symbol)) ??
-        _recentTrade;
+        ref.watch(recentTradeProvider(_recentTrade.symbol)) ?? _recentTrade;
 
     return Container(
       padding: const EdgeInsets.all(12.0),

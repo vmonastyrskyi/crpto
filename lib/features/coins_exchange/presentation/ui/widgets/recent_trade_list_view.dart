@@ -22,11 +22,13 @@ class RecentTradeListView extends ConsumerStatefulWidget {
 class _RecentTradeListViewState extends ConsumerState<RecentTradeListView> {
   @override
   Widget build(BuildContext context) {
-    final recentTradesState = ref.watch(recentTradesNotifierProvider);
+    final recentTradesState = ref.watch(recentTradesProvider);
 
     Widget child = const SizedBox.shrink();
 
     switch (recentTradesState) {
+      case AsyncError<Map<String, RecentTrade>>():
+        throw UnimplementedError();
       case AsyncLoading(value: final recentTradesMap):
         if (recentTradesMap == null || recentTradesMap.isEmpty) {
           child = const _RecentTradeListPlaceholder();

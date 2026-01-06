@@ -30,9 +30,7 @@ class CoinTickerStatsView extends StatelessWidget {
             _buildTitle(),
             Consumer(
               builder: (_, ref, _) {
-                final selectedCoinKline = ref.watch(
-                  selectedCoinKlineNotifierProvider,
-                );
+                final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
                 return _buildCoinData(selectedCoinKline);
               },
@@ -54,7 +52,7 @@ class CoinTickerStatsView extends StatelessWidget {
         final symbol = context.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         final coinBaseAsset = coinMetadata.baseAsset;
 
@@ -75,10 +73,10 @@ class CoinTickerStatsView extends StatelessWidget {
         final symbol = context.symbol;
 
         if (selectedCoinKline == null) {
-          ref.watch(coinTickerNotifierProvider(symbol));
+          ref.watch(coinTickerProvider(symbol));
         }
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         return Stack(
           alignment: Alignment.center,

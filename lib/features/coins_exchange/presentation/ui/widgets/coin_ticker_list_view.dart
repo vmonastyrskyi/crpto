@@ -25,11 +25,13 @@ class CoinTickerListView extends ConsumerStatefulWidget {
 class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
   @override
   Widget build(BuildContext context) {
-    final coinTickersState = ref.watch(coinTickersNotifierProvider);
+    final coinTickersState = ref.watch(coinTickersProvider);
 
     Widget child = _buildNoCoinsSelectedWarning();
 
     switch (coinTickersState) {
+      case AsyncError<Map<String, CoinTicker>>():
+        throw UnimplementedError();
       case AsyncLoading(value: final coinTickersMap):
         if (coinTickersMap == null || coinTickersMap.isEmpty) {
           child = const _CoinTickerListPlaceholder();

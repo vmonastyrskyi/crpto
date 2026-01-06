@@ -6,25 +6,61 @@ part of '../get_coin_metadata.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(GetCoinMetadataUseCase)
+const getCoinMetadataUseCaseProvider = GetCoinMetadataUseCaseProvider._();
+
+final class GetCoinMetadataUseCaseProvider
+    extends $NotifierProvider<GetCoinMetadataUseCase, GetCoinMetadataUseCase> {
+  const GetCoinMetadataUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'getCoinMetadataUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$getCoinMetadataUseCaseHash();
+
+  @$internal
+  @override
+  GetCoinMetadataUseCase create() => GetCoinMetadataUseCase();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(GetCoinMetadataUseCase value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<GetCoinMetadataUseCase>(value),
+    );
+  }
+}
+
 String _$getCoinMetadataUseCaseHash() =>
     r'89379a181a90516379a775322c501c460cb718d7';
 
-/// See also [GetCoinMetadataUseCase].
-@ProviderFor(GetCoinMetadataUseCase)
-final getCoinMetadataUseCaseProvider = AutoDisposeNotifierProvider<
-  GetCoinMetadataUseCase,
-  GetCoinMetadataUseCase
->.internal(
-  GetCoinMetadataUseCase.new,
-  name: r'getCoinMetadataUseCaseProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getCoinMetadataUseCaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$GetCoinMetadataUseCase = AutoDisposeNotifier<GetCoinMetadataUseCase>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$GetCoinMetadataUseCase
+    extends $Notifier<GetCoinMetadataUseCase> {
+  GetCoinMetadataUseCase build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<GetCoinMetadataUseCase, GetCoinMetadataUseCase>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<GetCoinMetadataUseCase, GetCoinMetadataUseCase>,
+              GetCoinMetadataUseCase,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

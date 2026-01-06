@@ -157,13 +157,13 @@ class CoinTickerItem extends StatelessWidget {
         final symbol = this.coinTicker.symbol;
 
         ref.watch(
-          coinTickerNotifierProvider(
+          coinTickerProvider(
             symbol,
           ).select((coinTicker) => coinTicker?.lastPrice),
         );
 
         final coinTicker =
-            ref.read(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
+            ref.read(coinTickerProvider(symbol)) ?? this.coinTicker;
 
         return CoinLastPriceText(lastPrice: coinTicker.lastPrice);
       },
@@ -176,13 +176,13 @@ class CoinTickerItem extends StatelessWidget {
         final symbol = this.coinTicker.symbol;
 
         ref.watch(
-          coinTickerNotifierProvider(
+          coinTickerProvider(
             symbol,
           ).select((coinTicker) => coinTicker?.lastPrice),
         );
 
         final coinTicker =
-            ref.read(coinTickerNotifierProvider(symbol)) ?? this.coinTicker;
+            ref.read(coinTickerProvider(symbol)) ?? this.coinTicker;
 
         final priceChangePercent = coinTicker.priceChangePercent
             .toStringAsFixed(2);

@@ -6,176 +6,109 @@ part of '../coin_klines_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinKlinesNotifierHash() =>
-    r'5035a6974753ff3314f64bc04b38d9de99bc331d';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$CoinKlinesNotifier
-    extends
-        BuildlessAutoDisposeAsyncNotifier<Map<KlinePeriod, List<CoinKline>>> {
-  late final String symbol;
-
-  FutureOr<Map<KlinePeriod, List<CoinKline>>> build(String symbol);
-}
-
-/// See also [CoinKlinesNotifier].
 @ProviderFor(CoinKlinesNotifier)
-const coinKlinesNotifierProvider = CoinKlinesNotifierFamily();
+const coinKlinesProvider = CoinKlinesNotifierFamily._();
 
-/// See also [CoinKlinesNotifier].
-class CoinKlinesNotifierFamily
-    extends Family<AsyncValue<Map<KlinePeriod, List<CoinKline>>>> {
-  /// See also [CoinKlinesNotifier].
-  const CoinKlinesNotifierFamily();
-
-  /// See also [CoinKlinesNotifier].
-  CoinKlinesNotifierProvider call(String symbol) {
-    return CoinKlinesNotifierProvider(symbol);
-  }
-
-  @override
-  CoinKlinesNotifierProvider getProviderOverride(
-    covariant CoinKlinesNotifierProvider provider,
-  ) {
-    return call(provider.symbol);
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'coinKlinesNotifierProvider';
-}
-
-/// See also [CoinKlinesNotifier].
-class CoinKlinesNotifierProvider
+final class CoinKlinesNotifierProvider
     extends
-        AutoDisposeAsyncNotifierProviderImpl<
+        $AsyncNotifierProvider<
           CoinKlinesNotifier,
           Map<KlinePeriod, List<CoinKline>>
         > {
-  /// See also [CoinKlinesNotifier].
-  CoinKlinesNotifierProvider(String symbol)
-    : this._internal(
-        () => CoinKlinesNotifier()..symbol = symbol,
-        from: coinKlinesNotifierProvider,
-        name: r'coinKlinesNotifierProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$coinKlinesNotifierHash,
-        dependencies: CoinKlinesNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            CoinKlinesNotifierFamily._allTransitiveDependencies,
-        symbol: symbol,
-      );
-
-  CoinKlinesNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.symbol,
-  }) : super.internal();
-
-  final String symbol;
+  const CoinKlinesNotifierProvider._({
+    required CoinKlinesNotifierFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'coinKlinesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
   @override
-  FutureOr<Map<KlinePeriod, List<CoinKline>>> runNotifierBuild(
-    covariant CoinKlinesNotifier notifier,
-  ) {
-    return notifier.build(symbol);
-  }
+  String debugGetCreateSourceHash() => _$coinKlinesNotifierHash();
 
   @override
-  Override overrideWith(CoinKlinesNotifier Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: CoinKlinesNotifierProvider._internal(
-        () => create()..symbol = symbol,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        symbol: symbol,
-      ),
-    );
+  String toString() {
+    return r'coinKlinesProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    CoinKlinesNotifier,
-    Map<KlinePeriod, List<CoinKline>>
-  >
-  createElement() {
-    return _CoinKlinesNotifierProviderElement(this);
-  }
+  CoinKlinesNotifier create() => CoinKlinesNotifier();
 
   @override
   bool operator ==(Object other) {
-    return other is CoinKlinesNotifierProvider && other.symbol == symbol;
+    return other is CoinKlinesNotifierProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, symbol.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin CoinKlinesNotifierRef
-    on AutoDisposeAsyncNotifierProviderRef<Map<KlinePeriod, List<CoinKline>>> {
-  /// The parameter `symbol` of this provider.
-  String get symbol;
-}
+String _$coinKlinesNotifierHash() =>
+    r'5035a6974753ff3314f64bc04b38d9de99bc331d';
 
-class _CoinKlinesNotifierProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
+final class CoinKlinesNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<
           CoinKlinesNotifier,
-          Map<KlinePeriod, List<CoinKline>>
-        >
-    with CoinKlinesNotifierRef {
-  _CoinKlinesNotifierProviderElement(super.provider);
+          AsyncValue<Map<KlinePeriod, List<CoinKline>>>,
+          Map<KlinePeriod, List<CoinKline>>,
+          FutureOr<Map<KlinePeriod, List<CoinKline>>>,
+          String
+        > {
+  const CoinKlinesNotifierFamily._()
+    : super(
+        retry: null,
+        name: r'coinKlinesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CoinKlinesNotifierProvider call(String symbol) =>
+      CoinKlinesNotifierProvider._(argument: symbol, from: this);
 
   @override
-  String get symbol => (origin as CoinKlinesNotifierProvider).symbol;
+  String toString() => r'coinKlinesProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$CoinKlinesNotifier
+    extends $AsyncNotifier<Map<KlinePeriod, List<CoinKline>>> {
+  late final _$args = ref.$arg as String;
+  String get symbol => _$args;
+
+  FutureOr<Map<KlinePeriod, List<CoinKline>>> build(String symbol);
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(_$args);
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<Map<KlinePeriod, List<CoinKline>>>,
+              Map<KlinePeriod, List<CoinKline>>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<Map<KlinePeriod, List<CoinKline>>>,
+                Map<KlinePeriod, List<CoinKline>>
+              >,
+              AsyncValue<Map<KlinePeriod, List<CoinKline>>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

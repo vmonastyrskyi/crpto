@@ -14,11 +14,13 @@ class CoinKlineChart extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final coinKlinesState = ref.watch(coinKlinesNotifierProvider(symbol));
+    final coinKlinesState = ref.watch(coinKlinesProvider(symbol));
 
     Widget child = _buildNoDataWarning();
 
     switch (coinKlinesState) {
+      case AsyncError<List<CoinKline>>():
+        throw UnimplementedError();
       case AsyncLoading(value: final coinKlines):
         if (coinKlines == null || coinKlines.isEmpty) {
           child = SizedBox.shrink(key: UniqueKey());

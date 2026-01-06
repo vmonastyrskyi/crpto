@@ -23,6 +23,8 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     final listedCoinsAsyncState = ref.watch(listedCoinsViewModelProvider);
 
     switch (listedCoinsAsyncState) {
+      case AsyncError<ListedCoinsState>():
+        throw UnimplementedError();
       case AsyncLoading(value: final state):
         if (state == null || state.listedCoins.isEmpty) {
           return _buildLoadingIndicator();
