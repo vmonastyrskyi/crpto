@@ -8,8 +8,8 @@ part 'generated/coin_ticker_notifier.g.dart';
 class CoinTickerNotifier extends _$CoinTickerNotifier {
   @override
   CoinTicker? build(String symbol) {
-    ref.listen(coinTickersProvider, (_, newState) {
-      final coinTicker = newState.value?[symbol];
+    ref.listen(coinTickersProvider, (_, next) {
+      final coinTicker = next.value?[symbol];
 
       if (coinTicker != null) {
         state = coinTicker;

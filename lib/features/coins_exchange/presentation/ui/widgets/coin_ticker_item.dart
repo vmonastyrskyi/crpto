@@ -209,10 +209,9 @@ class CoinTickerItem extends StatelessWidget {
             Text(
               '$priceChangePercent%',
               style: AppFonts.medium.copyWith(
-                color:
-                    isPriceChangeNegative
-                        ? AppColors.negativePriceColor
-                        : AppColors.positivePriceColor,
+                color: isPriceChangeNegative
+                    ? AppColors.negativePriceColor
+                    : AppColors.positivePriceColor,
                 fontSize: 14.0,
               ),
             ),
