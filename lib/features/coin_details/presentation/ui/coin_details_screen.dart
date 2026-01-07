@@ -27,7 +27,7 @@ class CoinDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = .new();
 
   late final PageController _pageController;
 

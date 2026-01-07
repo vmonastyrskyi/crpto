@@ -30,8 +30,6 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
     Widget child = _buildNoCoinsSelectedWarning();
 
     switch (coinTickersState) {
-      case AsyncError<Map<String, CoinTicker>>():
-        throw UnimplementedError();
       case AsyncLoading(value: final coinTickersMap):
         if (coinTickersMap == null || coinTickersMap.isEmpty) {
           child = const _CoinTickerListPlaceholder();
@@ -46,6 +44,8 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
 
           child = _buildCoinTickerList(coinTickers);
         }
+      case AsyncError<Map<String, CoinTicker>>():
+        throw UnimplementedError();
     }
 
     return FadeSwitcher(child: child);
@@ -109,9 +109,7 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
           builder: (_, headerBuilder, _) {
             final innerBoxIsScrolled = headerBuilder.innerBoxIsScrolled;
 
-            if (!innerBoxIsScrolled) {
-              return const SizedBox.shrink();
-            }
+            if (!innerBoxIsScrolled) return const SizedBox.shrink();
 
             return const Divider(
               color: AppColors.dividerColor,
