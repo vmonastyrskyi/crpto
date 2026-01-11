@@ -31,15 +31,19 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
   }
 
   Future<List<ListedCoin>> call() async {
-    List<ListedCoin> listedCoins =
-        await _binanceCoinRepository.getListedCoins();
+    List<ListedCoin> listedCoins = await _binanceCoinRepository
+        .getListedCoins();
 
     listedCoins = [
-      ...listedCoins.where(
-        (listedCoin) =>
-            listedCoin.status == CoinStatus.trading &&
-            listedCoin.quoteAsset == 'USDT',
-      ),
+      ...listedCoins
+          .where(
+            (listedCoin) => RegExp(r'^[A-Z0-9]+$').hasMatch(listedCoin.symbol),
+          )
+          .where(
+            (listedCoin) =>
+                listedCoin.status == CoinStatus.trading &&
+                listedCoin.quoteAsset == 'USDT',
+          ),
     ];
 
     Set<String> baseAssets = {
