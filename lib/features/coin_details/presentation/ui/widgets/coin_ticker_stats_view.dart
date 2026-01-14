@@ -23,7 +23,7 @@ class CoinTickerStatsView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Column(
-          spacing: 12.0,
+          spacing: 8.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -87,7 +87,7 @@ class CoinTickerStatsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Column(
-                  spacing: 12.0,
+                  spacing: 8.0,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -97,7 +97,7 @@ class CoinTickerStatsView extends StatelessWidget {
                   ],
                 ).expanded(),
                 Column(
-                  spacing: 12.0,
+                  spacing: 8.0,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -204,7 +204,6 @@ class CoinTickerStatsView extends StatelessWidget {
 
   Widget _buildRowItem({required String label, required String value}) {
     return Column(
-      spacing: 6.0,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[

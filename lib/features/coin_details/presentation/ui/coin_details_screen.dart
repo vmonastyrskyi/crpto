@@ -4,6 +4,7 @@ import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
+import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_order_book.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_price_performance_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_stats_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/flexible_app_bar.dart';
@@ -79,21 +80,19 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
                         ),
                       ];
                     },
-                    body: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 12.0),
-                          _buildKlineChart(),
-                          const SizedBox(height: 12.0),
-                          _buildKlinePeriodSelector(),
-                          const CoinTickerStatsView(),
-                          const CoinPricePerformanceView(),
-                          _buildCoinPriceDescription(),
-                        ],
-                      ),
+                    body: CustomScrollView(
+                      slivers: <Widget>[
+                        const SliverToBoxAdapter(child: SizedBox(height: 12.0)),
+                        SliverToBoxAdapter(child: _buildKlineChart()),
+                        const SliverToBoxAdapter(child: SizedBox(height: 12.0)),
+                        SliverToBoxAdapter(child: _buildKlinePeriodSelector()),
+                        const SliverToBoxAdapter(child: CoinTickerStatsView()),
+                        const SliverToBoxAdapter(
+                          child: CoinPricePerformanceView(),
+                        ),
+                        const CoinOrderBook(),
+                        SliverToBoxAdapter(child: _buildCoinPriceDescription()),
+                      ],
                     ),
                   ),
                 ),
@@ -201,8 +200,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!_isScrollAnimating && notification is ScrollEndNotification) {
-        final scrollOffset =
-            _scrollController.hasClients ? _scrollController.offset : 0.0;
+        final scrollOffset = _scrollController.hasClients
+            ? _scrollController.offset
+            : 0.0;
 
         if (scrollOffset > expandedHeight - toolbarHeight) return;
 
@@ -210,8 +210,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
           (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),
         );
 
-        final scrollPosition =
-            scrollValue > 0.5 ? expandedHeight - toolbarHeight : 0.0;
+        final scrollPosition = scrollValue > 0.5
+            ? expandedHeight - toolbarHeight
+            : 0.0;
 
         _isScrollAnimating = true;
 
@@ -229,8 +230,9 @@ extension _CoinDetailsScreenStateX on _CoinDetailsScreenState {
   }
 
   void _onAppBarPressed() async {
-    final scrollOffset =
-        _scrollController.hasClients ? _scrollController.offset : 0.0;
+    final scrollOffset = _scrollController.hasClients
+        ? _scrollController.offset
+        : 0.0;
 
     if (_isScrollAnimating ||
         (scrollOffset < (expandedHeight - toolbarHeight))) {

@@ -23,8 +23,6 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     final listedCoinsAsyncState = ref.watch(listedCoinsViewModelProvider);
 
     switch (listedCoinsAsyncState) {
-      case AsyncError<ListedCoinsState>():
-        throw UnimplementedError();
       case AsyncLoading(value: final state):
         if (state == null || state.listedCoins.isEmpty) {
           return _buildLoadingIndicator();
@@ -33,6 +31,8 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
         if (state.listedCoins.isNotEmpty) {
           return _buildListedCoins(state);
         }
+      case AsyncError():
+        throw UnimplementedError();
       case AsyncData(value: final state):
         if (state.listedCoins.isNotEmpty) {
           return _buildListedCoins(state);
@@ -86,23 +86,25 @@ extension _ListedCoinListStateX on _ListedCoinListViewState {
   List<ListedCoin> _sortListedCoins(List<ListedCoin> listedCoins) {
     final unselectedListedCoins = <ListedCoin>[];
 
-    final selectedListedCoins = [
-      ...listedCoins.where((listedCoin) {
-        final isSelected =
-            ref.read(listedCoinViewModelProvider(listedCoin)).selected;
+    final selectedListedCoins =
+        [
+          ...listedCoins.where((listedCoin) {
+            final isSelected = ref
+                .read(listedCoinViewModelProvider(listedCoin))
+                .selected;
 
-        if (!isSelected) {
-          unselectedListedCoins.add(listedCoin);
-        }
+            if (!isSelected) {
+              unselectedListedCoins.add(listedCoin);
+            }
 
-        return isSelected;
-      }),
-    ]..sort((a, b) {
-      final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
-      final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
+            return isSelected;
+          }),
+        ]..sort((a, b) {
+          final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
+          final bCoinMetadata = ref.read(coinMetadataProvider(b.symbol));
 
-      return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
-    });
+          return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
+        });
 
     unselectedListedCoins.sort((a, b) {
       final aCoinMetadata = ref.read(coinMetadataProvider(a.symbol));
