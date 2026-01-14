@@ -104,14 +104,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
               innerBoxIsScrolled;
         });
 
-        return <Widget>[
-          const SliverAppBar(
-            flexibleSpace: RecentTradeListView(),
-            automaticallyImplyLeading: false,
-            forceMaterialTransparency: true,
-            toolbarHeight: 160.0,
-          ),
-        ];
+        return <Widget>[const SliverToBoxAdapter(child: RecentTradeListView())];
       },
       body: const CoinTickerListView(),
     );

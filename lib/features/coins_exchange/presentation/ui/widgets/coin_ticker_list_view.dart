@@ -63,46 +63,42 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onVerticalDragUpdate: (_) {},
-          child: Container(
-            height: 36.0,
-            padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
-            color: AppColors.backgroundColor,
-            child: Row(
-              spacing: 24.0,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Coin',
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
-                  ),
-                ).expanded(flex: 54),
-                Text(
-                  '24h %',
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
-                  ),
-                  textAlign: TextAlign.end,
-                ).expanded(flex: 16),
-                Text(
-                  'Price',
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
-                  ),
-                  textAlign: TextAlign.end,
-                ).withPaddingOnly(right: 6.0).expanded(flex: 30),
-              ],
-            ),
+        Container(
+          height: 36.0,
+          padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
+          color: AppColors.backgroundColor,
+          child: Row(
+            spacing: 24.0,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Coin',
+                style: AppFonts.medium.copyWith(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+              ).expanded(flex: 54),
+              Text(
+                '24h %',
+                style: AppFonts.medium.copyWith(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+                textAlign: TextAlign.end,
+              ).expanded(flex: 16),
+              Text(
+                'Price',
+                style: AppFonts.medium.copyWith(
+                  color: AppColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+                textAlign: TextAlign.end,
+              ).withPaddingOnly(right: 6.0).expanded(flex: 30),
+            ],
           ),
         ),
         Consumer<HeaderBuilderNotifier>(
@@ -134,16 +130,18 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
               itemCount: coinTickers.length,
             ),
             SliverToBoxAdapter(
-              child: InkWell(
-                onTap: () => context.pushNamed(RouteNames.coinsManagement),
-                child: Center(
-                  child: Text(
-                    'Manage coins',
-                    style: AppFonts.semiBold.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 14.0,
-                    ),
-                  ).withPaddingAll(12.0),
+              child: SafeArea(
+                child: InkWell(
+                  onTap: () => context.pushNamed(RouteNames.coinsManagement),
+                  child: Center(
+                    child: Text(
+                      'Manage coins',
+                      style: AppFonts.semiBold.copyWith(
+                        color: AppColors.primaryColor,
+                        fontSize: 14.0,
+                      ),
+                    ).withPaddingAll(12.0),
+                  ),
                 ),
               ),
             ),
@@ -171,18 +169,20 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
                     fontSize: 14.0,
                   ),
                 ),
-                InkWell(
-                  onTap: () => context.pushNamed(RouteNames.coinsManagement),
-                  borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                  highlightColor: AppColors.splashColorDark,
-                  splashColor: AppColors.splashColorDark,
-                  child: Text(
-                    'Manage coins',
-                    style: AppFonts.semiBold.copyWith(
-                      color: AppColors.primaryColor,
-                      fontSize: 14.0,
-                    ),
-                  ).withPadding(12.0, 10.0, 12.0, 9.0),
+                SafeArea(
+                  child: InkWell(
+                    onTap: () => context.pushNamed(RouteNames.coinsManagement),
+                    borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                    highlightColor: AppColors.splashColorDark,
+                    splashColor: AppColors.splashColorDark,
+                    child: Text(
+                      'Manage coins',
+                      style: AppFonts.semiBold.copyWith(
+                        color: AppColors.primaryColor,
+                        fontSize: 14.0,
+                      ),
+                    ).withPadding(12.0, 10.0, 12.0, 9.0),
+                  ),
                 ),
               ],
             ),
