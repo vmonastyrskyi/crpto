@@ -1,4 +1,3 @@
-import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,8 +30,8 @@ class CrptoApp extends ConsumerWidget {
     return _EagerInitialization(
       child: MaterialApp.router(
         routerConfig: appRouter,
-        builder:
-            (_, child) => _buildFlavorBanner(show: kDebugMode, child: child),
+        builder: (_, child) =>
+            _buildFlavorBanner(show: kDebugMode, child: child),
         theme: darkTheme,
       ),
     );
@@ -41,16 +40,16 @@ class CrptoApp extends ConsumerWidget {
   Widget _buildFlavorBanner({bool show = true, Widget? child}) {
     return show
         ? Banner(
-          message: F.name.toUpperCase(),
-          location: BannerLocation.topStart,
-          textStyle: const TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 11.0,
-            height: 1.0,
-          ),
-          color: Colors.green,
-          child: child,
-        )
+            message: F.name.toUpperCase(),
+            location: BannerLocation.topStart,
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 11.0,
+              height: 1.0,
+            ),
+            color: Colors.green,
+            child: child,
+          )
         : child ?? const SizedBox.shrink();
   }
 }

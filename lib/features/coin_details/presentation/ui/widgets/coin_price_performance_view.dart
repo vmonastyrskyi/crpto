@@ -15,22 +15,30 @@ class CoinPricePerformanceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 12.0,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildTitle(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          spacing: 8.0,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildCoinLowPriceLabel(),
-            _buildCoinHighPriceLabel(),
+            _buildTitle(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildCoinLowPriceLabel(),
+                _buildCoinHighPriceLabel(),
+              ],
+            ),
+            _buildPricePerformancePainter(),
           ],
+        ).withPaddingAll(12.0),
+        const Divider(
+          color: AppColors.dividerColor,
+          thickness: 1.0,
+          height: 1.0,
         ),
-        _buildPricePerformancePainter(),
       ],
-    ).withPaddingAll(12.0);
+    );
   }
 
   Widget _buildTitle() {
@@ -76,7 +84,6 @@ class CoinPricePerformanceView extends StatelessWidget {
         );
 
         return Column(
-          spacing: 3.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -122,7 +129,6 @@ class CoinPricePerformanceView extends StatelessWidget {
         );
 
         return Column(
-          spacing: 3.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
@@ -311,18 +317,16 @@ class _PricePerformancePainter extends CustomPainter {
     final sliderWidth = size.width;
     final sliderHeight = size.height;
 
-    final indicatorPaint =
-        Paint()
-          ..color = AppColors.secondaryTextColor
-          ..strokeWidth = indicatorWidth
-          ..style = PaintingStyle.fill
-          ..strokeCap = StrokeCap.round;
-    final sliderPaint =
-        Paint()
-          ..color = AppColors.secondaryWidgetColor
-          ..strokeWidth = sliderHeight
-          ..style = PaintingStyle.fill
-          ..strokeCap = StrokeCap.round;
+    final indicatorPaint = Paint()
+      ..color = AppColors.secondaryTextColor
+      ..strokeWidth = indicatorWidth
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
+    final sliderPaint = Paint()
+      ..color = AppColors.secondaryWidgetColor
+      ..strokeWidth = sliderHeight
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
 
     canvas.drawLine(
       Offset(0.0 + (sliderHeight / 2.0), sliderHeight / 2.0),

@@ -13,6 +13,8 @@ class ListedCoinDTO with _$ListedCoinDTO {
     required this.baseAsset,
     required this.quoteAsset,
     required this.status,
+    required this.tickSize,
+    required this.stepSize,
   });
 
   @override
@@ -25,9 +27,33 @@ class ListedCoinDTO with _$ListedCoinDTO {
   final String quoteAsset;
   @override
   final CoinStatus status;
+  @override
+  @JsonKey(name: 'tickSize')
+  final String tickSize;
+  @override
+  @JsonKey(name: 'stepSize')
+  final String stepSize;
 
-  factory ListedCoinDTO.fromJson(Map<String, dynamic> json) =>
-      _$ListedCoinDTOFromJson(json);
+  factory ListedCoinDTO.fromJson(Map<String, dynamic> json) {
+    final filtersJson =
+        (json['filters'] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [];
+
+    final priceFilterJson = filtersJson.firstWhere(
+      (filterJson) => filterJson['filterType'] == 'PRICE_FILTER',
+      orElse: () => {},
+    );
+
+    final lotSizeJson = filtersJson.firstWhere(
+      (filterJson) => filterJson['filterType'] == 'LOT_SIZE',
+      orElse: () => {},
+    );
+
+    return _$ListedCoinDTOFromJson({
+      ...json,
+      'tickSize': priceFilterJson['tickSize'] as String,
+      'stepSize': lotSizeJson['stepSize'] as String,
+    });
+  }
 }
 
 extension ListedCoinDTOMapper on ListedCoinDTO {
@@ -37,6 +63,8 @@ extension ListedCoinDTOMapper on ListedCoinDTO {
       baseAsset: dto.baseAsset,
       quoteAsset: dto.quoteAsset,
       status: dto.status,
+      tickSize: dto.tickSize,
+      stepSize: dto.stepSize,
     );
   }
 }

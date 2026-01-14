@@ -28,9 +28,7 @@ class CoinKlineChart extends ConsumerStatefulWidget {
 }
 
 class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
-  final ValueNotifier<List<int>> _showingIndicatorListenable = ValueNotifier(
-    const [],
-  );
+  final ValueNotifier<List<int>> _showingIndicatorListenable = .new(const []);
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +125,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                           ),
                           show: true,
                         ),
-                        color:
-                            isLastClosePriceHigher
-                                ? AppColors.positivePriceColor
-                                : AppColors.negativePriceColor,
+                        color: isLastClosePriceHigher
+                            ? AppColors.positivePriceColor
+                            : AppColors.negativePriceColor,
                         dotData: const FlDotData(show: false),
                         isStrokeJoinRound: true,
                         isStrokeCapRound: true,
@@ -184,9 +181,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 
                             final lineColor =
                                 initialCoinKlineClosePrice <=
-                                        selectedCoinKlineClosePrice
-                                    ? AppColors.positivePriceColor
-                                    : AppColors.negativePriceColor;
+                                    selectedCoinKlineClosePrice
+                                ? AppColors.positivePriceColor
+                                : AppColors.negativePriceColor;
 
                             return TouchedSpotIndicatorData(
                               FlLine(
@@ -240,12 +237,11 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
                     ),
                     gridData: FlGridData(
                       horizontalInterval: horizontalInterval,
-                      getDrawingHorizontalLine:
-                          (_) => const FlLine(
-                            color: AppColors.dividerColor,
-                            dashArray: [6, 3],
-                            strokeWidth: 0.5,
-                          ),
+                      getDrawingHorizontalLine: (_) => const FlLine(
+                        color: AppColors.dividerColor,
+                        dashArray: [6, 3],
+                        strokeWidth: 0.5,
+                      ),
                       drawVerticalLine: false,
                     ),
                     minY: minY,
@@ -332,10 +328,9 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
 ) {
   final rangeValue = Decimal.parse('$maxValue') - Decimal.parse('$minValue');
 
-  final logRange =
-      rangeValue.toDouble() == 0.0
-          ? 0.0
-          : _log10(rangeValue.toDouble()).floorToDouble();
+  final logRange = rangeValue.toDouble() == 0.0
+      ? 0.0
+      : _log10(rangeValue.toDouble()).floorToDouble();
 
   final step = (Decimal.parse('${pow(10, logRange)}').toDouble());
 

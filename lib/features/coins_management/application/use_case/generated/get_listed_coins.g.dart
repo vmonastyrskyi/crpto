@@ -42,7 +42,7 @@ final class GetListedCoinsUseCaseProvider
 }
 
 String _$getListedCoinsUseCaseHash() =>
-    r'8015631fc7edca00d02b4bc4a5de4cf98ad900fc';
+    r'd2ecc53e0d5feecc28df4819f9badc20ac3afa8e';
 
 abstract class _$GetListedCoinsUseCase
     extends $Notifier<GetListedCoinsUseCase> {

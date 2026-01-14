@@ -35,7 +35,7 @@ final class CoinTickersNotifierProvider
 }
 
 String _$coinTickersNotifierHash() =>
-    r'a637a9e8f41a521e289e36b0400ee07e52c1ce65';
+    r'417f870adeac0e2c195bea7391aca9c5b955ab39';
 
 abstract class _$CoinTickersNotifier
     extends $AsyncNotifier<Map<String, CoinTicker>> {
