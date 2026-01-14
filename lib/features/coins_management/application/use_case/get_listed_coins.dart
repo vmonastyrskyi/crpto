@@ -35,15 +35,11 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
         .getListedCoins();
 
     listedCoins = [
-      ...listedCoins
-          .where(
-            (listedCoin) => RegExp(r'^[A-Z0-9]+$').hasMatch(listedCoin.symbol),
-          )
-          .where(
-            (listedCoin) =>
-                listedCoin.status == CoinStatus.trading &&
-                listedCoin.quoteAsset == 'USDT',
-          ),
+      ...listedCoins.where((listedCoin) {
+        return RegExp(r'^[A-Z0-9]+$').hasMatch(listedCoin.symbol) &&
+            listedCoin.status == CoinStatus.trading &&
+            listedCoin.quoteAsset == 'USDT';
+      }),
     ];
 
     Set<String> baseAssets = {
@@ -76,6 +72,8 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
       final id = cmcCoinMetadata.id;
       final symbol = listedCoin.symbol;
       final quoteAsset = listedCoin.quoteAsset;
+      final tickSize = listedCoin.tickSize;
+      final stepSize = listedCoin.stepSize;
       final slug = cmcCoinMetadata.slug;
       final name = cmcCoinMetadata.name;
       final description = cmcCoinMetadata.description;
@@ -89,6 +87,8 @@ class GetListedCoinsUseCase extends _$GetListedCoinsUseCase {
         symbol: symbol,
         baseAsset: baseAsset,
         quoteAsset: quoteAsset,
+        tickSize: tickSize,
+        stepSize: stepSize,
         slug: slug,
         name: name,
         description: description,

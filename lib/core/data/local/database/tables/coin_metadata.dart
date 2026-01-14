@@ -9,6 +9,8 @@ class CoinsMetadata extends Table {
   late final TextColumn symbol = text()();
   late final TextColumn baseAsset = text()();
   late final TextColumn quoteAsset = text()();
+  late final TextColumn tickSize = text()();
+  late final TextColumn stepSize = text()();
   late final TextColumn slug = text()();
   late final TextColumn name = text()();
   late final TextColumn description = text()();
@@ -48,6 +50,8 @@ extension CoinMetadataDTOMapper on CoinMetadataDTO {
       symbol: coinMetadata.symbol,
       baseAsset: coinMetadata.baseAsset,
       quoteAsset: coinMetadata.quoteAsset,
+      tickSize: coinMetadata.tickSize,
+      stepSize: coinMetadata.stepSize,
       slug: coinMetadata.slug,
       name: coinMetadata.name,
       description: coinMetadata.description,
@@ -64,6 +68,8 @@ extension CoinMetadataDTOMapper on CoinMetadataDTO {
       symbol: dto.symbol,
       baseAsset: dto.baseAsset,
       quoteAsset: dto.quoteAsset,
+      tickSize: dto.tickSize,
+      stepSize: dto.stepSize,
       slug: dto.slug,
       name: dto.name,
       description: dto.description,

@@ -12,6 +12,8 @@ ListedCoinDTO _$ListedCoinDTOFromJson(Map<String, dynamic> json) =>
       baseAsset: json['baseAsset'] as String,
       quoteAsset: json['quoteAsset'] as String,
       status: $enumDecode(_$CoinStatusEnumMap, json['status']),
+      tickSize: json['tickSize'] as String,
+      stepSize: json['stepSize'] as String,
     );
 
 const _$CoinStatusEnumMap = {

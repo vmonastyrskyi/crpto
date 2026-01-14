@@ -49,11 +49,10 @@ class $SelectedCoinsTable extends SelectedCoins
   SelectedCoinDTO map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return SelectedCoinDTO(
-      symbol:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}symbol'],
-          )!,
+      symbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}symbol'],
+      )!,
     );
   }
 
@@ -210,6 +209,28 @@ class $CoinsMetadataTable extends CoinsMetadata
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _tickSizeMeta = const VerificationMeta(
+    'tickSize',
+  );
+  @override
+  late final GeneratedColumn<String> tickSize = GeneratedColumn<String>(
+    'tick_size',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _stepSizeMeta = const VerificationMeta(
+    'stepSize',
+  );
+  @override
+  late final GeneratedColumn<String> stepSize = GeneratedColumn<String>(
+    'step_size',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _slugMeta = const VerificationMeta('slug');
   @override
   late final GeneratedColumn<String> slug = GeneratedColumn<String>(
@@ -283,6 +304,8 @@ class $CoinsMetadataTable extends CoinsMetadata
     symbol,
     baseAsset,
     quoteAsset,
+    tickSize,
+    stepSize,
     slug,
     name,
     description,
@@ -329,6 +352,22 @@ class $CoinsMetadataTable extends CoinsMetadata
       );
     } else if (isInserting) {
       context.missing(_quoteAssetMeta);
+    }
+    if (data.containsKey('tick_size')) {
+      context.handle(
+        _tickSizeMeta,
+        tickSize.isAcceptableOrUnknown(data['tick_size']!, _tickSizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tickSizeMeta);
+    }
+    if (data.containsKey('step_size')) {
+      context.handle(
+        _stepSizeMeta,
+        stepSize.isAcceptableOrUnknown(data['step_size']!, _stepSizeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_stepSizeMeta);
     }
     if (data.containsKey('slug')) {
       context.handle(
@@ -390,62 +429,60 @@ class $CoinsMetadataTable extends CoinsMetadata
   CoinMetadataDTO map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return CoinMetadataDTO(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      symbol:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}symbol'],
-          )!,
-      baseAsset:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}base_asset'],
-          )!,
-      quoteAsset:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}quote_asset'],
-          )!,
-      slug:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}slug'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      description:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}description'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      symbol: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}symbol'],
+      )!,
+      baseAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}base_asset'],
+      )!,
+      quoteAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}quote_asset'],
+      )!,
+      tickSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tick_size'],
+      )!,
+      stepSize: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}step_size'],
+      )!,
+      slug: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}slug'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
       category: $CoinsMetadataTable.$convertercategory.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}category'],
         )!,
       ),
-      logo:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}logo'],
-          )!,
-      dateAdded:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}date_added'],
-          )!,
-      rank:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}rank'],
-          )!,
+      logo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}logo'],
+      )!,
+      dateAdded: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date_added'],
+      )!,
+      rank: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rank'],
+      )!,
     );
   }
 
@@ -463,6 +500,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
   final String symbol;
   final String baseAsset;
   final String quoteAsset;
+  final String tickSize;
+  final String stepSize;
   final String slug;
   final String name;
   final String description;
@@ -475,6 +514,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     required this.symbol,
     required this.baseAsset,
     required this.quoteAsset,
+    required this.tickSize,
+    required this.stepSize,
     required this.slug,
     required this.name,
     required this.description,
@@ -490,6 +531,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     map['symbol'] = Variable<String>(symbol);
     map['base_asset'] = Variable<String>(baseAsset);
     map['quote_asset'] = Variable<String>(quoteAsset);
+    map['tick_size'] = Variable<String>(tickSize);
+    map['step_size'] = Variable<String>(stepSize);
     map['slug'] = Variable<String>(slug);
     map['name'] = Variable<String>(name);
     map['description'] = Variable<String>(description);
@@ -510,6 +553,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       symbol: Value(symbol),
       baseAsset: Value(baseAsset),
       quoteAsset: Value(quoteAsset),
+      tickSize: Value(tickSize),
+      stepSize: Value(stepSize),
       slug: Value(slug),
       name: Value(name),
       description: Value(description),
@@ -530,6 +575,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       symbol: serializer.fromJson<String>(json['symbol']),
       baseAsset: serializer.fromJson<String>(json['baseAsset']),
       quoteAsset: serializer.fromJson<String>(json['quoteAsset']),
+      tickSize: serializer.fromJson<String>(json['tickSize']),
+      stepSize: serializer.fromJson<String>(json['stepSize']),
       slug: serializer.fromJson<String>(json['slug']),
       name: serializer.fromJson<String>(json['name']),
       description: serializer.fromJson<String>(json['description']),
@@ -549,6 +596,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       'symbol': serializer.toJson<String>(symbol),
       'baseAsset': serializer.toJson<String>(baseAsset),
       'quoteAsset': serializer.toJson<String>(quoteAsset),
+      'tickSize': serializer.toJson<String>(tickSize),
+      'stepSize': serializer.toJson<String>(stepSize),
       'slug': serializer.toJson<String>(slug),
       'name': serializer.toJson<String>(name),
       'description': serializer.toJson<String>(description),
@@ -566,6 +615,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     String? symbol,
     String? baseAsset,
     String? quoteAsset,
+    String? tickSize,
+    String? stepSize,
     String? slug,
     String? name,
     String? description,
@@ -578,6 +629,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     symbol: symbol ?? this.symbol,
     baseAsset: baseAsset ?? this.baseAsset,
     quoteAsset: quoteAsset ?? this.quoteAsset,
+    tickSize: tickSize ?? this.tickSize,
+    stepSize: stepSize ?? this.stepSize,
     slug: slug ?? this.slug,
     name: name ?? this.name,
     description: description ?? this.description,
@@ -591,12 +644,16 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
       id: data.id.present ? data.id.value : this.id,
       symbol: data.symbol.present ? data.symbol.value : this.symbol,
       baseAsset: data.baseAsset.present ? data.baseAsset.value : this.baseAsset,
-      quoteAsset:
-          data.quoteAsset.present ? data.quoteAsset.value : this.quoteAsset,
+      quoteAsset: data.quoteAsset.present
+          ? data.quoteAsset.value
+          : this.quoteAsset,
+      tickSize: data.tickSize.present ? data.tickSize.value : this.tickSize,
+      stepSize: data.stepSize.present ? data.stepSize.value : this.stepSize,
       slug: data.slug.present ? data.slug.value : this.slug,
       name: data.name.present ? data.name.value : this.name,
-      description:
-          data.description.present ? data.description.value : this.description,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
       category: data.category.present ? data.category.value : this.category,
       logo: data.logo.present ? data.logo.value : this.logo,
       dateAdded: data.dateAdded.present ? data.dateAdded.value : this.dateAdded,
@@ -611,6 +668,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
           ..write('symbol: $symbol, ')
           ..write('baseAsset: $baseAsset, ')
           ..write('quoteAsset: $quoteAsset, ')
+          ..write('tickSize: $tickSize, ')
+          ..write('stepSize: $stepSize, ')
           ..write('slug: $slug, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
@@ -628,6 +687,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
     symbol,
     baseAsset,
     quoteAsset,
+    tickSize,
+    stepSize,
     slug,
     name,
     description,
@@ -644,6 +705,8 @@ class CoinMetadataDTO extends DataClass implements Insertable<CoinMetadataDTO> {
           other.symbol == this.symbol &&
           other.baseAsset == this.baseAsset &&
           other.quoteAsset == this.quoteAsset &&
+          other.tickSize == this.tickSize &&
+          other.stepSize == this.stepSize &&
           other.slug == this.slug &&
           other.name == this.name &&
           other.description == this.description &&
@@ -658,6 +721,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
   final Value<String> symbol;
   final Value<String> baseAsset;
   final Value<String> quoteAsset;
+  final Value<String> tickSize;
+  final Value<String> stepSize;
   final Value<String> slug;
   final Value<String> name;
   final Value<String> description;
@@ -670,6 +735,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     this.symbol = const Value.absent(),
     this.baseAsset = const Value.absent(),
     this.quoteAsset = const Value.absent(),
+    this.tickSize = const Value.absent(),
+    this.stepSize = const Value.absent(),
     this.slug = const Value.absent(),
     this.name = const Value.absent(),
     this.description = const Value.absent(),
@@ -683,6 +750,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     required String symbol,
     required String baseAsset,
     required String quoteAsset,
+    required String tickSize,
+    required String stepSize,
     required String slug,
     required String name,
     required String description,
@@ -693,6 +762,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
   }) : symbol = Value(symbol),
        baseAsset = Value(baseAsset),
        quoteAsset = Value(quoteAsset),
+       tickSize = Value(tickSize),
+       stepSize = Value(stepSize),
        slug = Value(slug),
        name = Value(name),
        description = Value(description),
@@ -705,6 +776,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     Expression<String>? symbol,
     Expression<String>? baseAsset,
     Expression<String>? quoteAsset,
+    Expression<String>? tickSize,
+    Expression<String>? stepSize,
     Expression<String>? slug,
     Expression<String>? name,
     Expression<String>? description,
@@ -718,6 +791,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
       if (symbol != null) 'symbol': symbol,
       if (baseAsset != null) 'base_asset': baseAsset,
       if (quoteAsset != null) 'quote_asset': quoteAsset,
+      if (tickSize != null) 'tick_size': tickSize,
+      if (stepSize != null) 'step_size': stepSize,
       if (slug != null) 'slug': slug,
       if (name != null) 'name': name,
       if (description != null) 'description': description,
@@ -733,6 +808,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     Value<String>? symbol,
     Value<String>? baseAsset,
     Value<String>? quoteAsset,
+    Value<String>? tickSize,
+    Value<String>? stepSize,
     Value<String>? slug,
     Value<String>? name,
     Value<String>? description,
@@ -746,6 +823,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
       symbol: symbol ?? this.symbol,
       baseAsset: baseAsset ?? this.baseAsset,
       quoteAsset: quoteAsset ?? this.quoteAsset,
+      tickSize: tickSize ?? this.tickSize,
+      stepSize: stepSize ?? this.stepSize,
       slug: slug ?? this.slug,
       name: name ?? this.name,
       description: description ?? this.description,
@@ -770,6 +849,12 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
     }
     if (quoteAsset.present) {
       map['quote_asset'] = Variable<String>(quoteAsset.value);
+    }
+    if (tickSize.present) {
+      map['tick_size'] = Variable<String>(tickSize.value);
+    }
+    if (stepSize.present) {
+      map['step_size'] = Variable<String>(stepSize.value);
     }
     if (slug.present) {
       map['slug'] = Variable<String>(slug.value);
@@ -804,6 +889,8 @@ class CoinsMetadataCompanion extends UpdateCompanion<CoinMetadataDTO> {
           ..write('symbol: $symbol, ')
           ..write('baseAsset: $baseAsset, ')
           ..write('quoteAsset: $quoteAsset, ')
+          ..write('tickSize: $tickSize, ')
+          ..write('stepSize: $stepSize, ')
           ..write('slug: $slug, ')
           ..write('name: $name, ')
           ..write('description: $description, ')
@@ -902,16 +989,12 @@ class $$SelectedCoinsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$SelectedCoinsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  $$SelectedCoinsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$SelectedCoinsTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              $$SelectedCoinsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SelectedCoinsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SelectedCoinsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> symbol = const Value.absent(),
@@ -922,16 +1005,9 @@ class $$SelectedCoinsTableTableManager
                 required String symbol,
                 Value<int> rowid = const Value.absent(),
               }) => SelectedCoinsCompanion.insert(symbol: symbol, rowid: rowid),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -960,6 +1036,8 @@ typedef $$CoinsMetadataTableCreateCompanionBuilder =
       required String symbol,
       required String baseAsset,
       required String quoteAsset,
+      required String tickSize,
+      required String stepSize,
       required String slug,
       required String name,
       required String description,
@@ -974,6 +1052,8 @@ typedef $$CoinsMetadataTableUpdateCompanionBuilder =
       Value<String> symbol,
       Value<String> baseAsset,
       Value<String> quoteAsset,
+      Value<String> tickSize,
+      Value<String> stepSize,
       Value<String> slug,
       Value<String> name,
       Value<String> description,
@@ -1009,6 +1089,16 @@ class $$CoinsMetadataTableFilterComposer
 
   ColumnFilters<String> get quoteAsset => $composableBuilder(
     column: $table.quoteAsset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tickSize => $composableBuilder(
+    column: $table.tickSize,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get stepSize => $composableBuilder(
+    column: $table.stepSize,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1078,6 +1168,16 @@ class $$CoinsMetadataTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get tickSize => $composableBuilder(
+    column: $table.tickSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get stepSize => $composableBuilder(
+    column: $table.stepSize,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get slug => $composableBuilder(
     column: $table.slug,
     builder: (column) => ColumnOrderings(column),
@@ -1137,6 +1237,12 @@ class $$CoinsMetadataTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<String> get tickSize =>
+      $composableBuilder(column: $table.tickSize, builder: (column) => column);
+
+  GeneratedColumn<String> get stepSize =>
+      $composableBuilder(column: $table.stepSize, builder: (column) => column);
+
   GeneratedColumn<String> get slug =>
       $composableBuilder(column: $table.slug, builder: (column) => column);
 
@@ -1184,22 +1290,20 @@ class $$CoinsMetadataTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$CoinsMetadataTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  $$CoinsMetadataTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$CoinsMetadataTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              $$CoinsMetadataTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CoinsMetadataTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CoinsMetadataTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> symbol = const Value.absent(),
                 Value<String> baseAsset = const Value.absent(),
                 Value<String> quoteAsset = const Value.absent(),
+                Value<String> tickSize = const Value.absent(),
+                Value<String> stepSize = const Value.absent(),
                 Value<String> slug = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String> description = const Value.absent(),
@@ -1212,6 +1316,8 @@ class $$CoinsMetadataTableTableManager
                 symbol: symbol,
                 baseAsset: baseAsset,
                 quoteAsset: quoteAsset,
+                tickSize: tickSize,
+                stepSize: stepSize,
                 slug: slug,
                 name: name,
                 description: description,
@@ -1226,6 +1332,8 @@ class $$CoinsMetadataTableTableManager
                 required String symbol,
                 required String baseAsset,
                 required String quoteAsset,
+                required String tickSize,
+                required String stepSize,
                 required String slug,
                 required String name,
                 required String description,
@@ -1238,6 +1346,8 @@ class $$CoinsMetadataTableTableManager
                 symbol: symbol,
                 baseAsset: baseAsset,
                 quoteAsset: quoteAsset,
+                tickSize: tickSize,
+                stepSize: stepSize,
                 slug: slug,
                 name: name,
                 description: description,
@@ -1246,16 +1356,9 @@ class $$CoinsMetadataTableTableManager
                 dateAdded: dateAdded,
                 rank: rank,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );

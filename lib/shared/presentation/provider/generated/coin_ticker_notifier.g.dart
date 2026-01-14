@@ -59,7 +59,7 @@ final class CoinTickerNotifierProvider
 }
 
 String _$coinTickerNotifierHash() =>
-    r'feb55aca0c62616e634290f7b5089241833a8995';
+    r'41b72920b2c1fb24027b352743d7af76cebcbae3';
 
 final class CoinTickerNotifierFamily extends $Family
     with

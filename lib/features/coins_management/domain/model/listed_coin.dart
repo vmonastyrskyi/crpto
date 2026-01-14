@@ -10,6 +10,8 @@ class ListedCoin with _$ListedCoin {
     required this.baseAsset,
     required this.quoteAsset,
     required this.status,
+    required this.tickSize,
+    required this.stepSize,
   });
 
   @override
@@ -20,4 +22,8 @@ class ListedCoin with _$ListedCoin {
   final String quoteAsset;
   @override
   final CoinStatus status;
+  @override
+  final String tickSize;
+  @override
+  final String stepSize;
 }

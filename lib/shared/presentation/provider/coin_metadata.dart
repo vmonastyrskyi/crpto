@@ -1,6 +1,5 @@
 import 'package:crpto/shared/application/use_case/coin_metadata/get_coin_metadata.dart';
 import 'package:crpto/shared/domain/model/coin_metadata.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/coin_metadata.g.dart';
