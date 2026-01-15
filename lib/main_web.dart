@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,15 +14,8 @@ void main() async {
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await FirebaseRemoteConfig.instance.setConfigSettings(
-    RemoteConfigSettings(
-      minimumFetchInterval: const Duration(hours: 1),
-      fetchTimeout: const Duration(minutes: 1),
-    ),
-  );
-  await FirebaseRemoteConfig.instance.fetchAndActivate();
-
   await CryptoUtils.init();
+
   await localStorageWithCache.init();
   await localStorage.init();
 

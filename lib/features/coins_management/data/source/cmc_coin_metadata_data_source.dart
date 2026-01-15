@@ -3,7 +3,6 @@ import 'package:crpto/features/coins_management/data/dto/cmc_coin_id_dto.dart';
 import 'package:crpto/features/coins_management/data/dto/cmc_coin_metadata_dto.dart';
 import 'package:crpto/features/coins_management/data/source/i_coin_metadata_data_source.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,17 +16,13 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
 
   @override
   ICoinMetadataDataSource build() {
-    final dioUrl = 'https://pro-api.coinmarketcap.com';
+    final proxyUrl = 'https://us-central1-crpto-32bfe.cloudfunctions.net';
 
-    String? cmcApiKey;
-    if (kIsWeb) {
-      cmcApiKey = FirebaseRemoteConfig.instance.getString('CMC_PRO_API_KEY');
-    } else {
-      cmcApiKey = dotenv.env['CMC_PRO_API_KEY'];
+    _dio = ref.watch(dioClientProvider(baseUrl: proxyUrl));
+
+    if (!kIsWeb) {
+      _dio.options.headers['X-CMC_PRO_API_KEY'] = dotenv.env['CMC_PRO_API_KEY'];
     }
-
-    _dio = ref.watch(dioClientProvider(baseUrl: dioUrl))
-      ..options.headers['X-CMC_PRO_API_KEY'] = cmcApiKey;
 
     return this;
   }
@@ -36,15 +31,21 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
   Future<Map<String, CmcCoinMetadataDTO>> getCoinsMetadata(
     Set<String> baseAssets,
   ) async {
-    const url = '/v2/cryptocurrency/info';
+    final url = 'pro-api.coinmarketcap.com';
+    final requestUrl = '/v2/cryptocurrency/info';
 
     final queryParameters = <String, dynamic>{
       if (baseAssets.isNotEmpty) 'symbol': baseAssets.join(','),
       'aux': 'logo,description,date_added',
       'skip_invalid': true,
-    };
+    }.map((key, value) => MapEntry(key, '$value'));
 
-    final response = await _dio.get(url, queryParameters: queryParameters);
+    final targetUrl = Uri.https(url, requestUrl, queryParameters);
+
+    final response = await _dio.get(
+      '/proxy',
+      queryParameters: {'url': '$targetUrl'},
+    );
 
     final jsonData = Map<String, dynamic>.from(response.data['data']);
 
@@ -73,15 +74,21 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
 
   @override
   Future<Map<String, CmcCoinIdDTO>> getCoinsId(Set<String> baseAssets) async {
-    const url = '/v1/cryptocurrency/map';
+    final url = 'pro-api.coinmarketcap.com';
+    final requestUrl = '/v1/cryptocurrency/map';
 
     final queryParameters = <String, dynamic>{
       if (baseAssets.isNotEmpty) 'symbol': baseAssets.join(','),
       'sort': 'cmc_rank',
       'aux': '',
-    };
+    }.map((key, value) => MapEntry(key, '$value'));
 
-    final response = await _dio.get(url, queryParameters: queryParameters);
+    final targetUrl = Uri.https(url, requestUrl, queryParameters);
+
+    final response = await _dio.get(
+      '/proxy',
+      queryParameters: {'url': '$targetUrl'},
+    );
 
     final jsonData = List<dynamic>.from(response.data['data']);
 
