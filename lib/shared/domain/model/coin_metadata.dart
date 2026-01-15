@@ -10,6 +10,8 @@ class CoinMetadata with _$CoinMetadata {
     required this.symbol,
     required this.baseAsset,
     required this.quoteAsset,
+    required this.tickSize,
+    required this.stepSize,
     required this.slug,
     required this.name,
     required this.description,
@@ -27,6 +29,10 @@ class CoinMetadata with _$CoinMetadata {
   final String baseAsset;
   @override
   final String quoteAsset;
+  @override
+  final String tickSize;
+  @override
+  final String stepSize;
   @override
   final String slug;
   @override

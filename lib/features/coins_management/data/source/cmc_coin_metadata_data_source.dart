@@ -17,7 +17,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
 
   @override
   ICoinMetadataDataSource build() {
-    final proxyUrl = 'https://corsproxy.io/?';
+    final dioUrl = 'https://pro-api.coinmarketcap.com';
 
     String? cmcApiKey;
     if (kIsWeb) {
@@ -26,7 +26,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
       cmcApiKey = dotenv.env['CMC_PRO_API_KEY'];
     }
 
-    _dio = ref.watch(dioClientProvider(baseUrl: proxyUrl))
+    _dio = ref.watch(dioClientProvider(baseUrl: dioUrl))
       ..options.headers['X-CMC_PRO_API_KEY'] = cmcApiKey;
 
     return this;
@@ -36,7 +36,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
   Future<Map<String, CmcCoinMetadataDTO>> getCoinsMetadata(
     Set<String> baseAssets,
   ) async {
-    const cmcUrl = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info';
+    const url = '/v2/cryptocurrency/info';
 
     final queryParameters = <String, dynamic>{
       if (baseAssets.isNotEmpty) 'symbol': baseAssets.join(','),
@@ -44,11 +44,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
       'skip_invalid': true,
     };
 
-    final cmcUri = Uri.parse(cmcUrl).replace(
-      queryParameters: queryParameters.map((k, v) => MapEntry(k, '$v')),
-    );
-
-    final response = await _dio.get(Uri.encodeComponent('$cmcUri'));
+    final response = await _dio.get(url, queryParameters: queryParameters);
 
     final jsonData = Map<String, dynamic>.from(response.data['data']);
 
@@ -77,7 +73,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
 
   @override
   Future<Map<String, CmcCoinIdDTO>> getCoinsId(Set<String> baseAssets) async {
-    const cmcUrl = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map';
+    const url = '/v1/cryptocurrency/map';
 
     final queryParameters = <String, dynamic>{
       if (baseAssets.isNotEmpty) 'symbol': baseAssets.join(','),
@@ -85,11 +81,7 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
       'aux': '',
     };
 
-    final cmcUri = Uri.parse(cmcUrl).replace(
-      queryParameters: queryParameters.map((k, v) => MapEntry(k, '$v')),
-    );
-
-    final response = await _dio.get(Uri.encodeComponent('$cmcUri'));
+    final response = await _dio.get(url, queryParameters: queryParameters);
 
     final jsonData = List<dynamic>.from(response.data['data']);
 

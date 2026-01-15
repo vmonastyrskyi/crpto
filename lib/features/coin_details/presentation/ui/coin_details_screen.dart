@@ -3,6 +3,7 @@ import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_kline_chart.dart';
+import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_order_book.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_price_performance_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/coin_ticker_stats_view.dart';
 import 'package:crpto/features/coin_details/presentation/ui/widgets/flexible_app_bar.dart';
@@ -27,7 +28,7 @@ class CoinDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = .new();
 
   late final PageController _pageController;
 
@@ -37,7 +38,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
   void initState() {
     super.initState();
 
-    final selectedKlinePeriod = ref.read(selectedKlinePeriodNotifierProvider);
+    final selectedKlinePeriod = ref.read(selectedKlinePeriodProvider);
 
     _pageController = PageController(
       initialPage: KlinePeriod.values.indexOf(selectedKlinePeriod),
@@ -46,7 +47,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(selectedCoinKlineNotifierProvider, (
+    ref.listen(selectedCoinKlineProvider, (
       prevSelectedCoinKline,
       nextSelectedCoinKline,
     ) {
@@ -82,23 +83,22 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
                         ),
                       ];
                     },
-                    body: SingleChildScrollView(
+                    body: CustomScrollView(
                       physics: kIsWeb
                           ? const BouncingScrollPhysics()
                           : const ClampingScrollPhysics(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 12.0),
-                          _buildKlineChart(),
-                          const SizedBox(height: 12.0),
-                          _buildKlinePeriodSelector(),
-                          const CoinTickerStatsView(),
-                          const CoinPricePerformanceView(),
-                          _buildCoinPriceDescription(),
-                        ],
-                      ),
+                      slivers: <Widget>[
+                        const SliverToBoxAdapter(child: SizedBox(height: 12.0)),
+                        SliverToBoxAdapter(child: _buildKlineChart()),
+                        const SliverToBoxAdapter(child: SizedBox(height: 12.0)),
+                        SliverToBoxAdapter(child: _buildKlinePeriodSelector()),
+                        const SliverToBoxAdapter(child: CoinTickerStatsView()),
+                        const SliverToBoxAdapter(
+                          child: CoinPricePerformanceView(),
+                        ),
+                        const CoinOrderBook(),
+                        SliverToBoxAdapter(child: _buildCoinPriceDescription()),
+                      ],
                     ),
                   ),
                 ),
@@ -137,7 +137,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
   }
 
   Widget _buildKlinePeriodSelector() {
-    final selectedKlinePeriod = ref.read(selectedKlinePeriodNotifierProvider);
+    final selectedKlinePeriod = ref.read(selectedKlinePeriodProvider);
 
     return DefaultTabController(
       initialIndex: KlinePeriod.values.indexOf(selectedKlinePeriod),
@@ -145,7 +145,7 @@ class _CoinDetailsScreenState extends ConsumerState<CoinDetailsScreen> {
       child: TabBar(
         onTap: (index) {
           ref
-              .read(selectedKlinePeriodNotifierProvider.notifier)
+              .read(selectedKlinePeriodProvider.notifier)
               .select(KlinePeriod.values[index]);
 
           _pageController.jumpToPage(index);

@@ -260,14 +260,10 @@ class _FlexibleAppBarState extends State<FlexibleAppBar> {
       builder: (context, ref, _) {
         final symbol = context.symbol;
 
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
-        final selectedKlinePeriod = ref.read(
-          selectedKlinePeriodNotifierProvider,
-        );
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
+        final selectedKlinePeriod = ref.read(selectedKlinePeriodProvider);
 
-        final coinKlinesMap = ref
-            .read(coinKlinesNotifierProvider(symbol))
-            .value;
+        final coinKlinesMap = ref.read(coinKlinesProvider(symbol)).value;
 
         final coinKlines = coinKlinesMap?[selectedKlinePeriod] ?? [];
 
@@ -389,12 +385,12 @@ class _FlexibleAppBarState extends State<FlexibleAppBar> {
         final symbol = context.symbol;
 
         ref.watch(
-          coinTickerNotifierProvider(
+          coinTickerProvider(
             symbol,
           ).select((coinTicker) => coinTicker?.lastPrice),
         );
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,

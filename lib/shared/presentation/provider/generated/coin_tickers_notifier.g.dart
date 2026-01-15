@@ -6,25 +6,61 @@ part of '../coin_tickers_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$coinTickersNotifierHash() =>
-    r'a637a9e8f41a521e289e36b0400ee07e52c1ce65';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [CoinTickersNotifier].
 @ProviderFor(CoinTickersNotifier)
-final coinTickersNotifierProvider = AsyncNotifierProvider<
-  CoinTickersNotifier,
-  Map<String, CoinTicker>
->.internal(
-  CoinTickersNotifier.new,
-  name: r'coinTickersNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$coinTickersNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const coinTickersProvider = CoinTickersNotifierProvider._();
 
-typedef _$CoinTickersNotifier = AsyncNotifier<Map<String, CoinTicker>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class CoinTickersNotifierProvider
+    extends
+        $AsyncNotifierProvider<CoinTickersNotifier, Map<String, CoinTicker>> {
+  const CoinTickersNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'coinTickersProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$coinTickersNotifierHash();
+
+  @$internal
+  @override
+  CoinTickersNotifier create() => CoinTickersNotifier();
+}
+
+String _$coinTickersNotifierHash() =>
+    r'417f870adeac0e2c195bea7391aca9c5b955ab39';
+
+abstract class _$CoinTickersNotifier
+    extends $AsyncNotifier<Map<String, CoinTicker>> {
+  FutureOr<Map<String, CoinTicker>> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref
+            as $Ref<
+              AsyncValue<Map<String, CoinTicker>>,
+              Map<String, CoinTicker>
+            >;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                AsyncValue<Map<String, CoinTicker>>,
+                Map<String, CoinTicker>
+              >,
+              AsyncValue<Map<String, CoinTicker>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

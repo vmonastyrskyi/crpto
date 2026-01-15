@@ -6,26 +6,66 @@ part of '../drift_selected_coin_data_source.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(DriftSelectedCoinDataSource)
+const driftSelectedCoinDataSourceProvider =
+    DriftSelectedCoinDataSourceProvider._();
+
+final class DriftSelectedCoinDataSourceProvider
+    extends
+        $NotifierProvider<
+          DriftSelectedCoinDataSource,
+          ISelectedCoinDataSource
+        > {
+  const DriftSelectedCoinDataSourceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'driftSelectedCoinDataSourceProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$driftSelectedCoinDataSourceHash();
+
+  @$internal
+  @override
+  DriftSelectedCoinDataSource create() => DriftSelectedCoinDataSource();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ISelectedCoinDataSource value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ISelectedCoinDataSource>(value),
+    );
+  }
+}
+
 String _$driftSelectedCoinDataSourceHash() =>
     r'54604c5a1e738e3e3053a08ef0cde05f8464df4c';
 
-/// See also [DriftSelectedCoinDataSource].
-@ProviderFor(DriftSelectedCoinDataSource)
-final driftSelectedCoinDataSourceProvider = AutoDisposeNotifierProvider<
-  DriftSelectedCoinDataSource,
-  ISelectedCoinDataSource
->.internal(
-  DriftSelectedCoinDataSource.new,
-  name: r'driftSelectedCoinDataSourceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$driftSelectedCoinDataSourceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$DriftSelectedCoinDataSource =
-    AutoDisposeNotifier<ISelectedCoinDataSource>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$DriftSelectedCoinDataSource
+    extends $Notifier<ISelectedCoinDataSource> {
+  ISelectedCoinDataSource build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<ISelectedCoinDataSource, ISelectedCoinDataSource>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ISelectedCoinDataSource, ISelectedCoinDataSource>,
+              ISelectedCoinDataSource,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

@@ -25,7 +25,7 @@ class CoinTickerListView extends ConsumerStatefulWidget {
 class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
   @override
   Widget build(BuildContext context) {
-    final coinTickersState = ref.watch(coinTickersNotifierProvider);
+    final coinTickersState = ref.watch(coinTickersProvider);
 
     Widget child = _buildNoCoinsSelectedWarning();
 
@@ -38,6 +38,8 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
 
           child = _buildCoinTickerList(coinTickers);
         }
+      case AsyncError():
+        throw UnimplementedError();
       case AsyncData(value: final coinTickersMap):
         if (coinTickersMap.isNotEmpty) {
           final coinTickers = [...coinTickersMap.values];
@@ -57,101 +59,41 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
       return aCoinMetadata.rank.compareTo(bCoinMetadata.rank);
     });
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onVerticalDragUpdate: (_) {},
-          child: Container(
-            height: 36.0,
-            padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
-            color: context.appColors.backgroundColor,
-            child: Row(
-              spacing: 24.0,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Coin',
-                  style: context.appFonts.medium.copyWith(
-                    color: context.appColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
+    return CustomScrollView(
+      physics: kIsWeb
+          ? const BouncingScrollPhysics()
+          : const ClampingScrollPhysics(),
+      slivers: <Widget>[
+        SliverPersistentHeader(delegate: _TickerHeaderDelegate(), pinned: true),
+        SliverList.builder(
+          itemBuilder: (_, index) {
+            final coinTicker = coinTickers[index];
+
+            return KeepAliveChild(
+              child: CoinTickerItem(
+                key: ValueKey(coinTicker.symbol),
+                coinTicker: coinTicker,
+              ),
+            );
+          },
+          itemCount: coinTickers.length,
+        ),
+        SliverToBoxAdapter(
+          child: SafeArea(
+            child: InkWell(
+              onTap: () => context.pushNamed(RouteNames.coinsManagement),
+              child: Center(
+                child: Text(
+                  'Manage coins',
+                  style: context.appFonts.semiBold.copyWith(
+                    color: context.appColors.primaryColor,
+                    fontSize: 14.0,
                   ),
-                ).expanded(flex: 54),
-                Text(
-                  '24h %',
-                  style: context.appFonts.medium.copyWith(
-                    color: context.appColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
-                  ),
-                  textAlign: TextAlign.end,
-                ).expanded(flex: 16),
-                Text(
-                  'Price',
-                  style: context.appFonts.medium.copyWith(
-                    color: context.appColors.secondaryTextColor,
-                    fontSize: 12.0,
-                    height: 1.0,
-                  ),
-                  textAlign: TextAlign.end,
-                ).withPaddingOnly(right: 6.0).expanded(flex: 30),
-              ],
+                ).withPaddingAll(12.0),
+              ),
             ),
           ),
         ),
-        Consumer<HeaderBuilderNotifier>(
-          builder: (_, headerBuilder, _) {
-            final innerBoxIsScrolled = headerBuilder.innerBoxIsScrolled;
-
-            if (!innerBoxIsScrolled) {
-              return const SizedBox.shrink();
-            }
-
-            return Divider(
-              color: context.appColors.dividerColor,
-              thickness: 1.0,
-              height: 1.0,
-            );
-          },
-        ),
-        CustomScrollView(
-          physics: kIsWeb
-              ? const BouncingScrollPhysics()
-              : const ClampingScrollPhysics(),
-          slivers: <Widget>[
-            SliverList.builder(
-              itemBuilder: (_, index) {
-                final coinTicker = coinTickers[index];
-
-                return KeepAliveChild(
-                  child: CoinTickerItem(
-                    key: ValueKey(coinTicker.symbol),
-                    coinTicker: coinTicker,
-                  ),
-                );
-              },
-              itemCount: coinTickers.length,
-            ),
-            SliverToBoxAdapter(
-              child: InkWell(
-                onTap: () => context.pushNamed(RouteNames.coinsManagement),
-                child: Center(
-                  child: Text(
-                    'Manage coins',
-                    style: context.appFonts.semiBold.copyWith(
-                      color: context.appColors.primaryColor,
-                      fontSize: 14.0,
-                    ),
-                  ).withPaddingAll(12.0),
-                ),
-              ),
-            ),
-          ],
-        ).expanded(),
       ],
     );
   }
@@ -174,16 +116,18 @@ class _CoinTickerListViewState extends ConsumerState<CoinTickerListView> {
                     fontSize: 14.0,
                   ),
                 ),
-                InkWell(
-                  onTap: () => context.pushNamed(RouteNames.coinsManagement),
-                  borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                  child: Text(
-                    'Manage coins',
-                    style: context.appFonts.semiBold.copyWith(
-                      color: context.appColors.primaryColor,
-                      fontSize: 14.0,
-                    ),
-                  ).withPadding(16.0, 10.0, 16.0, 10.0),
+                SafeArea(
+                  child: InkWell(
+                    onTap: () => context.pushNamed(RouteNames.coinsManagement),
+                    borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                    child: Text(
+                      'Manage coins',
+                      style: context.appFonts.semiBold.copyWith(
+                        color: context.appColors.primaryColor,
+                        fontSize: 14.0,
+                      ),
+                    ).withPadding(16.0, 10.0, 16.0, 10.0),
+                  ),
                 ),
               ],
             ),
@@ -344,4 +288,82 @@ class _CoinTickerListPlaceholderState
       ),
     );
   }
+}
+
+class _TickerHeaderDelegate extends SliverPersistentHeaderDelegate {
+  @override
+  double get minExtent => 37.0;
+
+  @override
+  double get maxExtent => 37.0;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: maxExtent - 1.0,
+          padding: const EdgeInsets.fromLTRB(12.0, 12.0, 6.0, 12.0),
+          color: context.appColors.backgroundColor,
+          child: Row(
+            spacing: 24.0,
+            children: <Widget>[
+              Text(
+                'Coin',
+                style: context.appFonts.medium.copyWith(
+                  color: context.appColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+              ).expanded(flex: 54),
+              Text(
+                '24h %',
+                style: context.appFonts.medium.copyWith(
+                  color: context.appColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+                textAlign: TextAlign.end,
+              ).expanded(flex: 16),
+              Text(
+                'Price',
+                style: context.appFonts.medium.copyWith(
+                  color: context.appColors.secondaryTextColor,
+                  fontSize: 12.0,
+                  height: 1.0,
+                ),
+                textAlign: TextAlign.end,
+              ).withPaddingOnly(right: 6.0).expanded(flex: 30),
+            ],
+          ),
+        ),
+        Consumer<HeaderBuilderNotifier>(
+          builder: (_, headerBuilder, _) {
+            final innerBoxIsScrolled = headerBuilder.innerBoxIsScrolled;
+
+            Widget child = innerBoxIsScrolled
+                ? Divider(
+                    color: context.appColors.dividerColor,
+                    thickness: 1.0,
+                    height: 0.0,
+                  )
+                : const SizedBox.shrink();
+
+            return FadeSwitcher(
+              duration: const Duration(milliseconds: 125),
+              reverseDuration: const Duration(milliseconds: 125),
+              child: child,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  bool shouldRebuild(covariant _TickerHeaderDelegate oldDelegate) => false;
 }

@@ -1,3 +1,4 @@
+import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
@@ -5,7 +6,9 @@ import 'package:crpto/features/coins_management/presentation/view_model/listed_c
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_state.dart';
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coins_view_model.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
+import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
+import 'package:crpto/shared/presentation/ui/widgets/shimmer_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,24 +23,26 @@ class ListedCoinListView extends ConsumerStatefulWidget {
 class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
   @override
   Widget build(BuildContext context) {
-    final listedCoinsAsyncState = ref.watch(listedCoinsViewModelProvider);
+    final listedCoinsState = ref.watch(listedCoinsViewModelProvider);
 
-    switch (listedCoinsAsyncState) {
+    Widget child = _buildNoListedCoinsFoundWarning();
+
+    switch (listedCoinsState) {
       case AsyncLoading(value: final state):
         if (state == null || state.listedCoins.isEmpty) {
-          return _buildLoadingIndicator();
+          child = const _ListedCoinListPlaceholder();
+        } else if (state.listedCoins.isNotEmpty) {
+          child = _buildListedCoins(state);
         }
-
-        if (state.listedCoins.isNotEmpty) {
-          return _buildListedCoins(state);
-        }
+      case AsyncError():
+        throw UnimplementedError();
       case AsyncData(value: final state):
         if (state.listedCoins.isNotEmpty) {
-          return _buildListedCoins(state);
+          child = _buildListedCoins(state);
         }
     }
 
-    return _buildNoListedCoinsFoundWarning();
+    return FadeSwitcher(child: child);
   }
 
   Widget _buildListedCoins(ListedCoinsState state) {
@@ -61,19 +66,10 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     );
   }
 
-  Widget _buildLoadingIndicator() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: CircularProgressIndicator(color: context.appColors.loaderColor),
-      ),
-    );
-  }
-
   Widget _buildNoListedCoinsFoundWarning() {
     return Center(
       child: Text(
-        'No listed coins found',
+        'No listed coins found.',
         style: context.appFonts.medium.copyWith(
           color: context.appColors.secondaryTextColor,
           fontSize: 14.0,
@@ -115,5 +111,89 @@ extension _ListedCoinListStateX on _ListedCoinListViewState {
     });
 
     return [...selectedListedCoins, ...unselectedListedCoins];
+  }
+}
+
+class _ListedCoinListPlaceholder extends StatelessWidget {
+  const _ListedCoinListPlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return ShimmerWrapper(
+      child: CustomScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        slivers: <Widget>[
+          SliverList.builder(
+            itemBuilder: (_, index) {
+              return Row(
+                spacing: 12.0,
+                children: <Widget>[
+                  _buildTokenIconPlaceholder(context),
+                  Column(
+                    mainAxisAlignment: .center,
+                    crossAxisAlignment: .start,
+                    children: <Widget>[
+                      _buildCoinBaseAssetPlaceholder(context),
+                      _buildCoinNamePlaceholder(context),
+                    ],
+                  ).expanded(),
+                ],
+              ).withPaddingAll(12.0);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTokenIconPlaceholder(BuildContext context) {
+    return Container(
+      width: 40.0,
+      height: 40.0,
+      decoration: BoxDecoration(
+        color: context.appColors.primaryWidgetColor,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  Widget _buildCoinBaseAssetPlaceholder(BuildContext context) {
+    return SizedBox(
+      height: 24.0,
+      child: Row(
+        children: <Widget>[
+          Center(
+            child: Container(
+              height: 16.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: context.appColors.primaryWidgetColor,
+              ),
+            ),
+          ).expanded(flex: 1),
+          const Spacer(flex: 3),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCoinNamePlaceholder(BuildContext context) {
+    return SizedBox(
+      height: 21.0,
+      child: Row(
+        children: <Widget>[
+          Center(
+            child: Container(
+              height: 14.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14.0),
+                color: context.appColors.primaryWidgetColor,
+              ),
+            ),
+          ).expanded(flex: 2),
+          const Spacer(flex: 3),
+        ],
+      ),
+    );
   }
 }

@@ -74,15 +74,14 @@ class CoinTickersNotifier extends _$CoinTickersNotifier {
           state = AsyncData(_currentCoinTickers);
         }
 
-        _coinTickersStreamSubscription = _listenCoinTickers(
-          selectedSymbols,
-        ).listen((coinTicker) {
-          if (selectedSymbols.contains(coinTicker.symbol)) {
-            _currentCoinTickers[coinTicker.symbol] = coinTicker;
-          }
+        _coinTickersStreamSubscription = _listenCoinTickers(selectedSymbols)
+            .listen((coinTicker) {
+              if (selectedSymbols.contains(coinTicker.symbol)) {
+                _currentCoinTickers[coinTicker.symbol] = coinTicker;
+              }
 
-          _coinTickersStreamController.add(_currentCoinTickers);
-        });
+              _coinTickersStreamController.add(_currentCoinTickers);
+            });
 
         _previousSelectedCoins = selectedCoins;
       }, const Duration(milliseconds: 250));
@@ -90,7 +89,7 @@ class CoinTickersNotifier extends _$CoinTickersNotifier {
 
     _coinTickersStreamController
         .throttleTime(const Duration(seconds: 5))
-        .listen((coinTickers) => state = AsyncData(coinTickers));
+        .listen((coinTickers) => state = AsyncData({...coinTickers}));
 
     return await future;
   }
@@ -98,11 +97,10 @@ class CoinTickersNotifier extends _$CoinTickersNotifier {
   Future<void> _loadCoinTickers([
     List<SelectedCoin>? optionalSelectedCoins,
   ]) async {
-    final selectedCoins =
-        _previousSelectedCoins =
-            optionalSelectedCoins != null && optionalSelectedCoins.isNotEmpty
-                ? optionalSelectedCoins
-                : _getSelectedCoins();
+    final selectedCoins = _previousSelectedCoins =
+        optionalSelectedCoins != null && optionalSelectedCoins.isNotEmpty
+        ? optionalSelectedCoins
+        : _getSelectedCoins();
 
     if (selectedCoins.isNotEmpty) {
       final symbols = <String>[

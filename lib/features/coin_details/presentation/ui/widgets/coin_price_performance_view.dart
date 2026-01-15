@@ -14,22 +14,30 @@ class CoinPricePerformanceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 12.0,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _buildTitle(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          spacing: 8.0,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildCoinLowPriceLabel(),
-            _buildCoinHighPriceLabel(),
+            _buildTitle(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildCoinLowPriceLabel(),
+                _buildCoinHighPriceLabel(),
+              ],
+            ),
+            _buildPricePerformancePainter(),
           ],
+        ).withPaddingAll(12.0),
+        Divider(
+          color: context.appColors.dividerColor,
+          thickness: 1.0,
+          height: 1.0,
         ),
-        _buildPricePerformancePainter(),
       ],
-    ).withPaddingAll(12.0);
+    );
   }
 
   Widget _buildTitle() {
@@ -38,7 +46,7 @@ class CoinPricePerformanceView extends StatelessWidget {
         final symbol = context.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         final coinBaseAsset = coinMetadata.baseAsset;
 
@@ -58,24 +66,23 @@ class CoinPricePerformanceView extends StatelessWidget {
       builder: (context, ref, _) {
         final symbol = context.symbol;
 
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         if (selectedCoinKline == null) {
           ref.watch(
-            coinTickerNotifierProvider(
+            coinTickerProvider(
               symbol,
             ).select((coinTicker) => coinTicker?.lowPrice),
           );
         }
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         final formattedLowPrice = StringX.formatCurrency(
           selectedCoinKline?.lowPrice ?? coinTicker?.lowPrice ?? 0.0,
         );
 
         return Column(
-          spacing: 3.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -104,24 +111,23 @@ class CoinPricePerformanceView extends StatelessWidget {
       builder: (context, ref, _) {
         final symbol = context.symbol;
 
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         if (selectedCoinKline == null) {
           ref.watch(
-            coinTickerNotifierProvider(
+            coinTickerProvider(
               symbol,
             ).select((coinTicker) => coinTicker?.highPrice),
           );
         }
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         final formattedHighPrice = StringX.formatCurrency(
           selectedCoinKline?.highPrice ?? coinTicker?.highPrice ?? 0.0,
         );
 
         return Column(
-          spacing: 3.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
@@ -152,7 +158,7 @@ class CoinPricePerformanceView extends StatelessWidget {
       builder: (context, ref, _) {
         final symbol = context.symbol;
 
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         if (selectedCoinKline != null) {
           final lowPrice = selectedCoinKline.lowPrice;
@@ -167,12 +173,12 @@ class CoinPricePerformanceView extends StatelessWidget {
         }
 
         ref.watch(
-          coinTickerNotifierProvider(
+          coinTickerProvider(
             symbol,
           ).select((coinTicker) => coinTicker?.lastPrice),
         );
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         final lowPrice = coinTicker?.lowPrice ?? 0.0;
         final highPrice = coinTicker?.highPrice ?? 0.0;

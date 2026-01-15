@@ -6,173 +6,109 @@ part of '../web_socket_client.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$webSocketClientHash() => r'4f113c9e3bc99cf89be720201594d2455745400b';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$WebSocketClient
-    extends BuildlessAutoDisposeNotifier<Raw<Future<WebSocketClient>>> {
-  late final String url;
-
-  Raw<Future<WebSocketClient>> build({required String url});
-}
-
-/// See also [WebSocketClient].
 @ProviderFor(WebSocketClient)
-const webSocketClientProvider = WebSocketClientFamily();
+const webSocketClientProvider = WebSocketClientFamily._();
 
-/// See also [WebSocketClient].
-class WebSocketClientFamily extends Family<Raw<Future<WebSocketClient>>> {
-  /// See also [WebSocketClient].
-  const WebSocketClientFamily();
+final class WebSocketClientProvider
+    extends $NotifierProvider<WebSocketClient, Raw<Future<WebSocketClient>>> {
+  const WebSocketClientProvider._({
+    required WebSocketClientFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'webSocketClientProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
 
-  /// See also [WebSocketClient].
-  WebSocketClientProvider call({required String url}) {
-    return WebSocketClientProvider(url: url);
+  @override
+  String debugGetCreateSourceHash() => _$webSocketClientHash();
+
+  @override
+  String toString() {
+    return r'webSocketClientProvider'
+        ''
+        '($argument)';
   }
 
+  @$internal
   @override
-  WebSocketClientProvider getProviderOverride(
-    covariant WebSocketClientProvider provider,
-  ) {
-    return call(url: provider.url);
-  }
+  WebSocketClient create() => WebSocketClient();
 
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'webSocketClientProvider';
-}
-
-/// See also [WebSocketClient].
-class WebSocketClientProvider
-    extends
-        AutoDisposeNotifierProviderImpl<
-          WebSocketClient,
-          Raw<Future<WebSocketClient>>
-        > {
-  /// See also [WebSocketClient].
-  WebSocketClientProvider({required String url})
-    : this._internal(
-        () => WebSocketClient()..url = url,
-        from: webSocketClientProvider,
-        name: r'webSocketClientProvider',
-        debugGetCreateSourceHash:
-            const bool.fromEnvironment('dart.vm.product')
-                ? null
-                : _$webSocketClientHash,
-        dependencies: WebSocketClientFamily._dependencies,
-        allTransitiveDependencies:
-            WebSocketClientFamily._allTransitiveDependencies,
-        url: url,
-      );
-
-  WebSocketClientProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.url,
-  }) : super.internal();
-
-  final String url;
-
-  @override
-  Raw<Future<WebSocketClient>> runNotifierBuild(
-    covariant WebSocketClient notifier,
-  ) {
-    return notifier.build(url: url);
-  }
-
-  @override
-  Override overrideWith(WebSocketClient Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Raw<Future<WebSocketClient>> value) {
+    return $ProviderOverride(
       origin: this,
-      override: WebSocketClientProvider._internal(
-        () => create()..url = url,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        url: url,
-      ),
+      providerOverride: $SyncValueProvider<Raw<Future<WebSocketClient>>>(value),
     );
   }
 
   @override
-  AutoDisposeNotifierProviderElement<
-    WebSocketClient,
-    Raw<Future<WebSocketClient>>
-  >
-  createElement() {
-    return _WebSocketClientProviderElement(this);
-  }
-
-  @override
   bool operator ==(Object other) {
-    return other is WebSocketClientProvider && other.url == url;
+    return other is WebSocketClientProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, url.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin WebSocketClientRef
-    on AutoDisposeNotifierProviderRef<Raw<Future<WebSocketClient>>> {
-  /// The parameter `url` of this provider.
-  String get url;
-}
+String _$webSocketClientHash() => r'4f113c9e3bc99cf89be720201594d2455745400b';
 
-class _WebSocketClientProviderElement
-    extends
-        AutoDisposeNotifierProviderElement<
+final class WebSocketClientFamily extends $Family
+    with
+        $ClassFamilyOverride<
           WebSocketClient,
-          Raw<Future<WebSocketClient>>
-        >
-    with WebSocketClientRef {
-  _WebSocketClientProviderElement(super.provider);
+          Raw<Future<WebSocketClient>>,
+          Raw<Future<WebSocketClient>>,
+          Raw<Future<WebSocketClient>>,
+          String
+        > {
+  const WebSocketClientFamily._()
+    : super(
+        retry: null,
+        name: r'webSocketClientProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  WebSocketClientProvider call({required String url}) =>
+      WebSocketClientProvider._(argument: url, from: this);
 
   @override
-  String get url => (origin as WebSocketClientProvider).url;
+  String toString() => r'webSocketClientProvider';
 }
 
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$WebSocketClient
+    extends $Notifier<Raw<Future<WebSocketClient>>> {
+  late final _$args = ref.$arg as String;
+  String get url => _$args;
+
+  Raw<Future<WebSocketClient>> build({required String url});
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build(url: _$args);
+    final ref =
+        this.ref
+            as $Ref<Raw<Future<WebSocketClient>>, Raw<Future<WebSocketClient>>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<
+                Raw<Future<WebSocketClient>>,
+                Raw<Future<WebSocketClient>>
+              >,
+              Raw<Future<WebSocketClient>>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

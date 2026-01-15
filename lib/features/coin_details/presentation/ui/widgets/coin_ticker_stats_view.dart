@@ -27,16 +27,14 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Column(
-          spacing: 12.0,
+          spacing: 8.0,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildTitle(),
             Consumer(
               builder: (_, ref, _) {
-                final selectedCoinKline = ref.watch(
-                  selectedCoinKlineNotifierProvider,
-                );
+                final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
                 return _buildCoinData(selectedCoinKline);
               },
@@ -58,7 +56,7 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
         final symbol = context.symbol;
 
         final coinMetadata = ref.watch(coinMetadataProvider(symbol));
-        final selectedCoinKline = ref.watch(selectedCoinKlineNotifierProvider);
+        final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
 
         final coinBaseAsset = coinMetadata.baseAsset;
 
@@ -79,10 +77,10 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
         final symbol = context.symbol;
 
         if (selectedCoinKline == null) {
-          ref.watch(coinTickerNotifierProvider(symbol));
+          ref.watch(coinTickerProvider(symbol));
         }
 
-        final coinTicker = ref.read(coinTickerNotifierProvider(symbol));
+        final coinTicker = ref.read(coinTickerProvider(symbol));
 
         return Stack(
           alignment: Alignment.center,
@@ -93,7 +91,7 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Column(
-                  spacing: 12.0,
+                  spacing: 8.0,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -103,7 +101,7 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
                   ],
                 ).expanded(),
                 Column(
-                  spacing: 12.0,
+                  spacing: 8.0,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -210,7 +208,6 @@ class _CoinTickerStatsViewState extends State<CoinTickerStatsView> {
 
   Widget _buildRowItem({required String label, required String value}) {
     return Column(
-      spacing: 6.0,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[

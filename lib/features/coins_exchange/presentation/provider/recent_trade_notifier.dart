@@ -14,7 +14,7 @@ class RecentTradeNotifier extends _$RecentTradeNotifier {
   RecentTrade? build(String symbol) {
     ref.onDispose(() => _recentTradeStreamController.close());
 
-    ref.listen(recentTradesNotifierProvider, (_, newState) {
+    ref.listen(recentTradesProvider, (_, newState) {
       newState.whenData((recentTrades) {
         final recentTrade = recentTrades[symbol];
 

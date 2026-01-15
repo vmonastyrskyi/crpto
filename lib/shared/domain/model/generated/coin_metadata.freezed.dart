@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CoinMetadata {
 
- int get id; String get symbol; String get baseAsset; String get quoteAsset; String get slug; String get name; String get description; CoinCategory get category; String get logo; DateTime get dateAdded; int get rank;
+ int get id; String get symbol; String get baseAsset; String get quoteAsset; String get tickSize; String get stepSize; String get slug; String get name; String get description; CoinCategory get category; String get logo; DateTime get dateAdded; int get rank;
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $CoinMetadataCopyWith<CoinMetadata> get copyWith => _$CoinMetadataCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.id, id) || other.id == id)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.logo, logo) || other.logo == logo)&&(identical(other.dateAdded, dateAdded) || other.dateAdded == dateAdded)&&(identical(other.rank, rank) || other.rank == rank));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoinMetadata&&(identical(other.id, id) || other.id == id)&&(identical(other.symbol, symbol) || other.symbol == symbol)&&(identical(other.baseAsset, baseAsset) || other.baseAsset == baseAsset)&&(identical(other.quoteAsset, quoteAsset) || other.quoteAsset == quoteAsset)&&(identical(other.tickSize, tickSize) || other.tickSize == tickSize)&&(identical(other.stepSize, stepSize) || other.stepSize == stepSize)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.category, category) || other.category == category)&&(identical(other.logo, logo) || other.logo == logo)&&(identical(other.dateAdded, dateAdded) || other.dateAdded == dateAdded)&&(identical(other.rank, rank) || other.rank == rank));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,symbol,baseAsset,quoteAsset,slug,name,description,category,logo,dateAdded,rank);
+int get hashCode => Object.hash(runtimeType,id,symbol,baseAsset,quoteAsset,tickSize,stepSize,slug,name,description,category,logo,dateAdded,rank);
 
 @override
 String toString() {
-  return 'CoinMetadata(id: $id, symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, slug: $slug, name: $name, description: $description, category: $category, logo: $logo, dateAdded: $dateAdded, rank: $rank)';
+  return 'CoinMetadata(id: $id, symbol: $symbol, baseAsset: $baseAsset, quoteAsset: $quoteAsset, tickSize: $tickSize, stepSize: $stepSize, slug: $slug, name: $name, description: $description, category: $category, logo: $logo, dateAdded: $dateAdded, rank: $rank)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $CoinMetadataCopyWith<$Res>  {
   factory $CoinMetadataCopyWith(CoinMetadata value, $Res Function(CoinMetadata) _then) = _$CoinMetadataCopyWithImpl;
 @useResult
 $Res call({
- int id, String symbol, String baseAsset, String quoteAsset, String slug, String name, String description, CoinCategory category, String logo, DateTime dateAdded, int rank
+ int id, String symbol, String baseAsset, String quoteAsset, String tickSize, String stepSize, String slug, String name, String description, CoinCategory category, String logo, DateTime dateAdded, int rank
 });
 
 
@@ -62,12 +62,14 @@ class _$CoinMetadataCopyWithImpl<$Res>
 
 /// Create a copy of CoinMetadata
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? slug = null,Object? name = null,Object? description = null,Object? category = null,Object? logo = null,Object? dateAdded = null,Object? rank = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? symbol = null,Object? baseAsset = null,Object? quoteAsset = null,Object? tickSize = null,Object? stepSize = null,Object? slug = null,Object? name = null,Object? description = null,Object? category = null,Object? logo = null,Object? dateAdded = null,Object? rank = null,}) {
   return _then(CoinMetadata(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,symbol: null == symbol ? _self.symbol : symbol // ignore: cast_nullable_to_non_nullable
 as String,baseAsset: null == baseAsset ? _self.baseAsset : baseAsset // ignore: cast_nullable_to_non_nullable
 as String,quoteAsset: null == quoteAsset ? _self.quoteAsset : quoteAsset // ignore: cast_nullable_to_non_nullable
+as String,tickSize: null == tickSize ? _self.tickSize : tickSize // ignore: cast_nullable_to_non_nullable
+as String,stepSize: null == stepSize ? _self.stepSize : stepSize // ignore: cast_nullable_to_non_nullable
 as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
