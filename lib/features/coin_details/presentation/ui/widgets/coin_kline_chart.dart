@@ -5,7 +5,6 @@ import 'package:crpto/core/utils/extensions/widget.dart';
 import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/coin_klines_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
-import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/presentation/provider/model/symbol.dart';
@@ -86,212 +85,156 @@ class _CoinKlinesChartState extends ConsumerState<CoinKlineChart> {
     return ValueListenableBuilder(
       valueListenable: _showingIndicatorListenable,
       builder: (_, showingIndicators, _) {
-        return Consumer(
-          builder: (_, ref, _) {
-            final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
-            final selectedKlinePeriod = ref.watch(selectedKlinePeriodProvider);
-
-            return Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.topCenter,
-              children: <Widget>[
-                LineChart(
-                  LineChartData(
-                    lineBarsData: <LineChartBarData>[
-                      LineChartBarData(
-                        showingIndicators: showingIndicators,
-                        spots: <FlSpot>[
-                          for (final coinKline in coinKlines)
-                            FlSpot(
-                              coinKlines.indexOf(coinKline).toDouble(),
-                              coinKline.closePrice,
-                            ),
-                        ],
-                        belowBarData: BarAreaData(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: <Color>[
-                              (isLastClosePriceHigher
-                                      ? context.appColors.positivePriceColor
-                                      : context.appColors.negativePriceColor)
-                                  .withValues(alpha: 0.25),
-                              (isLastClosePriceHigher
-                                      ? context.appColors.positivePriceColor
-                                      : context.appColors.negativePriceColor)
-                                  .withValues(alpha: 0.0),
-                            ],
-                          ),
-                          show: true,
-                        ),
-                        color: isLastClosePriceHigher
-                            ? context.appColors.positivePriceColor
-                            : context.appColors.negativePriceColor,
-                        dotData: const FlDotData(show: false),
-                        isStrokeJoinRound: true,
-                        isStrokeCapRound: true,
-                        isCurved: false,
-                        barWidth: 1.5,
-                      ),
+        return LineChart(
+          LineChartData(
+            lineBarsData: <LineChartBarData>[
+              LineChartBarData(
+                showingIndicators: showingIndicators,
+                spots: <FlSpot>[
+                  for (final coinKline in coinKlines)
+                    FlSpot(
+                      coinKlines.indexOf(coinKline).toDouble(),
+                      coinKline.closePrice,
+                    ),
+                ],
+                belowBarData: BarAreaData(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: <Color>[
+                      (isLastClosePriceHigher
+                              ? context.appColors.positivePriceColor
+                              : context.appColors.negativePriceColor)
+                          .withValues(alpha: 0.25),
+                      (isLastClosePriceHigher
+                              ? context.appColors.positivePriceColor
+                              : context.appColors.negativePriceColor)
+                          .withValues(alpha: 0.0),
                     ],
-                    lineTouchData: LineTouchData(
-                      touchCallback: (touchEvent, lineTouchResponse) {
-                        switch (touchEvent) {
-                          case FlPanDownEvent() ||
-                              FlPanStartEvent() ||
-                              FlPanUpdateEvent():
-                            if (lineTouchResponse == null) return;
-
-                            final lineBarSpots = lineTouchResponse.lineBarSpots;
-
-                            if (lineBarSpots == null || lineBarSpots.isEmpty) {
-                              return;
-                            }
-
-                            int spotIndex = lineBarSpots.first.spotIndex;
-
-                            if (spotIndex == 0) {
-                              spotIndex++;
-                            } else if (spotIndex == coinKlines.length - 1) {
-                              spotIndex--;
-                            }
-
-                            ref
-                                .read(selectedCoinKlineProvider.notifier)
-                                .select(coinKlines[spotIndex]);
-
-                            _showingIndicatorListenable.value = [spotIndex];
-                          case FlPanCancelEvent() || FlPanEndEvent():
-                            ref
-                                .read(selectedCoinKlineProvider.notifier)
-                                .select(null);
-
-                            _showingIndicatorListenable.value = const [];
-                        }
-                      },
-                      getTouchedSpotIndicator: (_, spotIndexes) {
-                        final initialCoinKlineClosePrice =
-                            coinKlines.first.closePrice;
-
-                        return <TouchedSpotIndicatorData>[
-                          ...spotIndexes.map((spotIndex) {
-                            final selectedCoinKlineClosePrice =
-                                coinKlines[spotIndex].closePrice;
-
-                            final lineColor =
-                                initialCoinKlineClosePrice <=
-                                    selectedCoinKlineClosePrice
-                                ? context.appColors.positivePriceColor
-                                : context.appColors.negativePriceColor;
-
-                            return TouchedSpotIndicatorData(
-                              FlLine(
-                                color: lineColor,
-                                dashArray: [4, 4],
-                                strokeWidth: 1.0,
-                              ),
-                              const FlDotData(show: false),
-                            );
-                          }),
-                        ];
-                      },
-                      touchTooltipData: LineTouchTooltipData(
-                        getTooltipItems: (touchedSpots) {
-                          return <LineTooltipItem>[
-                            ...touchedSpots.map(
-                              (_) => const LineTooltipItem(
-                                emptyString,
-                                TextStyle(color: Colors.transparent),
-                              ),
-                            ),
-                          ];
-                        },
-                        getTooltipColor: (_) => Colors.transparent,
-                      ),
-                      getTouchLineStart: (_, _) => -double.infinity,
-                      getTouchLineEnd: (_, _) => double.infinity,
-                      longPressDuration: const Duration(days: 1),
-                      handleBuiltInTouches: false,
-                    ),
-                    borderData: FlBorderData(show: false),
-                    titlesData: FlTitlesData(
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          getTitlesWidget: _buildCoinPriceLabel,
-                          interval: horizontalInterval,
-                          reservedSize: 52.0,
-                          showTitles: true,
-                        ),
-                      ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      show: true,
-                    ),
-                    gridData: FlGridData(
-                      horizontalInterval: horizontalInterval,
-                      getDrawingHorizontalLine: (_) => FlLine(
-                        color: context.appColors.dividerColor,
-                        dashArray: [6, 3],
-                        strokeWidth: 0.5,
-                      ),
-                      drawVerticalLine: false,
-                    ),
-                    minY: minY,
-                    maxY: maxY,
                   ),
+                  show: true,
                 ),
+                color: isLastClosePriceHigher
+                    ? context.appColors.positivePriceColor
+                    : context.appColors.negativePriceColor,
+                dotData: const FlDotData(show: false),
+                isStrokeJoinRound: true,
+                isStrokeCapRound: true,
+                isCurved: false,
+                barWidth: 1.5,
+              ),
+            ],
+            lineTouchData: LineTouchData(
+              touchCallback: (touchEvent, lineTouchResponse) {
+                switch (touchEvent) {
+                  case FlPanDownEvent() ||
+                      FlPanStartEvent() ||
+                      FlPanUpdateEvent():
+                    if (lineTouchResponse == null) return;
 
-                if (coinKlines.isNotEmpty && selectedCoinKline != null)
-                  Positioned(
-                    top: -9.0,
-                    right: 0.0,
-                    child: _buildSelectedCoinKlineCloseDate(
-                      selectedCoinKline,
-                      selectedKlinePeriod,
+                    final lineBarSpots = lineTouchResponse.lineBarSpots;
+
+                    if (lineBarSpots == null || lineBarSpots.isEmpty) {
+                      return;
+                    }
+
+                    int spotIndex = lineBarSpots.first.spotIndex;
+
+                    if (spotIndex == 0) {
+                      spotIndex++;
+                    } else if (spotIndex == coinKlines.length - 1) {
+                      spotIndex--;
+                    }
+
+                    ref
+                        .read(selectedCoinKlineProvider.notifier)
+                        .select(coinKlines[spotIndex]);
+
+                    _showingIndicatorListenable.value = [spotIndex];
+                  case FlPanCancelEvent() || FlPanEndEvent():
+                    ref.read(selectedCoinKlineProvider.notifier).select(null);
+
+                    _showingIndicatorListenable.value = const [];
+                }
+              },
+              getTouchedSpotIndicator: (_, spotIndexes) {
+                final initialCoinKlineClosePrice = coinKlines.first.closePrice;
+
+                return <TouchedSpotIndicatorData>[
+                  ...spotIndexes.map((spotIndex) {
+                    final selectedCoinKlineClosePrice =
+                        coinKlines[spotIndex].closePrice;
+
+                    final lineColor =
+                        initialCoinKlineClosePrice <=
+                            selectedCoinKlineClosePrice
+                        ? context.appColors.positivePriceColor
+                        : context.appColors.negativePriceColor;
+
+                    return TouchedSpotIndicatorData(
+                      FlLine(
+                        color: lineColor,
+                        dashArray: [4, 4],
+                        strokeWidth: 1.0,
+                      ),
+                      const FlDotData(show: false),
+                    );
+                  }),
+                ];
+              },
+              touchTooltipData: LineTouchTooltipData(
+                getTooltipItems: (touchedSpots) {
+                  return <LineTooltipItem>[
+                    ...touchedSpots.map(
+                      (_) => const LineTooltipItem(
+                        emptyString,
+                        TextStyle(color: Colors.transparent),
+                      ),
                     ),
-                  ),
-              ],
-            );
-          },
+                  ];
+                },
+                getTooltipColor: (_) => Colors.transparent,
+              ),
+              getTouchLineStart: (_, _) => -double.infinity,
+              getTouchLineEnd: (_, _) => double.infinity,
+              longPressDuration: const Duration(days: 1),
+              handleBuiltInTouches: false,
+            ),
+            borderData: FlBorderData(show: false),
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  getTitlesWidget: _buildCoinPriceLabel,
+                  interval: horizontalInterval,
+                  reservedSize: 52.0,
+                  showTitles: true,
+                ),
+              ),
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              bottomTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              show: true,
+            ),
+            gridData: FlGridData(
+              horizontalInterval: horizontalInterval,
+              getDrawingHorizontalLine: (_) => FlLine(
+                color: context.appColors.dividerColor,
+                dashArray: [6, 3],
+                strokeWidth: 0.5,
+              ),
+              drawVerticalLine: false,
+            ),
+            minY: minY,
+            maxY: maxY,
+          ),
         );
       },
-    );
-  }
-
-  Widget _buildSelectedCoinKlineCloseDate(
-    CoinKline selectedCoinKline,
-    KlinePeriod selectedKlinePeriod,
-  ) {
-    final closeDate = DateFormat.yMMMd().format(
-      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
-    );
-    final closeTime = DateFormat.jm().format(
-      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
-    );
-
-    final showCloseTime =
-        selectedKlinePeriod == KlinePeriod.oneHour ||
-        selectedKlinePeriod == KlinePeriod.oneDay ||
-        selectedKlinePeriod == KlinePeriod.oneWeek ||
-        selectedKlinePeriod == KlinePeriod.oneMonth;
-
-    return Container(
-      padding: const EdgeInsets.only(left: 4.0),
-      color: context.appColors.backgroundColor,
-      child: Text(
-        '$closeDate${showCloseTime ? ' $closeTime' : ''}',
-        style: context.appFonts.medium.copyWith(
-          color: context.appColors.secondaryTextColor,
-          fontSize: 12.0,
-        ),
-      ),
     );
   }
 

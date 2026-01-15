@@ -7,6 +7,7 @@ import 'package:crpto/features/coin_details/presentation/provider/selected_kline
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_last_price_text.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
+import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:crpto/shared/presentation/provider/model/scroll_value.dart';
@@ -16,8 +17,10 @@ import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart' hide Consumer;
 import 'package:provider/single_child_widget.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 const double expandedHeight = toolbarHeight + 72.0;
 const double toolbarHeight = 56.0;
@@ -39,32 +42,59 @@ class FlexibleAppBar extends StatefulWidget {
 class _FlexibleAppBarState extends State<FlexibleAppBar> {
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      automaticallyImplyLeading: false,
-      flexibleSpace: FlexibleSpaceBar(
-        title: GestureDetector(
-          onTap: widget.onAppBarPressed,
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: context.appColors.backgroundColor),
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: <Widget>[
-                _buildBackButton(),
-                _buildAppBarTitle(),
-                _buildHeaderContent(),
-                _buildDivider(),
-              ],
+    return SliverStack(
+      insetOnOverlap: true,
+      children: <Widget>[
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          flexibleSpace: FlexibleSpaceBar(
+            title: GestureDetector(
+              onTap: widget.onAppBarPressed,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: context.appColors.backgroundColor,
+                ),
+                child: Stack(
+                  clipBehavior: .none,
+                  alignment: .centerLeft,
+                  children: <Widget>[
+                    _buildBackButton(),
+                    _buildAppBarTitle(),
+                    _buildHeaderContent(),
+                    _buildDivider(),
+                  ],
+                ),
+              ),
             ),
+            collapseMode: CollapseMode.pin,
+            titlePadding: EdgeInsets.zero,
+            expandedTitleScale: 1.0,
           ),
+          forceMaterialTransparency: true,
+          expandedHeight: expandedHeight,
+          toolbarHeight: toolbarHeight,
+          pinned: true,
         ),
-        collapseMode: CollapseMode.pin,
-        titlePadding: EdgeInsets.zero,
-        expandedTitleScale: 1.0,
-      ),
-      forceMaterialTransparency: true,
-      expandedHeight: expandedHeight,
-      toolbarHeight: toolbarHeight,
-      pinned: true,
+        Consumer(
+          builder: (_, ref, _) {
+            final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
+            final selectedKlinePeriod = ref.watch(selectedKlinePeriodProvider);
+
+            if (selectedCoinKline == null) {
+              return const SliverPositioned.fill(child: SizedBox.shrink());
+            }
+
+            return SliverPositioned(
+              right: 6.0,
+              bottom: -28.0,
+              child: _buildSelectedCoinKlineCloseDate(
+                selectedCoinKline,
+                selectedKlinePeriod,
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -471,6 +501,39 @@ class _FlexibleAppBarState extends State<FlexibleAppBar> {
           ),
         ).withPaddingOnly(right: 6.0);
       },
+    );
+  }
+
+  Widget _buildSelectedCoinKlineCloseDate(
+    CoinKline selectedCoinKline,
+    KlinePeriod selectedKlinePeriod,
+  ) {
+    final closeDate = DateFormat.yMMMd().format(
+      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
+    );
+    final closeTime = DateFormat.jm().format(
+      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
+    );
+
+    final showCloseTime =
+        selectedKlinePeriod == KlinePeriod.oneHour ||
+        selectedKlinePeriod == KlinePeriod.oneDay ||
+        selectedKlinePeriod == KlinePeriod.oneWeek ||
+        selectedKlinePeriod == KlinePeriod.oneMonth;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 0.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18.0),
+        color: context.appColors.backgroundColor,
+      ),
+      child: Text(
+        '$closeDate${showCloseTime ? ' $closeTime' : ''}',
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
+          fontSize: 12.0,
+        ),
+      ),
     );
   }
 
