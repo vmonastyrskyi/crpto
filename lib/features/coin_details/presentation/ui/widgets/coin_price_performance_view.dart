@@ -1,7 +1,6 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
@@ -32,8 +31,8 @@ class CoinPricePerformanceView extends StatelessWidget {
             _buildPricePerformancePainter(),
           ],
         ).withPaddingAll(12.0),
-        const Divider(
-          color: AppColors.dividerColor,
+        Divider(
+          color: context.appColors.dividerColor,
           thickness: 1.0,
           height: 1.0,
         ),
@@ -53,8 +52,8 @@ class CoinPricePerformanceView extends StatelessWidget {
 
         return Text(
           '$coinBaseAsset Price performance${selectedCoinKline == null ? ' (24h)' : ''}',
-          style: AppFonts.semiBold.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.semiBold.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: 14.0,
           ),
         );
@@ -89,15 +88,15 @@ class CoinPricePerformanceView extends StatelessWidget {
           children: <Widget>[
             Text(
               'Low',
-              style: AppFonts.medium.copyWith(
-                color: AppColors.secondaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.secondaryTextColor,
                 fontSize: 12.0,
               ),
             ),
             Text(
               '\$$formattedLowPrice',
-              style: AppFonts.medium.copyWith(
-                color: AppColors.primaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.primaryTextColor,
                 fontSize: 14.0,
               ),
             ),
@@ -134,16 +133,16 @@ class CoinPricePerformanceView extends StatelessWidget {
           children: <Widget>[
             Text(
               'High',
-              style: AppFonts.medium.copyWith(
-                color: AppColors.secondaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.secondaryTextColor,
                 fontSize: 12.0,
               ),
               textAlign: TextAlign.end,
             ),
             Text(
               '\$$formattedHighPrice',
-              style: AppFonts.medium.copyWith(
-                color: AppColors.primaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.primaryTextColor,
                 fontSize: 14.0,
               ),
               textAlign: TextAlign.end,
@@ -291,6 +290,7 @@ class _PricePerformanceSlider extends StatelessWidget {
     return CustomPaint(
       size: const Size(double.infinity, 3.0),
       painter: _PricePerformancePainter(
+        context: context,
         minValue: minValue,
         maxValue: maxValue,
         value: value,
@@ -301,11 +301,13 @@ class _PricePerformanceSlider extends StatelessWidget {
 
 class _PricePerformancePainter extends CustomPainter {
   const _PricePerformancePainter({
+    required this.context,
     required this.minValue,
     required this.maxValue,
     required this.value,
   });
 
+  final BuildContext context;
   final double minValue;
   final double maxValue;
   final double value;
@@ -318,12 +320,12 @@ class _PricePerformancePainter extends CustomPainter {
     final sliderHeight = size.height;
 
     final indicatorPaint = Paint()
-      ..color = AppColors.secondaryTextColor
+      ..color = context.appColors.secondaryTextColor
       ..strokeWidth = indicatorWidth
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;
     final sliderPaint = Paint()
-      ..color = AppColors.secondaryWidgetColor
+      ..color = context.appColors.secondaryWidgetColor
       ..strokeWidth = sliderHeight
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.round;

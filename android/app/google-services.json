@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "736324598871",
+    "project_id": "crpto-32bfe",
+    "storage_bucket": "crpto-32bfe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736324598871:android:4e88484e72268baea6f712",
+        "android_client_info": {
+          "package_name": "com.vmdev.crpto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs7s-9q4oxvhapvekHaPSc8378vZfWEvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

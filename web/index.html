@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+      If you are serving your web app in a path other than the root, change the
+      href value below to reflect the base path you are serving from.
+
+      The path provided below has to start and end with a slash "/" in order for
+      it to work correctly.
+
+      For more details:
+      * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+      This is a placeholder for base href that will be replaced by the value of
+      the `--base-href` argument provided to `flutter build`.
+    -->
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="crpto">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
+    <title>crpto</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        body {
+            background-color: #181818;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .iphone-outer-frame {
+            display: flex;
+            position: relative;
+            width: 409px;
+            height: 843px;
+            border-radius: 58px;
+            box-shadow: 0 0 3px 1px #000000, 0 0 0 4px #585858, 0 0 24px 0 rgba(0, 0, 0, 1);
+            z-index: 2;
+        }
+
+        .iphone-inner-frame {
+            position: relative;
+            border: 8px solid #000000;
+            border-radius: 58px;
+            background-color: transparent;
+            overflow: hidden;
+            flex-grow: 1;
+            z-index: 2;
+        }
+
+        .iphone-status-bar-time {
+            position: absolute;
+            top: 16px;
+            left: 56px;
+            z-index: 2;
+        }
+
+        .iphone-status-bar-icons {
+            position: absolute;
+            top: 21px;
+            right: 32px;
+            z-index: 2;
+        }
+
+        .dynamic-island {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 30px;
+            background-color: #000000;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .front-camera {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            float: right;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: #0E0B0F;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .front-camera-lens-1 {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: 10px;
+            height: 10px;
+            background-color: #161424;
+            border-radius: 50%;
+        }
+
+        .front-camera-lens-2 {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: 6px;
+            height: 6px;
+            background-color: #0F0F2A;
+            border-radius: 50%;
+        }
+
+        .front-camera-lens-3 {
+            position: relative;
+            top: -1px;
+            width: 2px;
+            height: 2px;
+            background-color: #393752;
+            border-radius: 50%;
+        }
+
+        .action-button {
+            position: absolute;
+            top: 150px;
+            left: -7px;
+            width: 3px;
+            height: 32px;
+            background: #565656;
+            background: linear-gradient(90deg, rgba(86, 86, 86, 1) 25%, rgba(23, 23, 23, 1) 100%);
+            border-radius: 2px 0 0 2px;
+        }
+
+        .volume-buttons-1 {
+            position: absolute;
+            top: 210px;
+            left: -7px;
+            width: 3px;
+            height: 56px;
+            background: #565656;
+            background: linear-gradient(90deg, rgba(86, 86, 86, 1) 25%, rgba(23, 23, 23, 1) 100%);
+            border-radius: 2px 0 0 2px;
+        }
+
+        .volume-buttons-2 {
+            position: absolute;
+            top: 285px;
+            left: -7px;
+            width: 3px;
+            height: 56px;
+            background: #565656;
+            background: linear-gradient(90deg, rgba(86, 86, 86, 1) 25%, rgba(23, 23, 23, 1) 100%);
+            border-radius: 2px 0 0 2px;
+        }
+
+        .side-button {
+            position: absolute;
+            top: 250px;
+            right: -7px;
+            width: 3px;
+            height: 100px;
+            background: #565656;
+            background: linear-gradient(270deg, rgba(86, 86, 86, 1) 25%, rgba(23, 23, 23, 1) 100%);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .back-line {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 144px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            z-index: 2;
+        }
+
+        .app-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            border: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="iphone-outer-frame">
+    <div class="iphone-inner-frame">
+        <svg class="iphone-status-bar-time" width="35" height="22"
+             viewBox="0 0 35 22"
+             xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.9666 4.72314C8.52324 4.72314 10.7479 6.54102 10.7479 10.8574V10.874C10.7479 14.9082 8.92998 17.2988 5.9168 17.2988C3.71709 17.2988 2.07354 15.9956 1.6917 14.1611L1.6751 14.0698H3.7835L3.8084 14.1528C4.12383 14.9912 4.8626 15.5391 5.9168 15.5391C7.81768 15.5391 8.62285 13.6797 8.71416 11.3887C8.71416 11.2974 8.72246 11.2061 8.72246 11.1147H8.55645C8.1165 12.061 7.07061 12.8994 5.42705 12.8994C3.12774 12.8994 1.51738 11.2227 1.51738 8.94824V8.93164C1.51738 6.49951 3.36846 4.72314 5.9666 4.72314ZM5.9583 11.2559C7.31133 11.2559 8.34893 10.2764 8.34893 8.92334V8.90674C8.34893 7.53711 7.31133 6.46631 5.9832 6.46631C4.66338 6.46631 3.60918 7.52051 3.60918 8.85693V8.87354C3.60918 10.2598 4.59697 11.2559 5.9583 11.2559ZM13.7164 9.23877C12.961 9.23877 12.3966 8.65771 12.3966 7.92725C12.3966 7.18848 12.961 6.61572 13.7164 6.61572C14.4801 6.61572 15.0362 7.18848 15.0362 7.92725C15.0362 8.65771 14.4801 9.23877 13.7164 9.23877ZM13.7164 15.3979C12.961 15.3979 12.3966 14.8252 12.3966 14.0864C12.3966 13.3477 12.961 12.7749 13.7164 12.7749C14.4801 12.7749 15.0362 13.3477 15.0362 14.0864C15.0362 14.8252 14.4801 15.3979 13.7164 15.3979ZM22.4955 17V14.7007H16.6352V12.9492C18.1874 10.2515 19.8891 7.49561 21.516 5.02197H24.5458V12.9326H26.1562V14.7007H24.5458V17H22.4955ZM18.6273 12.9824H22.5287V6.73193H22.4042C21.1757 8.60791 19.7895 10.8242 18.6273 12.8579V12.9824ZM30.32 17V7.13037H30.1789L27.1989 9.23877V7.22168L30.3283 5.02197H32.4616V17H30.32Z"
+                  fill="white"/>
+        </svg>
+        <svg class="iphone-status-bar-icons" width="76" height="13"
+             viewBox="0 0 76 13"
+             xmlns="http://www.w3.org/2000/svg">
+            <path opacity="0.35"
+                  d="M52 0.527344H69C70.9178 0.527344 72.4727 2.08222 72.4727 4V9C72.4727 10.9178 70.9178 12.4727 69 12.4727H52C50.0822 12.4727 48.5273 10.9178 48.5273 9V4C48.5273 2.08222 50.0822 0.527344 52 0.527344Z"
+                  stroke="white" stroke-width="1.05509"/>
+            <path opacity="0.4"
+                  d="M74 5V9.22034C74.8491 8.86291 75.4012 8.0314 75.4012 7.11017C75.4012 6.18894 74.8491 5.35744 74 5Z"
+                  fill="white"/>
+            <path d="M50 4C50 2.89543 50.8954 2 52 2H69C70.1046 2 71 2.89543 71 4V9C71 10.1046 70.1046 11 69 11H52C50.8954 11 50 10.1046 50 9V4Z"
+                  fill="white"/>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M33.5005 2.58753C35.967 2.58764 38.3393 3.55505 40.1269 5.28982C40.2615 5.42375 40.4766 5.42206 40.6092 5.28603L41.896 3.96045C41.9631 3.89146 42.0006 3.798 42 3.70076C41.9994 3.60353 41.9609 3.51052 41.893 3.44234C37.2011 -1.14745 29.7991 -1.14745 25.1072 3.44234C25.0392 3.51047 25.0006 3.60345 25 3.70069C24.9994 3.79792 25.0367 3.89141 25.1038 3.96045L26.391 5.28603C26.5235 5.42226 26.7388 5.42396 26.8733 5.28982C28.6612 3.55494 31.0337 2.58752 33.5005 2.58753ZM33.5359 6.67235C34.8911 6.67227 36.198 7.18644 37.2025 8.11497C37.3384 8.24674 37.5524 8.24389 37.6849 8.10853L38.9702 6.78295C39.0379 6.71342 39.0754 6.61909 39.0744 6.52108C39.0735 6.42306 39.034 6.32954 38.965 6.26142C35.9059 3.35683 31.1685 3.35683 28.1094 6.26142C28.0403 6.32953 28.0009 6.42311 28 6.52115C27.9991 6.6192 28.0368 6.71352 28.1046 6.78295L29.3895 8.10853C29.522 8.24389 29.736 8.24674 29.8719 8.11497C30.8758 7.18706 32.1816 6.67293 33.5359 6.67235ZM36.1496 9.34267C36.1515 9.44096 36.1137 9.53573 36.0449 9.60459L33.8217 11.8948C33.7565 11.9621 33.6676 12 33.5749 12C33.4822 12 33.3933 11.9621 33.3282 11.8948L31.1045 9.60459C31.0358 9.53568 30.998 9.44088 31.0001 9.34259C31.0021 9.2443 31.0438 9.15123 31.1153 9.08534C32.5351 7.8595 34.6147 7.8595 36.0345 9.08534C36.106 9.15128 36.1476 9.24438 36.1496 9.34267Z"
+                  fill="white"/>
+            <path d="M10 3C10 2.44772 10.4477 2 11 2H12C12.5523 2 13 2.44772 13 3V11C13 11.5523 12.5523 12 12 12H11C10.4477 12 10 11.5523 10 11V3Z"
+                  fill="white"/>
+            <path d="M15 1C15 0.447715 15.4477 0 16 0H17C17.5523 0 18 0.447715 18 1V11C18 11.5523 17.5523 12 17 12H16C15.4477 12 15 11.5523 15 11V1Z"
+                  fill="white"/>
+            <path d="M5 6.5C5 5.94772 5.44772 5.5 6 5.5H7C7.55228 5.5 8 5.94772 8 6.5V11C8 11.5523 7.55228 12 7 12H6C5.44772 12 5 11.5523 5 11V6.5Z"
+                  fill="white"/>
+            <path d="M0 9C0 8.44772 0.447715 8 1 8H2C2.55228 8 3 8.44772 3 9V11C3 11.5523 2.55228 12 2 12H1C0.447715 12 0 11.5523 0 11V9Z"
+                  fill="white"/>
+        </svg>
+
+
+        <div class="dynamic-island">
+            <div class="front-camera">
+                <div class="front-camera-lens-1">
+                    <div class="front-camera-lens-2">
+                        <div class="front-camera-lens-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <iframe class="app-frame" id="app-frame"></iframe>
+    </div>
+
+    <div class="action-button"></div>
+    <div class="volume-buttons-1"></div>
+    <div class="volume-buttons-2"></div>
+    <div class="side-button"></div>
+
+    <div class="back-line"></div>
+</div>
+<script>
+    if (window.self === window.top) {
+        document.getElementById('app-frame').src = window.location.href;
+    } else {
+        document.querySelector('.iphone-outer-frame').style.display = 'none';
+        document.body.style.background = '#000';
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
+
+        const script = document.createElement('script');
+        script.src = 'flutter_bootstrap.js';
+        script.async = true;
+
+        document.head.appendChild(script);
+    }
+</script>
+</body>
+</html>

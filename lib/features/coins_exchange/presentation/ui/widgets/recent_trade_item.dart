@@ -1,7 +1,6 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
 import 'package:crpto/features/coins_exchange/presentation/provider/recent_trade_notifier.dart';
 import 'package:crpto/shared/domain/model/enum/trade_type.dart';
@@ -34,12 +33,12 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: AppColors.shadowColor.withValues(alpha: 0.2),
+            color: context.appColors.shadowColor.withValues(alpha: 0.2),
             offset: const Offset(0.0, 3.0),
             blurRadius: 6.0,
           ),
         ],
-        color: AppColors.primaryWidgetColor,
+        color: context.appColors.primaryWidgetColor,
       ),
       child: Column(
         spacing: 12.0,
@@ -59,8 +58,8 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
                   TokenIcon(symbol: _recentTrade.symbol),
                   Text(
                     coinMetadata.baseAsset,
-                    style: AppFonts.medium.copyWith(
-                      color: AppColors.primaryTextColor,
+                    style: context.appFonts.medium.copyWith(
+                      color: context.appColors.primaryTextColor,
                       fontSize: 16.0,
                     ),
                   ),
@@ -79,10 +78,9 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
   Widget _buildRecentTradeType(RecentTrade recentTrade) {
     final tradeType = recentTrade.type;
 
-    final tradeTypeColor =
-        tradeType == TradeType.buy
-            ? AppColors.positivePriceColor
-            : AppColors.negativePriceColor;
+    final tradeTypeColor = tradeType == TradeType.buy
+        ? context.appColors.positivePriceColor
+        : context.appColors.negativePriceColor;
 
     return Container(
       alignment: Alignment.center,
@@ -93,7 +91,7 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
       ),
       child: Text(
         tradeType.name.toUpperCase(),
-        style: AppFonts.semiBold.copyWith(
+        style: context.appFonts.semiBold.copyWith(
           color: tradeTypeColor,
           fontSize: 16.0,
           height: 1.0,
@@ -128,12 +126,12 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
             padding: const EdgeInsets.fromLTRB(6.0, 6.5, 6.0, 5.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              color: AppColors.secondaryWidgetColor,
+              color: context.appColors.secondaryWidgetColor,
             ),
             child: Text(
               label.toUpperCase(),
-              style: AppFonts.semiBold.copyWith(
-                color: AppColors.secondaryTextColor,
+              style: context.appFonts.semiBold.copyWith(
+                color: context.appColors.secondaryTextColor,
                 fontSize: 10.0,
                 height: 1.0,
               ),
@@ -141,8 +139,8 @@ class _RecentTradeItemState extends ConsumerState<RecentTradeItem> {
           ),
           Text(
             value,
-            style: AppFonts.medium.copyWith(
-              color: AppColors.primaryTextColor,
+            style: context.appFonts.medium.copyWith(
+              color: context.appColors.primaryTextColor,
               fontSize: 16.0,
             ),
           ),

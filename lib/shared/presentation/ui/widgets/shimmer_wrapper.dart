@@ -1,4 +1,4 @@
-import 'package:crpto/core/utils/app_colors.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,16 +19,16 @@ class ShimmerWrapper extends StatelessWidget {
     return Shimmer(
       gradient: LinearGradient(
         colors: <Color>[
-          AppColors.shimmerBackgroundColor,
-          AppColors.shimmerBackgroundColor,
-          AppColors.shimmerOuterColor,
-          AppColors.shimmerOuterColor,
-          AppColors.shimmerInnerColor,
-          AppColors.shimmerInnerColor,
-          AppColors.shimmerOuterColor,
-          AppColors.shimmerOuterColor,
-          AppColors.shimmerBackgroundColor,
-          AppColors.shimmerBackgroundColor,
+          context.appColors.shimmerBackgroundColor,
+          context.appColors.shimmerBackgroundColor,
+          context.appColors.shimmerOuterColor,
+          context.appColors.shimmerOuterColor,
+          context.appColors.shimmerInnerColor,
+          context.appColors.shimmerInnerColor,
+          context.appColors.shimmerOuterColor,
+          context.appColors.shimmerOuterColor,
+          context.appColors.shimmerBackgroundColor,
+          context.appColors.shimmerBackgroundColor,
         ],
         stops: <double>[
           0.0,

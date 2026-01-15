@@ -1,13 +1,13 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coin_details/presentation/provider/coin_klines_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_coin_kline_notifier.dart';
 import 'package:crpto/features/coin_details/presentation/provider/selected_kline_period_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_last_price_text.dart';
 import 'package:crpto/shared/domain/model/coin_kline.dart';
 import 'package:crpto/shared/domain/model/coin_ticker.dart';
+import 'package:crpto/shared/domain/model/enum/kline_period.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/provider/coin_ticker_notifier.dart';
 import 'package:crpto/shared/presentation/provider/model/scroll_value.dart';
@@ -17,13 +17,15 @@ import 'package:crpto/shared/presentation/ui/widgets/token_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auto_size_text/flutter_auto_size_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' hide Provider;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart' hide Consumer;
 import 'package:provider/single_child_widget.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 const double expandedHeight = toolbarHeight + 72.0;
 const double toolbarHeight = 56.0;
 
-class FlexibleAppBar extends StatelessWidget {
+class FlexibleAppBar extends StatefulWidget {
   const FlexibleAppBar({
     super.key,
     required this.scrollController,
@@ -34,37 +36,93 @@ class FlexibleAppBar extends StatelessWidget {
   final VoidCallback onAppBarPressed;
 
   @override
+  State<FlexibleAppBar> createState() => _FlexibleAppBarState();
+}
+
+class _FlexibleAppBarState extends State<FlexibleAppBar> {
+  @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      flexibleSpace: FlexibleSpaceBar(
-        title: GestureDetector(
-          onTap: onAppBarPressed,
-          child: DecoratedBox(
-            decoration: const BoxDecoration(color: AppColors.backgroundColor),
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: <Widget>[
-                _buildAppBarTitle(),
-                _buildHeaderContent(),
-                _buildDivider(),
-              ],
+    return SliverStack(
+      insetOnOverlap: true,
+      children: <Widget>[
+        SliverAppBar(
+          automaticallyImplyLeading: false,
+          flexibleSpace: FlexibleSpaceBar(
+            title: GestureDetector(
+              onTap: widget.onAppBarPressed,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: context.appColors.backgroundColor,
+                ),
+                child: Stack(
+                  clipBehavior: .none,
+                  alignment: .centerLeft,
+                  children: <Widget>[
+                    _buildBackButton(),
+                    _buildAppBarTitle(),
+                    _buildHeaderContent(),
+                    _buildDivider(),
+                  ],
+                ),
+              ),
+            ),
+            collapseMode: CollapseMode.pin,
+            titlePadding: EdgeInsets.zero,
+            expandedTitleScale: 1.0,
+          ),
+          forceMaterialTransparency: true,
+          expandedHeight: expandedHeight,
+          toolbarHeight: toolbarHeight,
+          pinned: true,
+        ),
+        Consumer(
+          builder: (_, ref, _) {
+            final selectedCoinKline = ref.watch(selectedCoinKlineProvider);
+            final selectedKlinePeriod = ref.watch(selectedKlinePeriodProvider);
+
+            if (selectedCoinKline == null) {
+              return const SliverPositioned.fill(child: SizedBox.shrink());
+            }
+
+            return SliverPositioned(
+              right: 6.0,
+              bottom: -28.0,
+              child: _buildSelectedCoinKlineCloseDate(
+                selectedCoinKline,
+                selectedKlinePeriod,
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBackButton() {
+    return AnimatedBuilder(
+      animation: widget.scrollController,
+      builder: (_, child) {
+        return Positioned(
+          height: toolbarHeight,
+          left: 8.0,
+          top: 0.0,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: BackButton(
+              style: const ButtonStyle(
+                padding: WidgetStatePropertyAll(EdgeInsets.all(8.0)),
+              ),
+              color: context.appColors.iconColor,
             ),
           ),
-        ),
-        collapseMode: CollapseMode.pin,
-        titlePadding: EdgeInsets.zero,
-        expandedTitleScale: 1.0,
-      ),
-      forceMaterialTransparency: true,
-      expandedHeight: expandedHeight,
-      toolbarHeight: toolbarHeight,
-      pinned: true,
+        );
+      },
     );
   }
 
   Widget _buildAppBarTitle() {
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (_, child) {
         final scrollValue = _calculateScrollValue();
 
@@ -98,8 +156,8 @@ class FlexibleAppBar extends StatelessWidget {
 
         return Text(
           coinMetadata.baseAsset,
-          style: AppFonts.semiBold.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.semiBold.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: 18.0,
           ),
         );
@@ -109,7 +167,7 @@ class FlexibleAppBar extends StatelessWidget {
 
   Widget _buildHeaderContent() {
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (_, child) {
         final scrollValue = _calculateScrollValue();
 
@@ -134,8 +192,6 @@ class FlexibleAppBar extends StatelessWidget {
         children: <Widget>[
           Row(
             spacing: 12.0,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _buildCoinIcon(),
               _buildCoinTitle().expanded(),
@@ -149,7 +205,7 @@ class FlexibleAppBar extends StatelessWidget {
 
   Widget _buildCoinIcon() {
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final symbol = context.symbol;
         final scrollValue = context.scrollValue;
@@ -163,25 +219,23 @@ class FlexibleAppBar extends StatelessWidget {
 
   Widget _buildCoinTitle() {
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final scrollValue = context.scrollValue;
 
         return FadeSwitcher(
           duration: const Duration(milliseconds: 125),
           reverseDuration: const Duration(milliseconds: 125),
-          layoutBuilder:
-              (currentChild, previousChildren) => Stack(
-                alignment: Alignment.centerLeft,
-                children: <Widget>[
-                  ...previousChildren,
-                  if (currentChild != null) currentChild,
-                ],
-              ),
-          child:
-              scrollValue > 0.5
-                  ? _buildCoinBaseAsset(scrollValue)
-                  : _buildCoinName(scrollValue),
+          layoutBuilder: (currentChild, previousChildren) => Stack(
+            alignment: Alignment.centerLeft,
+            children: <Widget>[
+              ...previousChildren,
+              if (currentChild != null) currentChild,
+            ],
+          ),
+          child: scrollValue > 0.5
+              ? _buildCoinBaseAsset(scrollValue)
+              : _buildCoinName(scrollValue),
         );
       },
     );
@@ -199,8 +253,8 @@ class FlexibleAppBar extends StatelessWidget {
 
         return Text(
           coinMetadata.baseAsset,
-          style: AppFonts.semiBold.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.semiBold.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: fontSize,
           ),
         );
@@ -220,8 +274,8 @@ class FlexibleAppBar extends StatelessWidget {
 
         return Text(
           coinMetadata.name,
-          style: AppFonts.medium.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: fontSize,
           ),
           overflow: TextOverflow.ellipsis,
@@ -265,7 +319,7 @@ class FlexibleAppBar extends StatelessWidget {
       children: <Widget>[
         _buildSelectedCoinKlineLastPrice(selectedCoinKline),
         AnimatedBuilder(
-          animation: scrollController,
+          animation: widget.scrollController,
           builder: (context, _) {
             final scrollValue = context.scrollValue;
 
@@ -283,7 +337,7 @@ class FlexibleAppBar extends StatelessWidget {
     final lastPrice = StringX.formatCurrency(selectedCoinKline.closePrice);
 
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final scrollValue = context.scrollValue;
 
@@ -291,8 +345,8 @@ class FlexibleAppBar extends StatelessWidget {
 
         return Text(
           '\$$lastPrice',
-          style: AppFonts.medium.copyWith(
-            color: AppColors.primaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.primaryTextColor,
             fontSize: fontSize,
           ),
         );
@@ -309,25 +363,25 @@ class FlexibleAppBar extends StatelessWidget {
     final priceChange = StringX.formatCurrency(
       (selectedCoinKline.closePrice - initialCoinKline.closePrice).abs(),
     );
-    final priceChangePercent = (((selectedCoinKline.closePrice -
-                    initialCoinKline.closePrice) /
-                initialCoinKline.closePrice) *
-            100.0)
-        .abs()
-        .toStringAsFixed(2);
+    final priceChangePercent =
+        (((selectedCoinKline.closePrice - initialCoinKline.closePrice) /
+                    initialCoinKline.closePrice) *
+                100.0)
+            .abs()
+            .toStringAsFixed(2);
     final isPriceNegative =
         (selectedCoinKline.closePrice - initialCoinKline.closePrice).isNegative;
 
     final priceSign = isPriceNegative ? '-' : '+';
 
-    final priceChangeBuffer =
-        StringBuffer()..writeAll([
-          '$priceSign$priceChange\$',
-          '($priceSign$priceChangePercent%)',
-        ], ' ');
+    final priceChangeBuffer = StringBuffer()
+      ..writeAll([
+        '$priceSign$priceChange\$',
+        '($priceSign$priceChangePercent%)',
+      ], ' ');
 
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final scrollValue = context.scrollValue;
 
@@ -339,11 +393,10 @@ class FlexibleAppBar extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: AutoSizeText(
               '$priceChangeBuffer',
-              style: AppFonts.medium.copyWith(
-                color:
-                    isPriceNegative
-                        ? AppColors.negativePriceColor
-                        : AppColors.positivePriceColor,
+              style: context.appFonts.medium.copyWith(
+                color: isPriceNegative
+                    ? context.appColors.negativePriceColor
+                    : context.appColors.positivePriceColor,
                 fontSize: fontSize,
               ),
               textAlign: TextAlign.right,
@@ -375,7 +428,7 @@ class FlexibleAppBar extends StatelessWidget {
           children: <Widget>[
             if (coinTicker != null) _buildCoinLastPrice(coinTicker),
             AnimatedBuilder(
-              animation: scrollController,
+              animation: widget.scrollController,
               builder: (context, _) {
                 final scrollValue = context.scrollValue;
 
@@ -393,7 +446,7 @@ class FlexibleAppBar extends StatelessWidget {
 
   Widget _buildCoinLastPrice(CoinTicker coinTicker) {
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final scrollValue = context.scrollValue;
 
@@ -416,14 +469,14 @@ class FlexibleAppBar extends StatelessWidget {
 
     final priceSign = isPriceNegative ? '-' : '+';
 
-    final priceChangeBuffer =
-        StringBuffer()..writeAll([
-          '$priceSign$priceChange\$',
-          '($priceSign$priceChangePercent%)',
-        ], ' ');
+    final priceChangeBuffer = StringBuffer()
+      ..writeAll([
+        '$priceSign$priceChange\$',
+        '($priceSign$priceChangePercent%)',
+      ], ' ');
 
     return AnimatedBuilder(
-      animation: scrollController,
+      animation: widget.scrollController,
       builder: (context, _) {
         final scrollValue = context.scrollValue;
 
@@ -435,11 +488,10 @@ class FlexibleAppBar extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: AutoSizeText(
               '$priceChangeBuffer',
-              style: AppFonts.medium.copyWith(
-                color:
-                    isPriceNegative
-                        ? AppColors.negativePriceColor
-                        : AppColors.positivePriceColor,
+              style: context.appFonts.medium.copyWith(
+                color: isPriceNegative
+                    ? context.appColors.negativePriceColor
+                    : context.appColors.positivePriceColor,
                 fontSize: fontSize,
               ),
               textAlign: TextAlign.right,
@@ -452,13 +504,46 @@ class FlexibleAppBar extends StatelessWidget {
     );
   }
 
+  Widget _buildSelectedCoinKlineCloseDate(
+    CoinKline selectedCoinKline,
+    KlinePeriod selectedKlinePeriod,
+  ) {
+    final closeDate = DateFormat.yMMMd().format(
+      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
+    );
+    final closeTime = DateFormat.jm().format(
+      selectedCoinKline.closeTime.add(const Duration(seconds: 1)),
+    );
+
+    final showCloseTime =
+        selectedKlinePeriod == KlinePeriod.oneHour ||
+        selectedKlinePeriod == KlinePeriod.oneDay ||
+        selectedKlinePeriod == KlinePeriod.oneWeek ||
+        selectedKlinePeriod == KlinePeriod.oneMonth;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(6.0, 0.0, 6.0, 0.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18.0),
+        color: context.appColors.backgroundColor,
+      ),
+      child: Text(
+        '$closeDate${showCloseTime ? ' $closeTime' : ''}',
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
+          fontSize: 12.0,
+        ),
+      ),
+    );
+  }
+
   Widget _buildDivider() {
-    return const Positioned(
+    return Positioned(
       left: 0.0,
       right: 0.0,
       bottom: 0.0,
       child: Divider(
-        color: AppColors.dividerColor,
+        color: context.appColors.dividerColor,
         thickness: 1.0,
         height: 1.0,
       ),
@@ -466,10 +551,11 @@ class FlexibleAppBar extends StatelessWidget {
   }
 }
 
-extension _FlexibleAppBarX on FlexibleAppBar {
+extension _FlexibleAppBarX on _FlexibleAppBarState {
   double _calculateScrollValue() {
-    final scrollOffset =
-        scrollController.hasClients ? scrollController.offset : 0.0;
+    final scrollOffset = widget.scrollController.hasClients
+        ? widget.scrollController.offset
+        : 0.0;
 
     final scrollValue = Curves.easeOutSine.transform(
       (scrollOffset / (expandedHeight - toolbarHeight)).clamp(0.0, 1.0),

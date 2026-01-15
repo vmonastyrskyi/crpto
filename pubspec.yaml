@@ -49,7 +49,12 @@ dependencies:
   # local storage
   shared_preferences: ^2.5.4
   drift_flutter: ^0.2.8
-  drift: ^2.30.0
+  drift: ^2.30.1
+
+  # firebase
+  cloud_functions: ^6.0.5
+  firebase_analytics: ^12.1.0
+  firebase_core: ^4.3.0
 
   cupertino_icons: ^1.0.8
 
@@ -59,7 +64,7 @@ dev_dependencies:
 
   freezed: ^3.2.3
   json_serializable: ^6.11.2
-  drift_dev: ^2.30.0
+  drift_dev: ^2.30.1
 
   riverpod_generator: ^3.0.3
 
@@ -68,7 +73,7 @@ dev_dependencies:
 
   vector_graphics_compiler: ^1.1.19
 
-  build_runner: ^2.10.4
+  build_runner: ^2.10.5
 
   flutter_lints: ^6.0.0
 
@@ -81,8 +86,6 @@ flutter:
     - assets/svgs_vec/
     - assets/svgs/common/
     - assets/svgs/tokens/
-    - assets/svgs/tokens/
-    - assets/svgs_vec/tokens/
     - assets/svgs_vec/tokens/
 
     - .env

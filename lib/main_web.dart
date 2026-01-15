@@ -1,0 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'app.dart';
+import 'core/data/local/database/database.dart';
+import 'core/data/local/local_storage/local_storage.dart';
+import 'core/data/local/local_storage/local_storage_with_cache.dart';
+import 'core/utils/crypto_utils.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await CryptoUtils.init();
+
+  await localStorageWithCache.init();
+  await localStorage.init();
+
+  await crptoDB.loadCache();
+
+  runApp(const ProviderScope(child: CrptoApp()));
+}

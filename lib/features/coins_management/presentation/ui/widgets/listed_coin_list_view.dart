@@ -1,6 +1,5 @@
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_management/domain/model/listed_coin.dart';
 import 'package:crpto/features/coins_management/presentation/ui/widgets/listed_coin_item.dart';
 import 'package:crpto/features/coins_management/presentation/view_model/listed_coin_view_model.dart';
@@ -10,6 +9,7 @@ import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
 import 'package:crpto/shared/presentation/ui/widgets/fade_switcher.dart';
 import 'package:crpto/shared/presentation/ui/widgets/keep_alive.dart';
 import 'package:crpto/shared/presentation/ui/widgets/shimmer_wrapper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,6 +49,9 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     final listedCoins = _sortListedCoins(state.listedCoins);
 
     return ListView.builder(
+      physics: kIsWeb
+          ? const BouncingScrollPhysics()
+          : const ClampingScrollPhysics(),
       itemBuilder: (_, index) {
         final listedCoin = listedCoins[index];
 
@@ -67,8 +70,8 @@ class _ListedCoinListViewState extends ConsumerState<ListedCoinListView> {
     return Center(
       child: Text(
         'No listed coins found.',
-        style: AppFonts.medium.copyWith(
-          color: AppColors.secondaryTextColor,
+        style: context.appFonts.medium.copyWith(
+          color: context.appColors.secondaryTextColor,
           fontSize: 14.0,
         ),
       ),
@@ -125,13 +128,13 @@ class _ListedCoinListPlaceholder extends StatelessWidget {
               return Row(
                 spacing: 12.0,
                 children: <Widget>[
-                  _buildTokenIconPlaceholder(),
+                  _buildTokenIconPlaceholder(context),
                   Column(
                     mainAxisAlignment: .center,
                     crossAxisAlignment: .start,
                     children: <Widget>[
-                      _buildCoinBaseAssetPlaceholder(),
-                      _buildCoinNamePlaceholder(),
+                      _buildCoinBaseAssetPlaceholder(context),
+                      _buildCoinNamePlaceholder(context),
                     ],
                   ).expanded(),
                 ],
@@ -143,18 +146,18 @@ class _ListedCoinListPlaceholder extends StatelessWidget {
     );
   }
 
-  Widget _buildTokenIconPlaceholder() {
+  Widget _buildTokenIconPlaceholder(BuildContext context) {
     return Container(
       width: 40.0,
       height: 40.0,
-      decoration: const BoxDecoration(
-        color: AppColors.primaryWidgetColor,
+      decoration: BoxDecoration(
+        color: context.appColors.primaryWidgetColor,
         shape: BoxShape.circle,
       ),
     );
   }
 
-  Widget _buildCoinBaseAssetPlaceholder() {
+  Widget _buildCoinBaseAssetPlaceholder(BuildContext context) {
     return SizedBox(
       height: 24.0,
       child: Row(
@@ -164,7 +167,7 @@ class _ListedCoinListPlaceholder extends StatelessWidget {
               height: 16.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                color: AppColors.primaryWidgetColor,
+                color: context.appColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 1),
@@ -174,7 +177,7 @@ class _ListedCoinListPlaceholder extends StatelessWidget {
     );
   }
 
-  Widget _buildCoinNamePlaceholder() {
+  Widget _buildCoinNamePlaceholder(BuildContext context) {
     return SizedBox(
       height: 21.0,
       child: Row(
@@ -184,7 +187,7 @@ class _ListedCoinListPlaceholder extends StatelessWidget {
               height: 14.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14.0),
-                color: AppColors.primaryWidgetColor,
+                color: context.appColors.primaryWidgetColor,
               ),
             ),
           ).expanded(flex: 2),

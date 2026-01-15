@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:crpto/core/utils/app_colors.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
 import 'package:crpto/features/coins_exchange/domain/model/recent_trade.dart';
 import 'package:crpto/features/coins_exchange/presentation/provider/recent_trades_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_item.dart';
@@ -107,7 +107,7 @@ class _RecentTradeListPlaceholder extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16.0),
-                      color: AppColors.primaryWidgetColor,
+                      color: context.appColors.primaryWidgetColor,
                     ),
                   ).withPaddingAll(12.0),
                 );

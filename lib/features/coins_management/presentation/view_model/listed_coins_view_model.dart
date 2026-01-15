@@ -12,14 +12,14 @@ part 'generated/listed_coins_view_model.g.dart';
 class ListedCoinsViewModel extends _$ListedCoinsViewModel {
   final Debounce _searchListedCoinsDebounce = Debounce();
 
-  late GetListedCoinsUseCase _getListedCoins;
+  late GetListedCoinsUseCase _getListedCoinsUseCase;
 
   List<ListedCoin> _lastListedCoins = const [];
   String _lastSearchValue = emptyString;
 
   @override
   Future<ListedCoinsState> build() {
-    _getListedCoins = ref.watch(getListedCoinsUseCaseProvider);
+    _getListedCoinsUseCase = ref.watch(getListedCoinsUseCaseProvider);
 
     ref.onDispose(() => _searchListedCoinsDebounce.cancel());
 
@@ -66,7 +66,7 @@ class ListedCoinsViewModel extends _$ListedCoinsViewModel {
   Future<ListedCoinsState> _loadListedCoins() async {
     state = const AsyncLoading();
 
-    final listedCoins = _lastListedCoins = await _getListedCoins();
+    final listedCoins = _lastListedCoins = await _getListedCoinsUseCase();
 
     state = AsyncData(ListedCoinsState.data(listedCoins: listedCoins));
 

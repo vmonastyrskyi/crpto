@@ -1,9 +1,11 @@
 import 'package:crpto/core/navigation/route_names.dart';
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
+import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/themes.dart';
+import 'package:crpto/features/coins_exchange/presentation/provider/recent_trades_notifier.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/coin_ticker_list_view.dart';
 import 'package:crpto/features/coins_exchange/presentation/ui/widgets/recent_trade_list_view.dart';
 import 'package:crpto/shared/presentation/ui/widgets/unfocus_tap_area.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,11 +29,14 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
         ChangeNotifierProvider(create: (_) => HeaderBuilderNotifier()),
       ],
       child: Container(
-        color: AppColors.backgroundColor,
+        color: context.appColors.backgroundColor,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: UnfocusTapArea(
             child: SafeArea(
+              minimum: kIsWeb
+                  ? const EdgeInsets.fromLTRB(0.0, 48.0, 0.0, 0.0)
+                  : EdgeInsets.zero,
               bottom: false,
               child: Scaffold(appBar: _buildAppBar(), body: _buildBody()),
             ),
@@ -47,7 +52,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
       child: SizedBox.fromSize(
         size: const Size.fromHeight(56.0),
         child: Container(
-          color: AppColors.backgroundColor,
+          color: context.appColors.backgroundColor,
           child: Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -56,7 +61,7 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
             ],
           ),
         ),
-      ),
+      ).withPadding(kIsWeb ? 8.0 : 0.0, 0.0, kIsWeb ? 8.0 : 0.0, 0.0),
     );
   }
 
@@ -67,18 +72,16 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
           children: <InlineSpan>[
             TextSpan(
               text: 'crp',
-              style: AppFonts.bold.copyWith(
-                color: AppColors.primaryTextColor,
+              style: context.appFonts.bold.copyWith(
+                color: context.appColors.primaryTextColor,
                 fontSize: 20.0,
-                height: 1.6,
               ),
             ),
             TextSpan(
               text: 'to',
-              style: AppFonts.bold.copyWith(
-                color: AppColors.primaryColor,
+              style: context.appFonts.bold.copyWith(
+                color: context.appColors.primaryColor,
                 fontSize: 20.0,
-                height: 1.6,
               ),
             ),
           ],
@@ -90,19 +93,24 @@ class _CoinsExchangeScreenState extends ConsumerState<CoinsExchangeScreen> {
   Widget _buildManageCoinsButton() {
     return IconButton(
       onPressed: () => context.pushNamed(RouteNames.coinsManagement),
+      highlightColor: context.appColors.splashColorLight,
+      hoverColor: context.appColors.splashColorDark,
+      color: context.appColors.iconColor,
       icon: const Icon(Icons.settings),
-      color: AppColors.iconColor,
     );
   }
 
   Widget _buildBody() {
     return NestedScrollView(
-      physics: const NeverScrollableScrollPhysics(),
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           context.read<HeaderBuilderNotifier>().innerBoxIsScrolled =
               innerBoxIsScrolled;
         });
+
+        final recentTradesState = ref.watch(recentTradesProvider);
+
+        if (recentTradesState.value?.isEmpty ?? true) return const <Widget>[];
 
         return <Widget>[const SliverToBoxAdapter(child: RecentTradeListView())];
       },

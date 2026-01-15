@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
-import 'package:crpto/core/utils/app_colors.dart';
-import 'package:crpto/core/utils/app_fonts.dart';
 import 'package:crpto/core/utils/extensions/string.dart';
 import 'package:crpto/core/utils/extensions/widget.dart';
+import 'package:crpto/core/utils/theme/app_colors.dart';
+import 'package:crpto/core/utils/theme/app_fonts.dart';
 import 'package:crpto/features/coin_details/domain/model/order_book_level_depth.dart';
 import 'package:crpto/features/coin_details/presentation/provider/order_book_notifier.dart';
 import 'package:crpto/shared/presentation/provider/coin_metadata.dart';
@@ -30,8 +30,8 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
       child: Center(
         child: Text(
           'No data available',
-          style: AppFonts.medium.copyWith(
-            color: AppColors.secondaryTextColor,
+          style: context.appFonts.medium.copyWith(
+            color: context.appColors.secondaryTextColor,
             fontSize: 14.0,
           ),
         ),
@@ -46,8 +46,8 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
           child: Center(
             child: Text(
               'Something went wrong!',
-              style: AppFonts.medium.copyWith(
-                color: AppColors.secondaryTextColor,
+              style: context.appFonts.medium.copyWith(
+                color: context.appColors.secondaryTextColor,
                 fontSize: 14.0,
               ),
             ),
@@ -109,9 +109,9 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
             FadeSwitcher(useSliver: true, child: child),
           ],
         ).withSliverPaddingAll(12.0),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Divider(
-            color: AppColors.dividerColor,
+            color: context.appColors.dividerColor,
             thickness: 1.0,
             height: 1.0,
           ),
@@ -123,8 +123,8 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
   Widget _buildTitle() {
     return Text(
       'Order book',
-      style: AppFonts.semiBold.copyWith(
-        color: AppColors.primaryTextColor,
+      style: context.appFonts.semiBold.copyWith(
+        color: context.appColors.primaryTextColor,
         fontSize: 14.0,
       ),
     );
@@ -137,8 +137,8 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
         Expanded(
           child: Text(
             'Bid',
-            style: AppFonts.semiBold.copyWith(
-              color: AppColors.secondaryTextColor,
+            style: context.appFonts.semiBold.copyWith(
+              color: context.appColors.secondaryTextColor,
               fontSize: 12.0,
             ),
           ),
@@ -146,8 +146,8 @@ class _CoinOrderBookState extends ConsumerState<CoinOrderBook> {
         Expanded(
           child: Text(
             'Ask',
-            style: AppFonts.semiBold.copyWith(
-              color: AppColors.secondaryTextColor,
+            style: context.appFonts.semiBold.copyWith(
+              color: context.appColors.secondaryTextColor,
               fontSize: 12.0,
             ),
           ),
@@ -191,8 +191,8 @@ class _CoinOrderBookRowState extends ConsumerState<_CoinOrderBookRow> {
                 width: barWidth,
                 color:
                     (widget.isBid
-                            ? AppColors.positivePriceColor
-                            : AppColors.negativePriceColor)
+                            ? context.appColors.positivePriceColor
+                            : context.appColors.negativePriceColor)
                         .withValues(alpha: 0.125),
               ),
             ),
@@ -203,13 +203,13 @@ class _CoinOrderBookRowState extends ConsumerState<_CoinOrderBookRow> {
                       _buildQuantity(widget.orderBookLevelDepth.level.quantity),
                       _buildPrice(
                         widget.orderBookLevelDepth.level.price,
-                        AppColors.positivePriceColor,
+                        context.appColors.positivePriceColor,
                       ),
                     ]
                   : <Widget>[
                       _buildPrice(
                         widget.orderBookLevelDepth.level.price,
-                        AppColors.negativePriceColor,
+                        context.appColors.negativePriceColor,
                       ),
                       _buildQuantity(widget.orderBookLevelDepth.level.quantity),
                     ],
@@ -228,8 +228,8 @@ class _CoinOrderBookRowState extends ConsumerState<_CoinOrderBookRow> {
 
     return Text(
       _formatNumber(quantity, coinMetadata.stepSize),
-      style: AppFonts.medium.copyWith(
-        color: AppColors.primaryTextColor,
+      style: context.appFonts.medium.copyWith(
+        color: context.appColors.primaryTextColor,
         fontSize: 12.0,
       ),
     );
@@ -238,7 +238,7 @@ class _CoinOrderBookRowState extends ConsumerState<_CoinOrderBookRow> {
   Widget _buildPrice(double price, Color color) {
     return Text(
       StringX.formatCurrency(price),
-      style: AppFonts.medium.copyWith(color: color, fontSize: 12.0),
+      style: context.appFonts.medium.copyWith(color: color, fontSize: 12.0),
     );
   }
 
@@ -277,16 +277,16 @@ class _OrderBookPlaceholder extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      _buildBidQuantityPlaceholder().expanded(flex: 4),
+                      _buildBidQuantityPlaceholder(context).expanded(flex: 4),
                       const Spacer(flex: 3),
-                      _buildBidPricePlaceholder().expanded(flex: 3),
+                      _buildBidPricePlaceholder(context).expanded(flex: 3),
                     ],
                   ).expanded(),
                   Row(
                     children: <Widget>[
-                      _buildBidQuantityPlaceholder().expanded(flex: 3),
+                      _buildBidQuantityPlaceholder(context).expanded(flex: 3),
                       const Spacer(flex: 3),
-                      _buildBidPricePlaceholder().expanded(flex: 4),
+                      _buildBidPricePlaceholder(context).expanded(flex: 4),
                     ],
                   ).expanded(),
                 ],
@@ -297,25 +297,25 @@ class _OrderBookPlaceholder extends StatelessWidget {
     );
   }
 
-  Widget _buildBidQuantityPlaceholder() {
+  Widget _buildBidQuantityPlaceholder(BuildContext context) {
     return SizedBox(
       height: 12.0,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: AppColors.primaryWidgetColor,
+          color: context.appColors.primaryWidgetColor,
         ),
       ),
     );
   }
 
-  Widget _buildBidPricePlaceholder() {
+  Widget _buildBidPricePlaceholder(BuildContext context) {
     return SizedBox(
       height: 12.0,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: AppColors.primaryWidgetColor,
+          color: context.appColors.primaryWidgetColor,
         ),
       ),
     );
