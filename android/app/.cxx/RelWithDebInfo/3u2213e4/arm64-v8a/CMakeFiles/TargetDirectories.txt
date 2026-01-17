@@ -1,2 +1,0 @@
-C:/Projects/crpto/android/app/.cxx/RelWithDebInfo/3u2213e4/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Projects/crpto/android/app/.cxx/RelWithDebInfo/3u2213e4/arm64-v8a/CMakeFiles/rebuild_cache.dir

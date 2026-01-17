@@ -32,22 +32,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.debug
-        }
-    }
-
-    flavorDimensions "default"
-
-    productFlavors {
-        prod {
-            dimension "default"
-            resValue "string", "app_name", "Crpto"
-        }
-
-        dev {
-            dimension "default"
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "Crpto Dev"
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
