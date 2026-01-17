@@ -3,8 +3,6 @@ import 'package:crpto/features/coins_management/data/dto/cmc_coin_id_dto.dart';
 import 'package:crpto/features/coins_management/data/dto/cmc_coin_metadata_dto.dart';
 import 'package:crpto/features/coins_management/data/source/i_coin_metadata_data_source.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/cmc_coin_metadata_data_source.g.dart';
@@ -19,10 +17,6 @@ final class CmcCoinMetadataDataSource extends _$CmcCoinMetadataDataSource
     final proxyUrl = 'https://us-central1-crpto-32bfe.cloudfunctions.net';
 
     _dio = ref.watch(dioClientProvider(baseUrl: proxyUrl));
-
-    if (!kIsWeb) {
-      _dio.options.headers['X-CMC_PRO_API_KEY'] = dotenv.env['CMC_PRO_API_KEY'];
-    }
 
     return this;
   }
